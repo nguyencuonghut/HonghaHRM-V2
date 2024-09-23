@@ -72,7 +72,7 @@ class UsersController extends Controller
             ->addColumn('name', function($row) {
                 return $row->name;
             })
-            ->addColumn('name', function($row) {
+            ->addColumn('email', function($row) {
                 return $row->email;
             })
             ->addColumn('actions', function($row){
