@@ -12,6 +12,10 @@ Route::post('/login', [LoginController::class, 'handleLogin'])->name('handleLogi
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware'=>'auth:web'], function() {
+    //Home
     Route::get('/', [HomeController::class, 'home'])->name('home');
+
+    //Users
+    Route::get('/users/data', [UsersController::class, 'anyData'])->name('users.data');
     Route::resource('/users', UsersController::class);
     });
