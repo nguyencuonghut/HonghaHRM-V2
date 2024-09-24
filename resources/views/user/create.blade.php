@@ -16,7 +16,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Thêm mới</li>
+            <li class="breadcrumb-item active">Thêm</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -68,79 +68,3 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
-
-@push('scripts')
-<style type="text/css">
-    .dataTables_wrapper .dt-buttons {
-    margin-bottom: -3em
-  }
-</style>
-
-
-<script>
-    // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    });
-
-    $(function () {
-      $("#users-table").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        buttons: [
-            {
-                extend: 'copy',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            },
-            {
-                extend: 'csv',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-
-            },
-            {
-                extend: 'excel',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            },
-            {
-                extend: 'pdf',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            },
-            {
-                extend: 'print',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            },
-            {
-                extend: 'colvis',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2]
-                }
-            }
-        ],
-        dom: 'Blfrtip',
-        ajax: ' {!! route('users.data') !!}',
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
-            {data: 'actions', name: 'actions', orderable: false, searchable: false},
-       ]
-      }).buttons().container().appendTo('#users-table_wrapper .col-md-6:eq(0)');
-    });
-  </script>
-@endpush
