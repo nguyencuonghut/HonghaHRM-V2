@@ -16,6 +16,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
     //Users
+    Route::post('users/import', [UsersController::class, 'import'])->name('users.import');
     Route::get('/users/data', [UsersController::class, 'anyData'])->name('users.data');
     Route::resource('/users', UsersController::class);
     });

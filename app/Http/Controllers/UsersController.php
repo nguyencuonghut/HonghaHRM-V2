@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UserImport;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -21,7 +25,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -29,7 +33,29 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+        ];
+
+        $messages = [
+            'name.required' => 'Bạn phải nhập tên.',
+            'email.required' => 'Bạn phải nhập email.',
+            'email.unique' => 'Email đã tồn tại.'
+        ];
+
+        $request->validate($rules, $messages);
+
+        $password = Str::random(8);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($password);
+        $user->save();
+
+        Alert::toast('Thêm người dùng thành công!', 'success', 'top-right');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -85,5 +111,39 @@ class UsersController extends Controller
             })
             ->rawColumns(['actions'])
             ->make(true);
+    }
+
+    public function import(Request $request)
+    {
+        $rules = [
+            'file' => 'required|mimes:xlsx,xls|max:5000',
+        ];
+        $messages = [
+            'file.required' => 'Bạn phải chọn file import.',
+            'file.mimes' => 'Bạn phải chọn định dạng file .xlsx, .xls.',
+            'file.max' => 'File vượt quá 5MB.',
+        ];
+
+        $request->validate($rules, $messages);
+
+        try {
+            $import = new UserImport;
+            Excel::import($import, $request->file('file')->store('files'));
+            $rows = $import->getRowCount();
+            $duplicates = $import->getDuplicateCount();
+            $duplicate_rows = $import->getDuplicateRows();
+            if ($duplicates) {
+                $duplicate_rows_list = implode(', ', $duplicate_rows);
+                Alert::toast('Các dòng bị trùng lặp là '. $duplicate_rows_list);
+                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công! Có ' . $duplicates . ' dòng bị trùng lặp! Lặp tại dòng số: ' . $duplicate_rows_list, 'success', 'top-right');
+            } else {
+                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
+            }
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            Alert::toast('Có lỗi xảy ra trong quá trình import dữ liệu. Vui lòng kiểm tra lại file!', 'error', 'top-right');
+            return redirect()->back();
+        }
     }
 }

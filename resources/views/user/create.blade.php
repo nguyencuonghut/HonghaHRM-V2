@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Tất cả người dùng' }}
+{{ 'Thêm người dùng' }}
 @endsection
 
 @extends('layouts.base')
@@ -11,12 +11,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tất cả người dùng</h1>
+          <h1 class="m-0">Thêm người dùng</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Người dùng</li>
+            <li class="breadcrumb-item active">Thêm mới</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -31,57 +31,35 @@
       <div class="row">
         <div class="col-12">
             <div class="card">
-              <!-- /.card-header -->
-              <div class="card-body">
-                <a href="{{ route('users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
-
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_users">
-                  <i class="fas fa-file-excel"></i> Import
-                </button>
-                <table id="users-table" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Họ tên</th>
-                    <th>Email</th>
-                    <th>Thao tác</th>
-                  </tr>
-                  </thead>
-                </table>
-
-                <!-- modal -->
-                <form class="form-horizontal" method="post" action="{{ route('users.import') }}" enctype="multipart/form-data" name="import-users" id="import-users">
-                    {{ csrf_field() }}
-                    <div class="modal fade" id="import_users">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4>Import người dùng</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group mb-4">
-                                        <div class="custom-file text-left">
-                                            <input type="file" name="file" class="custom-file-input" id="customFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-                                            <label class="custom-file-label" for="customFile">Chọn file</label>
-                                        </div>
+                <form class="form-horizontal" method="post" action="{{ url('users') }}" name="add_user" id="add_user" enctype="multipart/form-data" novalidate="novalidate">{{ csrf_field() }}
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="control-group">
+                                    <label class="required-field" class="control-label">Tên</label>
+                                    <div class="controls">
+                                        <input type="text" class="form-control" name="name" id="name" required="">
                                     </div>
                                 </div>
-                                <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                <button type="submit" class="btn btn-primary">Import</button>
+                            </div>
+                            <div class="col-6">
+                                <div class="control-group">
+                                    <label class="required-field" class="control-label">Email</label>
+                                    <div class="controls">
+                                        <input type="email" class="form-control" name="email" id="email" required="">
+                                    </div>
                                 </div>
                             </div>
-                            <!-- /.modal-content -->
+                        </div>
+                        <br>
+                        <div class="control-group">
+                            <div class="controls">
+                                <input type="submit" value="Thêm" class="btn btn-success">
+                            </div>
                         </div>
                     </div>
-                  </form>
-                  <!-- /.modal -->
-              </div>
-            </div>
-        </div>
+                </form>
       </div>
       <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
