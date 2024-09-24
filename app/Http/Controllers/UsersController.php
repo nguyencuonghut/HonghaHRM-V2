@@ -71,7 +71,8 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('user.edit', ['user' => $user]);
     }
 
     /**
@@ -79,7 +80,26 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|unique:users,email,'.$id,
+        ];
+
+        $messages = [
+            'name.required' => 'Bạn phải nhập tên.',
+            'email.required' => 'Bạn phải nhập email.',
+            'email.unique' => 'Email bị trùng',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        Alert::toast('Sửa người dùng thành công!', 'success', 'top-right');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -87,7 +107,11 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->destroy($id);
+
+        Alert::toast('Xóa người dùng thành công!', 'success', 'top-rigth');
+        return redirect()->route('users.index');
     }
 
     public function anyData()
