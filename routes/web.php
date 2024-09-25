@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +22,13 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Home
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
+    //Roles
+    Route::post('/roles/import', [RoleController::class, 'import'])->name('roles.import');
+    Route::get('/roles/data', [RoleController::class, 'anyData'])->name('roles.data');
+    Route::resource('/roles', RoleController::class);
+
     //Users
-    Route::post('users/import', [UsersController::class, 'import'])->name('users.import');
+    Route::post('/users/import', [UsersController::class, 'import'])->name('users.import');
     Route::get('/users/data', [UsersController::class, 'anyData'])->name('users.data');
     Route::resource('/users', UsersController::class);
-    });
+});
