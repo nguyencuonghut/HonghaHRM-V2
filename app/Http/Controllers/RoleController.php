@@ -98,9 +98,14 @@ class RoleController extends Controller
     public function destroy(string $id)
     {
         $role = Role::findOrFail($id);
+        //Check if Role is used or not
+        if ($role->users->count()) {
+            Alert::toast('Vai trò đang được sử dụng. Không thể xóa!', 'error', 'top-rigth');
+            return redirect()->route('roles.index');
+        }
         $role->destroy($id);
 
-        Alert::toast('Xóa người dùng thành công!', 'success', 'top-rigth');
+        Alert::toast('Xóa vai trò thành công!', 'success', 'top-rigth');
         return redirect()->route('roles.index');
     }
 

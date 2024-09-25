@@ -53,6 +53,32 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="control-group">
+                                    <label class="required-field" class="control-label">Vai trò</label>
+                                    <div class="controls">
+                                        <select name="role_id" id="role_id" data-placeholder="Chọn vai trò" class="form-control select2" style="width: 100%;">
+                                            @foreach ($roles as $role)
+                                                <option value="{{$role->id}}" @if($role->id == $user->role_id) selected @endif>{{$role->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="control-group">
+                                    <label class="required-field" class="control-label">Trạng thái</label>
+                                    <div class="controls">
+                                        <select name="status" id="status" data-placeholder="Chọn trạng thái" class="form-control select2" style="width: 100%;">
+                                            <option value="Mở" @if('Mở' == $user->status) selected @endif>Mở</option>
+                                            <option value="Khóa" @if('Khóa' == $user->status) selected @endif>Khóa</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <br>
                         <div class="control-group">
                             <div class="controls">
@@ -69,3 +95,14 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
+
+@push('scripts')
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+    })
+</script>
+@endpush

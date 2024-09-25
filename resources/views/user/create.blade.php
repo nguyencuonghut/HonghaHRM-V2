@@ -52,6 +52,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="control-group">
+                                    <label class="required-field" class="control-label">Vai trò</label>
+                                    <div class="controls">
+                                        <select name="role_id" id="role_id" data-placeholder="Chọn vai trò" class="form-control select2" style="width: 100%;">
+                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                            @foreach ($roles as $role)
+                                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <br>
                         <div class="control-group">
                             <div class="controls">
@@ -68,3 +83,14 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
+
+@push('scripts')
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+    })
+</script>
+@endpush

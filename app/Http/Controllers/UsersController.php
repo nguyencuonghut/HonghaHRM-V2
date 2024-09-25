@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\UserImport;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,7 +26,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        $roles = Role::orderBy('id', 'desc')->get();
+        return view('user.create', ['roles' => $roles]);
     }
 
     /**
@@ -36,12 +38,14 @@ class UsersController extends Controller
         $rules = [
             'name' => 'required',
             'email' => 'required|unique:users',
+            'role_id' => 'required',
         ];
 
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
             'email.required' => 'Bạn phải nhập email.',
-            'email.unique' => 'Email đã tồn tại.'
+            'email.unique' => 'Email đã tồn tại.',
+            'role_id.required' => 'Bạn phải chọn vai trò.',
         ];
 
         $request->validate($rules, $messages);
@@ -52,6 +56,8 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($password);
+        $user->role_id = $request->role_id;
+        $user->status = 'Mở';
         $user->save();
 
         Alert::toast('Thêm người dùng thành công!', 'success', 'top-right');
@@ -72,7 +78,12 @@ class UsersController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-        return view('user.edit', ['user' => $user]);
+        $roles = Role::orderBy('id', 'desc')->get();
+        return view('user.edit',
+                    [
+                        'user' => $user,
+                        'roles' => $roles,
+                    ]);
     }
 
     /**
@@ -83,12 +94,16 @@ class UsersController extends Controller
         $rules = [
             'name' => 'required',
             'email' => 'required|unique:users,email,'.$id,
+            'role_id' => 'required',
+            'status' => 'required',
         ];
 
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
             'email.required' => 'Bạn phải nhập email.',
             'email.unique' => 'Email bị trùng',
+            'role_id.required' => 'Bạn phải chọn vai trò.',
+            'status.required' => 'Bạn phải chọn trạng thái.',
         ];
 
         $request->validate($rules, $messages);
@@ -96,6 +111,8 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->role_id = $request->role_id;
+        $user->status = $request->status;
         $user->save();
 
         Alert::toast('Sửa người dùng thành công!', 'success', 'top-right');
@@ -116,7 +133,7 @@ class UsersController extends Controller
 
     public function anyData()
     {
-        $data = User::orderBy('id', 'desc');
+        $data = User::with('role')->orderBy('id', 'desc');
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('name', function($row) {
@@ -124,6 +141,16 @@ class UsersController extends Controller
             })
             ->addColumn('email', function($row) {
                 return $row->email;
+            })
+            ->addColumn('role', function($row) {
+                return $row->role->name;
+            })
+            ->addColumn('status', function($row) {
+                if ('Mở' == $row->status) {
+                    return '<span class="badge badge-success">' . $row->status . '</span>';
+                } else {
+                    return '<span class="badge badge-danger">' . $row->status . '</span>';
+                }
             })
             ->addColumn('actions', function($row){
                 $action = '<a href="' . route("users.edit", $row->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
@@ -133,7 +160,7 @@ class UsersController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'status'])
             ->make(true);
     }
 
