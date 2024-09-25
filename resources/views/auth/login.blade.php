@@ -59,7 +59,7 @@
       </form>
 
       <p class="mb-1">
-        <a href="#">Tôi quên mật khẩu</a>
+        <a href="{{ route('forgot.password.get') }}">Tôi quên mật khẩu</a>
       </p>
     </div>
     <!-- /.card-body -->
