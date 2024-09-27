@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
@@ -31,4 +32,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('/users/import', [UsersController::class, 'import'])->name('users.import');
     Route::get('/users/data', [UsersController::class, 'anyData'])->name('users.data');
     Route::resource('/users', UsersController::class);
+
+    //Departments
+    Route::post('/departments/import', [DepartmentController::class, 'import'])->name('departments.import');
+    Route::get('/departments/data', [DepartmentController::class, 'anyData'])->name('departments.data');
+    Route::resource('/departments', DepartmentController::class);
 });

@@ -32,6 +32,7 @@
           </li>
 
           <li class="nav-header">HỆ THỐNG</li>
+          <!-- Người dùng -->
           <li class="nav-item">
             <a href="{{route('users.index')}}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
@@ -40,11 +41,23 @@
               </p>
             </a>
           </li>
+
+          <!-- Vai trò -->
           <li class="nav-item">
             <a href="{{route('roles.index')}}" class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-tag"></i>
               <p>
                 Vai trò
+              </p>
+            </a>
+          </li>
+
+          <!-- Phòng/ban -->
+          <li class="nav-item">
+            <a href="{{route('departments.index')}}" class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
+              <i class="fas fa-sitemap"></i>
+              <p>
+                Phòng/ban
               </p>
             </a>
           </li>
