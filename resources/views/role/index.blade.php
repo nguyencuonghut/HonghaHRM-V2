@@ -35,7 +35,7 @@
               <div class="card-body">
                 <a href="{{ route('roles.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
 
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_users">
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_roles">
                   <i class="fas fa-file-excel"></i> Import
                 </button>
                 <table id="roles-table" class="table table-bordered table-striped">
@@ -51,7 +51,7 @@
                 <!-- modal -->
                 <form class="form-horizontal" method="post" action="{{ route('roles.import') }}" enctype="multipart/form-data" name="import-roles" id="import-roles">
                     {{ csrf_field() }}
-                    <div class="modal fade" id="import_users">
+                    <div class="modal fade" id="import_roles">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
