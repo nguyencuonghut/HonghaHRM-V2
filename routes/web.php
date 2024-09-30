@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
@@ -37,4 +38,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('/departments/import', [DepartmentController::class, 'import'])->name('departments.import');
     Route::get('/departments/data', [DepartmentController::class, 'anyData'])->name('departments.data');
     Route::resource('/departments', DepartmentController::class);
+
+    //Divisions
+    Route::post('/divisions/import', [DivisionController::class, 'import'])->name('divisions.import');
+    Route::get('/divisions/data', [DivisionController::class, 'anyData'])->name('divisions.data');
+    Route::resource('/divisions', DivisionController::class);
 });

@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Tất cả phòng/ban' }}
+{{ 'Tất cả bộ phận' }}
 @endsection
 
 @extends('layouts.base')
@@ -11,12 +11,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tất cả phòng/ban</h1>
+          <h1 class="m-0">Tất cả bộ phận</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Phòng/ban</li>
+            <li class="breadcrumb-item active">Bộ phận</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -33,29 +33,30 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('departments.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                <a href="{{ route('divisions.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
 
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_departments">
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_divisions">
                   <i class="fas fa-file-excel"></i> Import
                 </button>
-                <table id="departments-table" class="table table-bordered table-striped">
+                <table id="divisions-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Phòng/ban</th>
+                    <th>Bộ phận</th>
+                    <th>Thuộc phòng/ban</th>
                     <th>Thao tác</th>
                   </tr>
                   </thead>
                 </table>
 
                 <!-- modal -->
-                <form class="form-horizontal" method="post" action="{{ route('departments.import') }}" enctype="multipart/form-data" name="import-departments" id="import-departments">
+                <form class="form-horizontal" method="post" action="{{ route('divisions.import') }}" enctype="multipart/form-data" name="import-divisions" id="import-divisions">
                     {{ csrf_field() }}
-                    <div class="modal fade" id="import_departments">
+                    <div class="modal fade" id="import_divisions">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4>Import phòng/ban</h4>
+                                    <h4>Import bộ phận</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -106,21 +107,21 @@
     });
 
     $(function () {
-      $("#departments-table").DataTable({
+      $("#divisions-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         buttons: [
             {
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2]
                 }
 
             },
@@ -128,39 +129,40 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2]
                 }
             }
         ],
         dom: 'Blfrtip',
-        ajax: ' {!! route('departments.data') !!}',
+        ajax: ' {!! route('divisions.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
+            {data: 'department', name: 'department'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
-      }).buttons().container().appendTo('#departments-table_wrapper .col-md-6:eq(0)');
+      }).buttons().container().appendTo('#divisions-table_wrapper .col-md-6:eq(0)');
     });
   </script>
 @endpush

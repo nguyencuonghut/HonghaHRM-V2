@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\DepartmentImport;
+use App\Imports\DivisionImport;
 use App\Models\Department;
 use App\Models\Division;
 use Illuminate\Http\RedirectResponse;
@@ -12,14 +12,14 @@ use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
-class DepartmentController extends Controller
+class DivisionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        return view('department.index');
+        return view('division.index');
     }
 
     /**
@@ -27,7 +27,8 @@ class DepartmentController extends Controller
      */
     public function create(): View
     {
-        return view('department.create');
+        $departments = Department::orderBy('id', 'desc')->get();
+        return view('division.create', ['departments' => $departments]);
     }
 
     /**
@@ -36,28 +37,31 @@ class DepartmentController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $rules = [
-            'name' => 'required|unique:departments',
+            'name' => 'required|unique:divisions',
+            'department_id' => 'required',
         ];
 
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Phòng/ban đã tồn tại.'
+            'name.unique' => 'Phòng/ban đã tồn tại.',
+            'department_id.required' => 'Bạn phải chọn phòng/ban.',
         ];
 
         $request->validate($rules, $messages);
 
-        $department = new Department();
-        $department->name = $request->name;
-        $department->save();
+        $division = new Division();
+        $division->name = $request->name;
+        $division->department_id = $request->department_id;
+        $division->save();
 
-        Alert::toast('Thêm phòng/ban thành công!', 'success', 'top-right');
-        return redirect()->route('departments.index');
+        Alert::toast('Thêm bộ phận thành công!', 'success', 'top-right');
+        return redirect()->route('divisions.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show(Division $division)
     {
         //
     }
@@ -65,62 +69,68 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department): View
+    public function edit(Division $division): View
     {
-        return view('department.edit', ['department' => $department]);
+        $departments = Department::orderBy('id', 'desc')->get();
+        return view('division.edit',
+                    [
+                        'division' => $division,
+                        'departments' => $departments,
+                    ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department): RedirectResponse
+    public function update(Request $request, Division $division): RedirectResponse
     {
         $rules = [
-            'name' => 'required|unique:departments,name,'.$department->id,
+            'name' => 'required|unique:divisions,name,'.$division->id,
+            'department_id' => 'required',
         ];
 
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
             'name.unique' => 'Tên bị trùng',
+            'department_id.required' => 'Bạn phải chọn phòng/ban.',
         ];
 
         $request->validate($rules, $messages);
 
-        $department->name = $request->name;
-        $department->save();
+        $division->name = $request->name;
+        $division->department_id = $request->department_id;
+        $division->save();
 
-        Alert::toast('Sửa phòng/ban thành công!', 'success', 'top-right');
-        return redirect()->route('departments.index');
+        Alert::toast('Sửa bộ phận thành công!', 'success', 'top-right');
+        return redirect()->route('divisions.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department): RedirectResponse
+    public function destroy(Division $division): RedirectResponse
     {
-        //Check if Department is used or not
-        $divisions = Division::where('department_id', $department->id)->get();
-        if ($divisions->count()) {
-            Alert::toast('Phòng/ban đang được sử dụng. Không thể xóa!', 'error', 'top-rigth');
-            return redirect()->route('departments.index');
-        }
-        $department->delete();
+        //TODO: Check if Department is used or not
+        $division->delete();
 
-        Alert::toast('Xóa vai trò thành công!', 'success', 'top-rigth');
-        return redirect()->route('departments.index');
+        Alert::toast('Xóa bộ phận thành công!', 'success', 'top-rigth');
+        return redirect()->route('divisions.index');
     }
 
     public function anyData()
     {
-        $data = Department::orderBy('id', 'desc');
+        $data = Division::with('department')->orderBy('id', 'desc')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('name', function($row) {
                 return $row->name;
             })
+            ->addColumn('department', function($row) {
+                return $row->department->name;
+            })
             ->addColumn('actions', function($row){
-                $action = '<a href="' . route("departments.edit", $row->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                <form style="display:inline" action="'. route("departments.destroy", $row->id) . '" method="POST">
+                $action = '<a href="' . route("divisions.edit", $row->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                <form style="display:inline" action="'. route("divisions.destroy", $row->id) . '" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
@@ -144,19 +154,25 @@ class DepartmentController extends Controller
         $request->validate($rules, $messages);
 
         try {
-            $import = new DepartmentImport;
+            $import = new DivisionImport;
             Excel::import($import, $request->file('file')->store('files'));
             $rows = $import->getRowCount();
             $duplicates = $import->getDuplicateCount();
             $duplicate_rows = $import->getDuplicateRows();
+            $duplicate_rows = $import->getDuplicateRows();
+            $invalid_dept_name_row = $import->getInvalidDeptNameRow();
             if ($duplicates) {
                 $duplicate_rows_list = implode(', ', $duplicate_rows);
                 Alert::toast('Các dòng bị trùng lặp là '. $duplicate_rows_list);
                 Alert::toast('Import '. $rows . ' dòng dữ liệu thành công! Có ' . $duplicates . ' dòng bị trùng lặp! Lặp tại dòng số: ' . $duplicate_rows_list, 'success', 'top-right');
-            } else {
-                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
+                return redirect()->back();
             }
 
+            if ($invalid_dept_name_row) {
+                Alert::toast('Không tìm thấy tên phòng/ban tại dòng thứ ' . $invalid_dept_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+            Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
             return redirect()->back();
         } catch (\Exception $e) {
             Alert::toast('Có lỗi xảy ra trong quá trình import dữ liệu. Vui lòng kiểm tra lại file!', 'error', 'top-right');

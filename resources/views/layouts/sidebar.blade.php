@@ -55,9 +55,19 @@
           <!-- Phòng/ban -->
           <li class="nav-item">
             <a href="{{route('departments.index')}}" class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
-              <i class="fas fa-sitemap"></i>
+              <i class="nav-icon fas fa-sitemap"></i>
               <p>
                 Phòng/ban
+              </p>
+            </a>
+          </li>
+
+          <!-- Bộ phận -->
+          <li class="nav-item">
+            <a href="{{route('divisions.index')}}" class="nav-link {{ Request::is('divisions*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-code-branch"></i>
+              <p>
+                Bộ phận
               </p>
             </a>
           </li>
