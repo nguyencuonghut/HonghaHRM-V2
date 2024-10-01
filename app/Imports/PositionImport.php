@@ -6,7 +6,6 @@ use App\Models\Department;
 use App\Models\Division;
 use App\Models\Position;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class PositionImport implements ToCollection
@@ -30,21 +29,17 @@ class PositionImport implements ToCollection
 
                 //Check if department_id is valid
                 $department = Department::where('name', $row['2'])->first();
-                Log::error("department");
                 if (null == $department) {
                     $this->invalid_dept_name_row = $i;
                     break;
                 }
-                Log::error("department");
                 //Check if division_id is valid
                 $division = Division::where('name', $row['3'])->first();
                 if (null == $division) {
                     $this->invalid_divi_name_row = $i;
                     break;
                 }
-                Log::error("division");
 
-                Log::error("data - " . $row);
                 if ($data->count() == 0
                     && $department) {
                     //Create Position
@@ -58,10 +53,7 @@ class PositionImport implements ToCollection
                     $position->position_salary = $row[5];
                     $position->max_capacity_salary = $row[6];
                     $position->position_allowance = $row[7];
-                    Log::error("create Position dep " . $department->id);
-                    Log::error("create Position div " . $division->id);
                     $position->save();
-                    Log::error("create Position done");
 
                     ++$this->rows;
                 } else {
