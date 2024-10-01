@@ -34,10 +34,10 @@ class DivisionImport implements ToCollection
                 if ($data->count() == 0
                     && $department) {
                     //Create Division
-                    $role = new Division();
-                    $role->name = $row[1];
-                    $role->department_id = $department->id;
-                    $role->save();
+                    $division = new Division();
+                    $division->name = $row[1];
+                    $division->department_id = $department->id;
+                    $division->save();
 
                     ++$this->rows;
                 } else {
