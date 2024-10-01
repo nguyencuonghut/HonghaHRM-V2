@@ -17,52 +17,59 @@ class DivisionsTableSeeder extends Seeder
         DB::table('divisions')->delete();
 
         DB::table('divisions')->insert(array (
-            1 => array (
-                'id' => 2,
+            0 => array (
+                'id' => 1,
                 'department_id' => 2,
                 'name' => 'Bộ phận IT',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ),
-            2 => array (
-                'id' => 3,
+            1 => array (
+                'id' => 2,
                 'department_id' => 2,
                 'name' => 'Nhóm Kiểm Soát',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ),
+            2 => array (
+                'id' => 3,
+                'department_id' => 3,
+                'name' => 'Bộ phận Hành Chính',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ),
             3 => array (
                 'id' => 4,
                 'department_id' => 3,
-                'name' => 'Bộ phận Hành Chính',
+                'name' => 'Bộ phận Nhân Sự',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ),
             4 => array (
                 'id' => 5,
                 'department_id' => 3,
-                'name' => 'Bộ phận Nhân Sự',
+                'name' => 'Bộ phận Nhà Bếp',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ),
             5 => array (
                 'id' => 6,
                 'department_id' => 3,
-                'name' => 'Bộ phận Nhà Bếp',
+                'name' => 'Bộ phận Tạp Vụ',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ),
             6 => array (
                 'id' => 7,
                 'department_id' => 3,
-                'name' => 'Bộ phận Tạp Vụ',
+                'name' => 'Tổ Trồng Rau',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ),
             7 => array (
                 'id' => 8,
                 'department_id' => 3,
-                'name' => 'Tổ Trồng Rau',
+                'name' => 'Tổ Lái Xe',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ),
