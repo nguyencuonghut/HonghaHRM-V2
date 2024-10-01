@@ -5,7 +5,6 @@ namespace App\Imports;
 use App\Models\Department;
 use App\Models\Division;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class DivisionImport implements ToCollection
