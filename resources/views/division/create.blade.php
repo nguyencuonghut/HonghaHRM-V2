@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="control-group">
-                                    <label class="required-field" class="control-label">Bộ phận</label>
+                                    <label class="required-field" class="control-label">Phòng ban</label>
                                     <div class="controls">
                                         <select name="department_id" id="department_id" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
                                             <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>

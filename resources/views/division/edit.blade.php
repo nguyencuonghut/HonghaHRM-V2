@@ -46,9 +46,9 @@
                             </div>
                             <div class="col-6">
                                 <div class="control-group">
-                                    <label class="required-field" class="control-label">Bộ phận</label>
+                                    <label class="required-field" class="control-label">Phòng ban</label>
                                     <div class="controls">
-                                        <select name="department_id" id="department_id" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
+                                        <select name="department_id" id="department_id" data-placeholder="Chọn phòng ban" class="form-control select2" style="width: 100%;">
                                             @foreach ($departments as $department)
                                                 <option value="{{$department->id}}" @if($department->id == $division->department_id) selected @endif>{{$department->name}}</option>
                                             @endforeach
