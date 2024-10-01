@@ -4,6 +4,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('/users', UsersController::class);
 
     //Departments
+    Route::get('/departments/get-division/{department_id}', [DepartmentController::class, 'getDivision'])->name('departments.getDivision');
     Route::post('/departments/import', [DepartmentController::class, 'import'])->name('departments.import');
     Route::get('/departments/data', [DepartmentController::class, 'anyData'])->name('departments.data');
     Route::resource('/departments', DepartmentController::class);
@@ -43,4 +45,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('/divisions/import', [DivisionController::class, 'import'])->name('divisions.import');
     Route::get('/divisions/data', [DivisionController::class, 'anyData'])->name('divisions.data');
     Route::resource('/divisions', DivisionController::class);
+
+    //Positions
+    Route::post('/positions/import', [PositionController::class, 'import'])->name('positions.import');
+    Route::get('/positions/data', [PositionController::class, 'anyData'])->name('positions.data');
+    Route::resource('/positions', PositionController::class);
 });

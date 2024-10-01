@@ -163,4 +163,15 @@ class DepartmentController extends Controller
             return redirect()->back();
         }
     }
+
+    public function getDivision($department_id)
+    {
+        $divisionData['data'] = Division::orderby("name","asc")
+                                    ->select('id','name')
+                                    ->where('department_id',$department_id)
+                                    ->get();
+
+        return response()->json($divisionData);
+
+    }
 }

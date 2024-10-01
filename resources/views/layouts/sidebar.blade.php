@@ -71,6 +71,16 @@
               </p>
             </a>
           </li>
+
+          <!-- Vị trí -->
+          <li class="nav-item">
+            <a href="{{route('positions.index')}}" class="nav-link {{ Request::is('positions*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user-tie"></i>
+              <p>
+                Vị trí
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

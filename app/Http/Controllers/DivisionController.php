@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\DivisionImport;
 use App\Models\Department;
 use App\Models\Division;
+use App\Models\Position;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -110,7 +111,13 @@ class DivisionController extends Controller
      */
     public function destroy(Division $division): RedirectResponse
     {
-        //TODO: Check if Department is used or not
+        //Check if Division is used or not
+        $positions = Position::where('division_id', $division->id)->get();
+        if ($positions->count()) {
+            Alert::toast('Vị trí đang được sử dụng. Không thể xóa!', 'error', 'top-rigth');
+            return redirect()->route('divisions.index');
+        }
+
         $division->delete();
 
         Alert::toast('Xóa bộ phận thành công!', 'success', 'top-rigth');
