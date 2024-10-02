@@ -5,6 +5,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\RecruitmentRequestController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -50,4 +51,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('/positions/import', [PositionController::class, 'import'])->name('positions.import');
     Route::get('/positions/data', [PositionController::class, 'anyData'])->name('positions.data');
     Route::resource('/positions', PositionController::class);
+
+    //RecruitmentRequest
+    Route::get('/recruitment_requests/data', [RecruitmentRequestController::class, 'anyData'])->name('recruitment_requests.data');
+    Route::resource('/recruitment_requests', RecruitmentRequestController::class);
 });

@@ -31,6 +31,25 @@
             </a>
           </li>
 
+          <li class="nav-item {{ Request::is('recruitment_*') ? 'menu-open' : '' }}">
+            <a href="{{route('recruitment_requests.index')}}" class="nav-link {{ Request::is('recruitment_*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-search-location"></i>
+              <p>
+                Tuyển dụng
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('recruitment_requests.index')}}" class="nav-link {{ Request::is('recruitment_requests*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Yêu cầu</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">
