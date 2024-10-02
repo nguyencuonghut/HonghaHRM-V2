@@ -104,7 +104,13 @@ class RecruitmentRequestController extends Controller
      */
     public function edit(RecruitmentRequest $recruitmentRequest)
     {
-        //
+        $positions = Position::orderBy('name', 'asc')->get();
+
+        return view('recruitment_request.edit',
+                    [
+                        'recruitment_request' => $recruitmentRequest,
+                        'positions' => $positions,
+                    ]);
     }
 
     /**
@@ -112,7 +118,52 @@ class RecruitmentRequestController extends Controller
      */
     public function update(Request $request, RecruitmentRequest $recruitmentRequest)
     {
-        //
+        $rules = [
+            'position_id' => 'required',
+            'quantity' => 'required',
+            'reason' => 'required',
+            'requirement' => 'required',
+            'work_time' => 'required',
+        ];
+        $messages = [
+            'position_id.required' => 'Bạn phải chọn vị trí.',
+            'quantity.required' => 'Bạn phải nhập số lượng.',
+            'reason.required' => 'Bạn phải nhập lý do.',
+            'requirement.required' => 'Bạn phải nhập yêu cầu.',
+            'work_time.required' => 'Bạn phải nhập thời gian.',
+        ];
+        $request->validate($rules,$messages);
+
+        //Create new RecruitmentRequest
+        $recruitmentRequest->position_id  = $request->position_id;
+        $recruitmentRequest->quantity     = $request->quantity;
+        $recruitmentRequest->reason       = $request->reason;
+        $recruitmentRequest->requirement  = $request->requirement;
+        $recruitmentRequest->salary   = $request->salary;
+        $recruitmentRequest->work_time    = Carbon::createFromFormat('d/m/Y', $request->work_time);
+        $recruitmentRequest->note = $request->note;
+        $recruitmentRequest->creator_id   = Auth::user()->id;
+        // Trường hợp người sửa là Ban lãnh đạo, không cần review và phê duyệt nữa
+        if ('Ban lãnh đạo' == Auth::user()->role->name) {
+            $recruitmentRequest->reviewer_id      = Auth::user()->id;
+            $recruitmentRequest->reviewer_result  = 'Đồng ý';
+            $recruitmentRequest->approver_id      = Auth::user()->id;
+            $recruitmentRequest->approver_result  = 'Đồng ý';
+            $recruitmentRequest->status = 'Đã duyệt';
+
+        } else {
+            $recruitmentRequest->status = 'Mở';
+        }
+        $recruitmentRequest->save();
+
+        //Send notification to reviewer
+        $reviewers = User::where('status', 'Mở')->where('role_id', 4)->get(); //4: Nhân sự
+        foreach ($reviewers as $reviewer) {
+            Notification::route('mail' , $reviewer->email)->notify(new RecruitmentRequestCreated($recruitmentRequest->id));
+        }
+
+        Alert::toast('Sửa yêu cầu tuyển dụng mới thành công!', 'success', 'top-right');
+        return redirect()->route('recruitment_requests.index');
     }
 
     /**
