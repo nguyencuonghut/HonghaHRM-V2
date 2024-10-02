@@ -15,7 +15,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('positions.index') }}">Tất cả yêu cầu tuyển dụng</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('recruitment_requests.index') }}">Tất cả yêu cầu tuyển dụng</a></li>
             <li class="breadcrumb-item active">Thêm</li>
           </ol>
         </div><!-- /.col -->
