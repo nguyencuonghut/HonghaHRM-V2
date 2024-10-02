@@ -67,7 +67,7 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
         //
     }
@@ -75,9 +75,8 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        $user = User::findOrFail($id);
         $roles = Role::orderBy('id', 'desc')->get();
         return view('user.edit',
                     [
@@ -89,11 +88,11 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required|unique:users,email,'.$id,
+            'email' => 'required|unique:users,email,'.$user->id,
             'role_id' => 'required',
             'status' => 'required',
         ];
@@ -108,7 +107,6 @@ class UsersController extends Controller
 
         $request->validate($rules, $messages);
 
-        $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->role_id = $request->role_id;
@@ -122,10 +120,9 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
-        $user->destroy($id);
+        $user->delete();
 
         Alert::toast('Xóa người dùng thành công!', 'success', 'top-rigth');
         return redirect()->route('users.index');

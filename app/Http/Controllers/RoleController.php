@@ -54,7 +54,7 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Role $role)
     {
         //
     }
@@ -62,19 +62,18 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        $role = Role::findOrFail($id);
         return view('role.edit', ['role' => $role]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
         $rules = [
-            'name' => 'required|unique:roles,name,'.$id,
+            'name' => 'required|unique:roles,name,'.$role->id,
         ];
 
         $messages = [
@@ -84,7 +83,6 @@ class RoleController extends Controller
 
         $request->validate($rules, $messages);
 
-        $role = Role::findOrFail($id);
         $role->name = $request->name;
         $role->save();
 
@@ -95,15 +93,14 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        $role = Role::findOrFail($id);
         //Check if Role is used or not
         if ($role->users->count()) {
             Alert::toast('Vai trò đang được sử dụng. Không thể xóa!', 'error', 'top-rigth');
             return redirect()->route('roles.index');
         }
-        $role->destroy($id);
+        $role->delete();
 
         Alert::toast('Xóa vai trò thành công!', 'success', 'top-rigth');
         return redirect()->route('roles.index');
