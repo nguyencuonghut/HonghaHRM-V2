@@ -29,7 +29,7 @@ class RecruitmentRequestPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role->name != 'Admin';
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class RecruitmentRequestPolicy
      */
     public function update(User $user, RecruitmentRequest $recruitmentRequest): bool
     {
-        return $user->role->name != 'Admin';
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class RecruitmentRequestPolicy
      */
     public function delete(User $user, RecruitmentRequest $recruitmentRequest): bool
     {
-        return $user->role->name != 'Admin';
+        return true;
     }
 
     /**
