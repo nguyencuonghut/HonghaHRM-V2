@@ -33,11 +33,16 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('departments.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @can('create', App\Models\Department::class)
+                    <a href="{{ route('departments.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @endcan
 
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_departments">
-                  <i class="fas fa-file-excel"></i> Import
-                </button>
+                @can('import', App\Models\Department::class)
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_departments">
+                    <i class="fas fa-file-excel"></i> Import
+                    </button>
+                    <br>
+                @endcan
                 <table id="departments-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>

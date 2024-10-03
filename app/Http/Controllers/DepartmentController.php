@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Division;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -25,8 +26,13 @@ class DepartmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create()
     {
+        if (Auth::user()->cannot('create', Department::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('departments.index');
+        }
+
         return view('department.create');
     }
 
@@ -65,8 +71,13 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department): View
+    public function edit(Department $department)
     {
+        if (Auth::user()->cannot('update', $department)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('departments.index');
+        }
+
         return view('department.edit', ['department' => $department]);
     }
 
@@ -98,6 +109,11 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department): RedirectResponse
     {
+        if (Auth::user()->cannot('delete', $department)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('departments.index');
+        }
+
         //Check if Department is used or not
         $divisions = Division::where('department_id', $department->id)->get();
         if ($divisions->count()) {
