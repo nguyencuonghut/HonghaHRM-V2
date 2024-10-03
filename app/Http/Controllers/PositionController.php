@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Division;
 use App\Models\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,6 +27,11 @@ class PositionController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->cannot('create', Position::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('positions.index');
+        }
+
         $departments = Department::orderBy('id', 'desc')->get();
         $divisions = Division::orderBy('id', 'desc')->get();
         return view('position.create',
@@ -103,6 +109,11 @@ class PositionController extends Controller
      */
     public function edit(Position $position)
     {
+        if (Auth::user()->cannot('update', $position)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('positions.index');
+        }
+
         $departments = Department::orderBy('id', 'desc')->get();
         $divisions = Division::orderBy('id', 'desc')->get();
         return view('position.edit',
@@ -176,6 +187,11 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
+        if (Auth::user()->cannot('delete', $position)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('positions.index');
+        }
+
         //TODO: Check if Position is used or not
         $position->delete();
 
