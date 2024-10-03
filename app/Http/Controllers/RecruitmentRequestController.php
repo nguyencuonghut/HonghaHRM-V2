@@ -100,7 +100,13 @@ class RecruitmentRequestController extends Controller
      */
     public function show(RecruitmentRequest $recruitmentRequest)
     {
-        //
+        //TODO: Check authorization
+
+        $positions = Position::orderBy('name', 'asc')->get();
+        return view('recruitment_request.show',
+                    ['recruitment_request' => $recruitmentRequest,
+                     'positions' => $positions,
+                    ]);
     }
 
     /**
@@ -185,7 +191,7 @@ class RecruitmentRequestController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->editColumn('position', function ($data) {
-            return '<a href="'.route('positions.show', $data->id).'">'.$data->position->name.'</a>';
+            return '<a href="'.route('recruitment_requests.show', $data->id).'">'.$data->position->name.'</a>';
         })
         ->addColumn('quantity', function($row) {
             return $row->quantity;

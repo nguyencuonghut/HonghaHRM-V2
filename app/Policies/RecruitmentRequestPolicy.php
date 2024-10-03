@@ -63,4 +63,18 @@ class RecruitmentRequestPolicy
     {
         //
     }
+
+    public function review(User $user, RecruitmentRequest $recruitmentRequest): bool
+    {
+        return ('Mở' == $recruitmentRequest->status
+                || 'Đã kiểm tra' == $recruitmentRequest->status)
+                && 'Nhân sự' == $user->role->name;
+    }
+
+    public function approve(User $user, RecruitmentRequest $recruitmentRequest): bool
+    {
+        return ('Đã kiểm tra' == $recruitmentRequest->status
+                || 'Đã duyệt' == $recruitmentRequest->status)
+                && 'Ban lãnh đạo' == $user()->role->name;
+    }
 }
