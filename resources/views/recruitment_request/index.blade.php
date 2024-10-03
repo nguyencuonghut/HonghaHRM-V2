@@ -33,7 +33,9 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('recruitment_requests.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @can('create', App\Models\RecruitmentRequest::class)
+                    <a href="{{ route('recruitment_requests.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @endcan
                 <table id="recruitment-requests-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>

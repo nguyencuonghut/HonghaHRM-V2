@@ -28,6 +28,10 @@ class RecruitmentRequestController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->cannot('create', RecruitmentRequest::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('recruitment_requests.index');
+        }
         $positions = Position::orderBy('name', 'asc')->get();
 
         return view('recruitment_request.create', ['positions' => $positions]);
