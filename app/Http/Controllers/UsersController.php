@@ -6,6 +6,7 @@ use App\Imports\UserImport;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,6 +27,11 @@ class UsersController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->cannot('create', User::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('users.index');
+        }
+
         $roles = Role::orderBy('id', 'desc')->get();
         return view('user.create', ['roles' => $roles]);
     }
@@ -77,6 +83,11 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        if (Auth::user()->cannot('update', $user)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('users.index');
+        }
+
         $roles = Role::orderBy('id', 'desc')->get();
         return view('user.edit',
                     [
@@ -122,6 +133,11 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        if (Auth::user()->cannot('delete', $user)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('users.index');
+        }
+
         $user->delete();
 
         Alert::toast('Xóa người dùng thành công!', 'success', 'top-rigth');

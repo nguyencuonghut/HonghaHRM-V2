@@ -33,11 +33,15 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
-
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_users">
-                  <i class="fas fa-file-excel"></i> Import
-                </button>
+                @can('create', App\Models\User::class)
+                    <a href="{{ route('users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @endcan
+                @can('import', App\Models\Role::class)
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_users">
+                    <i class="fas fa-file-excel"></i> Import
+                    </button>
+                    <br>
+                @endcan
                 <table id="users-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
