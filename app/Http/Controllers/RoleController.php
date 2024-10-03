@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\RoleImport;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
@@ -24,6 +25,10 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->cannot('create', Role::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('roles.index');
+        }
         return view('role.create');
     }
 
@@ -64,6 +69,11 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        if (Auth::user()->cannot('update', $role)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('roles.index');
+        }
+
         return view('role.edit', ['role' => $role]);
     }
 
@@ -95,6 +105,11 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        if (Auth::user()->cannot('delete', $role)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('roles.index');
+        }
+
         //Check if Role is used or not
         if ($role->users->count()) {
             Alert::toast('Vai trò đang được sử dụng. Không thể xóa!', 'error', 'top-rigth');
