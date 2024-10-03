@@ -8,6 +8,7 @@ use App\Models\Division;
 use App\Models\Position;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -26,8 +27,13 @@ class DivisionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create()
     {
+        if (Auth::user()->cannot('create', Division::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('divisions.index');
+        }
+
         $departments = Department::orderBy('id', 'desc')->get();
         return view('division.create', ['departments' => $departments]);
     }
@@ -70,8 +76,13 @@ class DivisionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Division $division): View
+    public function edit(Division $division)
     {
+        if (Auth::user()->cannot('update', $division)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('divisions.index');
+        }
+
         $departments = Department::orderBy('id', 'desc')->get();
         return view('division.edit',
                     [
@@ -111,6 +122,11 @@ class DivisionController extends Controller
      */
     public function destroy(Division $division): RedirectResponse
     {
+        if (Auth::user()->cannot('delete', $division)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('divisions.index');
+        }
+
         //Check if Division is used or not
         $positions = Position::where('division_id', $division->id)->get();
         if ($positions->count()) {

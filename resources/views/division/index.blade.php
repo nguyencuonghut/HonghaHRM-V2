@@ -33,11 +33,15 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('divisions.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @can('create', App\Models\Division::class)
+                    <a href="{{ route('divisions.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @endcan
 
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_divisions">
-                  <i class="fas fa-file-excel"></i> Import
-                </button>
+                @can('import', App\Models\Division::class)
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_divisions">
+                    <i class="fas fa-file-excel"></i> Import
+                    </button>
+                @endcan
                 <table id="divisions-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
