@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Imports\UserImport;
+use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserDepartment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -32,8 +34,13 @@ class UsersController extends Controller
             return redirect()->route('users.index');
         }
 
-        $roles = Role::orderBy('id', 'desc')->get();
-        return view('user.create', ['roles' => $roles]);
+        $roles = Role::orderBy('name', 'asc')->get();
+        $departments = Department::orderBy('id', 'desc')->get();
+        return view('user.create',
+                    [
+                        'roles' => $roles,
+                        'departments' => $departments,
+                    ]);
     }
 
     /**
@@ -45,6 +52,7 @@ class UsersController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users',
             'role_id' => 'required',
+            'department_id' => 'required',
         ];
 
         $messages = [
@@ -52,6 +60,7 @@ class UsersController extends Controller
             'email.required' => 'Bạn phải nhập email.',
             'email.unique' => 'Email đã tồn tại.',
             'role_id.required' => 'Bạn phải chọn vai trò.',
+            'department_id.required' => 'Bạn phải chọn phòng ban.',
         ];
 
         $request->validate($rules, $messages);
@@ -65,6 +74,10 @@ class UsersController extends Controller
         $user->role_id = $request->role_id;
         $user->status = 'Mở';
         $user->save();
+
+        //Create admin_department pivot item
+        $user->departments()->attach($request->department_id);
+
 
         Alert::toast('Thêm người dùng thành công!', 'success', 'top-right');
         return redirect()->route('users.index');
@@ -89,10 +102,15 @@ class UsersController extends Controller
         }
 
         $roles = Role::orderBy('id', 'desc')->get();
+        $departments = Department::orderBy('id', 'desc')->get();
+        $selected_departments = UserDepartment::where('user_id', $user->id)->pluck('department_id')->toArray();
+
         return view('user.edit',
                     [
                         'user' => $user,
                         'roles' => $roles,
+                        'departments' => $departments,
+                        'selected_departments' => $selected_departments,
                     ]);
     }
 
@@ -106,6 +124,7 @@ class UsersController extends Controller
             'email' => 'required|unique:users,email,'.$user->id,
             'role_id' => 'required',
             'status' => 'required',
+            'department_id' => 'required',
         ];
 
         $messages = [
@@ -114,6 +133,7 @@ class UsersController extends Controller
             'email.unique' => 'Email bị trùng',
             'role_id.required' => 'Bạn phải chọn vai trò.',
             'status.required' => 'Bạn phải chọn trạng thái.',
+            'department_id.required' => 'Bạn phải chọn phòng/ban.',
         ];
 
         $request->validate($rules, $messages);
@@ -123,6 +143,12 @@ class UsersController extends Controller
         $user->role_id = $request->role_id;
         $user->status = $request->status;
         $user->save();
+
+        // Delete all old pivot items
+        $user->departments()->detach();
+
+        //Create admin_department pivot item
+        $user->departments()->attach($request->department_id);
 
         Alert::toast('Sửa người dùng thành công!', 'success', 'top-right');
         return redirect()->route('users.index');
@@ -146,7 +172,7 @@ class UsersController extends Controller
 
     public function anyData()
     {
-        $data = User::with('role')->orderBy('id', 'desc');
+        $data = User::with(['role', 'departments'])->orderBy('id', 'desc');
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('name', function($row) {
@@ -157,6 +183,13 @@ class UsersController extends Controller
             })
             ->addColumn('role', function($row) {
                 return $row->role->name;
+            })
+            ->editColumn('departments', function ($row) {
+                $departments = '';
+                foreach ($row->departments as $department) {
+                    $departments .= $department->name . '<br>';
+                }
+                return $departments;
             })
             ->addColumn('status', function($row) {
                 if ('Mở' == $row->status) {
@@ -173,7 +206,7 @@ class UsersController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'status'])
+            ->rawColumns(['actions', 'departments', 'status'])
             ->make(true);
     }
 

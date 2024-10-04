@@ -49,6 +49,7 @@
                     <th>Họ tên</th>
                     <th>Email</th>
                     <th>Vai trò</th>
+                    <th>Phòng ban</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
@@ -120,14 +121,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
 
             },
@@ -135,28 +136,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             }
         ],
@@ -167,6 +168,7 @@
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
             {data: 'role', name: 'role'},
+            {data: 'departments', name: 'departments'},
             {data: 'status', name: 'status'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]

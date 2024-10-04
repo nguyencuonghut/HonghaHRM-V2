@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 class User extends Authenticatable
 {
@@ -50,5 +52,10 @@ class User extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->BelongsTo(Role::class);
+    }
+
+    public function departments(): BelongsToMany
+    {
+        return $this->belongsToMany(Department::class, 'user_departments');
     }
 }

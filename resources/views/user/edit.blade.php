@@ -15,7 +15,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Tất cả người dùng</a></li>
             <li class="breadcrumb-item active">Sửa</li>
           </ol>
         </div><!-- /.col -->
@@ -79,6 +79,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="control-group">
+                                    <label class="required-field" class="control-label">Phòng ban</label>
+                                    <div class="controls">
+                                        <select name="department_id[]" id="department_id[]" data-placeholder="Chọn phòng/ban" multiple="multiple" class="form-control select2" style="width: 100%;">
+                                            <option value="-- Chọn --" disabled="disabled">-- Chọn --</option>
+                                            @foreach ($departments as $department)
+                                            <option value="{{$department->id}}" @if(in_array($department->id, $selected_departments)) selected="selected" @endif>{{$department->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <br>
                         <div class="control-group">
                             <div class="controls">
