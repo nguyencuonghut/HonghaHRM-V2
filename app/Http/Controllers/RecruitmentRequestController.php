@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Position;
 use App\Models\RecruitmentRequest;
 use App\Models\User;
+use App\Models\UserDepartment;
 use App\Notifications\RecruitmentRequestCreated;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -191,6 +192,23 @@ class RecruitmentRequestController extends Controller
     public function anyData()
     {
         $data = RecruitmentRequest::with(['position', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
+
+        if ('Admin' == Auth::user()->role->name
+        || 'Ban lãnh đạo' == Auth::user()->role->name
+        || 'Nhân sự' == Auth::user()->role->name) {
+        $data = RecruitmentRequest::with(['position', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
+
+    } else {
+        // Only fetch the RecruitmentRequest according to User's department
+        $department_ids = [];
+        $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+        $positions_ids = [];
+        $positions_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+        $data = RecruitmentRequest::with(['position', 'creator', 'reviewer', 'approver'])
+                                            ->whereIn('position_id', $positions_ids)
+                                            ->orderBy('id', 'desc')
+                                            ->get();
+    }
 
         return DataTables::of($data)
         ->addIndexColumn()
