@@ -185,11 +185,17 @@ class UsersController extends Controller
                 return $row->role->name;
             })
             ->editColumn('departments', function ($row) {
-                $departments = '';
-                foreach ($row->departments as $department) {
-                    $departments .= $department->name . '<br>';
+                $i = 0;
+                $length = count($row->departments);
+                $departments_list = '';
+                foreach ($row->departments as $item) {
+                    if(++$i === $length) {
+                        $departments_list =  $departments_list . $item->name;
+                    } else {
+                        $departments_list = $departments_list . $item->name . ', ';
+                    }
                 }
-                return $departments;
+                return $departments_list;
             })
             ->addColumn('status', function($row) {
                 if ('Mở' == $row->status) {
