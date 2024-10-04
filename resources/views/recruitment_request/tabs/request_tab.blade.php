@@ -150,7 +150,7 @@
 </div>
 
 <!-- Modals for review-->
-<form class="form-horizontal" method="post" action="#" name="make_review" id="make_review" novalidate="novalidate">
+<form class="form-horizontal" method="post" action="{{route('recruitment_requests.review', $recruitment_request->id)}}" name="make_review" id="make_review" novalidate="novalidate">
     {{ csrf_field() }}
     <div class="modal fade" id="create_review">
         <div class="modal-dialog modal-lg">
@@ -178,7 +178,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="control-group">
-                                <label class="control-label">Giải thích</label>
+                                <label class="control-label">Ý kiến</label>
                                 <div class="controls">
                                     <input type="text" class="form-control" name="reviewer_comment" id="reviewer_comment" required="">
                                 </div>
@@ -225,7 +225,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="control-group">
-                                <label class="control-label">Giải thích</label>
+                                <label class="control-label">Ý kiến</label>
                                 <div class="controls">
                                     <input type="text" class="form-control" name="approver_comment" id="approver_comment" required="">
                                 </div>

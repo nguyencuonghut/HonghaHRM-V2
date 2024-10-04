@@ -85,6 +85,6 @@ class RecruitmentRequestPolicy
     {
         return ('Đã kiểm tra' == $recruitmentRequest->status
                 || 'Đã duyệt' == $recruitmentRequest->status)
-                && 'Ban lãnh đạo' == $user()->role->name;
+                && 'Ban lãnh đạo' == $user->role->name;
     }
 }

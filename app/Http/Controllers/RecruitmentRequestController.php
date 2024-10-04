@@ -7,6 +7,8 @@ use App\Models\RecruitmentRequest;
 use App\Models\User;
 use App\Models\UserDepartment;
 use App\Notifications\RecruitmentRequestCreated;
+use App\Notifications\RecruitmentRequestReviewerRejected;
+use App\Notifications\RecruitmentRequestToApprover;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -256,5 +258,38 @@ class RecruitmentRequestController extends Controller
         })
         ->rawColumns(['actions', 'position', 'status'])
         ->make(true);
+    }
+
+    public function review(Request $request, $id)
+    {
+        $rules = [
+            'reviewer_result' => 'required',
+        ];
+        $messages = [
+            'reviewer_result.required' => 'Bạn phải chọn kết quả.',
+        ];
+        $request->validate($rules,$messages);
+
+        $recruitment_request = RecruitmentRequest::findOrFail($id);
+        $recruitment_request->reviewer_result = $request->reviewer_result;
+        $recruitment_request->reviewer_comment = $request->reviewer_comment;
+        $recruitment_request->reviewer_id = Auth::user()->id;
+        $recruitment_request->status = 'Đã kiểm tra';
+        $recruitment_request->save();
+
+        //Send notification
+        if ('Đồng ý' == $recruitment_request->reviewer_result) {
+            // Send notification to request approve
+            $leaders = User::where('role_id', 2)->get(); //2: Ban lãnh đạo
+            foreach ($leaders as $leader) {
+                Notification::route('mail' , $leader->email)->notify(new RecruitmentRequestToApprover($recruitment_request->id));
+            }
+        } else {
+            // Send notification for reject status to the creator
+            Notification::route('mail' , $recruitment_request->creator->email)->notify(new RecruitmentRequestReviewerRejected($recruitment_request->id));
+        }
+
+        Alert::toast('Kiểm tra thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 }
