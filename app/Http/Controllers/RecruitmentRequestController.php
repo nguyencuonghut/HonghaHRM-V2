@@ -6,6 +6,7 @@ use App\Models\Position;
 use App\Models\RecruitmentRequest;
 use App\Models\User;
 use App\Models\UserDepartment;
+use App\Notifications\RecruitmentRequestApproved;
 use App\Notifications\RecruitmentRequestCreated;
 use App\Notifications\RecruitmentRequestReviewerRejected;
 use App\Notifications\RecruitmentRequestToApprover;
@@ -290,6 +291,31 @@ class RecruitmentRequestController extends Controller
         }
 
         Alert::toast('Kiểm tra thành công!', 'success', 'top-right');
+        return redirect()->back();
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $rules = [
+            'approver_result' => 'required',
+        ];
+        $messages = [
+            'approver_result.required' => 'Bạn phải chọn kết quả.',
+        ];
+        $request->validate($rules,$messages);
+
+        $recruitment_request = RecruitmentRequest::findOrFail($id);
+        $recruitment_request->approver_result = $request->approver_result;
+        $recruitment_request->approver_comment = $request->approver_comment;
+        $recruitment_request->approver_id = Auth::user()->id;
+        $recruitment_request->status = 'Đã duyệt';
+        $recruitment_request->save();
+
+        //Send notification to creator and reviewer
+        Notification::route('mail' , $recruitment_request->creator->email)->notify(new RecruitmentRequestApproved($recruitment_request->id));
+        Notification::route('mail' , $recruitment_request->reviewer->email)->notify(new RecruitmentRequestApproved($recruitment_request->id));
+
+        Alert::toast('Phê duyệt thành công!', 'success', 'top-right');
         return redirect()->back();
     }
 }

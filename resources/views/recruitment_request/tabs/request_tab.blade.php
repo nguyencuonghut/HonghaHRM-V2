@@ -197,7 +197,7 @@
 </form>
 
 <!-- Modals for proposal approve -->
-<form class="form-horizontal" method="post" action="#" name="make_approve" id="make_approve" novalidate="novalidate">
+<form class="form-horizontal" method="post" action="{{route('recruitment_requests.approve', $recruitment_request->id)}}" name="make_approve" id="make_approve" novalidate="novalidate">
     {{ csrf_field() }}
     <div class="modal fade" id="create_approve">
         <div class="modal-dialog modal-lg">
