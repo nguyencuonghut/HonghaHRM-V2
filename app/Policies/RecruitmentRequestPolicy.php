@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\RecruitmentRequest;
 use App\Models\User;
+use App\Models\UserDepartment;
 use Illuminate\Auth\Access\Response;
 
 class RecruitmentRequestPolicy
@@ -21,7 +22,16 @@ class RecruitmentRequestPolicy
      */
     public function view(User $user, RecruitmentRequest $recruitmentRequest): bool
     {
-        //
+        // Check authorization
+        $dept_position_id = $recruitmentRequest->position->department_id;
+        $user_department_ids = [];
+        $user_department_ids = UserDepartment::where('user_id', $user->id)->pluck('department_id')->toArray();
+        if ('Trưởng đơn vị' == $user->role->name
+            && !in_array($dept_position_id, $user_department_ids)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**

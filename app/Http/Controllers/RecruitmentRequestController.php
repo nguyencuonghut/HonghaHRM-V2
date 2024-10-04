@@ -100,7 +100,11 @@ class RecruitmentRequestController extends Controller
      */
     public function show(RecruitmentRequest $recruitmentRequest)
     {
-        //TODO: Check authorization
+        //Check authorization
+        if (Auth::user()->cannot('view', $recruitmentRequest)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('recruitment_requests.index');
+        }
 
         $positions = Position::orderBy('name', 'asc')->get();
         return view('recruitment_request.show',
