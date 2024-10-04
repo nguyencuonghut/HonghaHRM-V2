@@ -75,7 +75,7 @@ class UsersController extends Controller
         $user->status = 'Mở';
         $user->save();
 
-        //Create admin_department pivot item
+        //Create user_department pivot item
         $user->departments()->attach($request->department_id);
 
 
@@ -147,7 +147,7 @@ class UsersController extends Controller
         // Delete all old pivot items
         $user->departments()->detach();
 
-        //Create admin_department pivot item
+        //Create user_department pivot item
         $user->departments()->attach($request->department_id);
 
         Alert::toast('Sửa người dùng thành công!', 'success', 'top-right');

@@ -2,6 +2,8 @@
 
 namespace App\Imports;
 
+use App\Models\Department;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -28,8 +30,26 @@ class UserImport implements ToCollection
                     $user = new User();
                     $user->name = $row[1];
                     $user->email = $row[2];
+                    //Find Role
+                    $role = Role::where('name', $row[3])->first();
+                    if (null != $role) {
+                        $user->role_id = $role->id;
+                    }
                     $user->password = bcrypt(Str::random(8));
+                    $user->status = $row[5];
                     $user->save();
+
+                    //Create array of department_id
+                    $department_names_str = explode(", ", $row[4]);
+                    $deparment_ids_arr = [];
+                    foreach ($department_names_str as $dept_name_str) {
+                        $dept = Department::where('name', $dept_name_str)->first();
+                        if (null != $dept) {
+                            array_push($deparment_ids_arr, $dept->id);
+                        }
+                    }
+                    //Create user_department pivot item
+                    $user->departments()->attach($deparment_ids_arr);
 
                     ++$this->rows;
                 } else {
