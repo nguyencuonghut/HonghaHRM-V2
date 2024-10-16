@@ -65,21 +65,12 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <address>
-                    <strong>Thời gian tạo</strong><br>
-                    {{date('d/m/Y H:i', strtotime($recruitment->created_at))}}<br>
+                    <strong>Thời gian kết thúc</strong><br>
+                    @if($recruitment->completed_time)
+                        {{date('d/m/Y H:i', strtotime($recruitment->created_at))}}<br>
+                    @endif
                   </address>
                 </div>
-                <!-- /.col -->
-                <div class="col-sm-4 invoice-col">
-                  <address>
-                    <strong>Người tạo</strong><br>
-                    {{$recruitment->creator->name}}<br>
-                  </address>
-                </div>
-            </div>
-
-            <hr>
-            <div class="row invoice-info">
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <address>
@@ -93,6 +84,18 @@
                     @endif
                   </address>
                 </div>
+            </div>
+
+            <hr>
+            <div class="row invoice-info">
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  <address>
+                    <strong>Người tạo</strong><br>
+                    {{$recruitment->creator->name}}<br>
+                    <small>({{date('d/m/Y H:i', strtotime($recruitment->created_at))}})</small><br>
+                  </address>
+                </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <address>
@@ -102,13 +105,14 @@
                     @endif
                     @if ($recruitment->reviewer_result)
                         @if($recruitment->reviewer_result == 'Đồng ý')
-                            <span class="badge badge-success">Đồng ý</span>
+                            <span class="badge badge-success">Đồng ý</span> <br>
                         @else
                             <span class="badge badge-danger">Từ chối</span> <br>
                             @if ($recruitment->reviewer_comment)
                                 (<small>{{$recruitment->reviewer_comment}}</small>)
                             @endif
                         @endif
+                        <small>({{date('d/m/Y H:i', strtotime($recruitment->reviewed_time))}})</small><br>
                     @endif
                   </address>
                 </div>
@@ -121,13 +125,14 @@
                     @endif
                     @if ($recruitment->approver_result)
                         @if($recruitment->approver_result == 'Đồng ý')
-                            <span class="badge badge-success">Đồng ý</span>
+                            <span class="badge badge-success">Đồng ý</span> <br>
                         @else
                             <span class="badge badge-danger">Từ chối</span> <br>
                             @if ($recruitment->approver_comment)
                                 (<small>{{$recruitment->approver_comment}}</small>)
                             @endif
                         @endif
+                        <small>({{date('d/m/Y H:i', strtotime($recruitment->approved_time))}})</small><br>
                     @endif
                   </address>
                 </div>

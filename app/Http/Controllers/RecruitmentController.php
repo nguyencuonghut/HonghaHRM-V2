@@ -236,9 +236,10 @@ class RecruitmentController extends Controller
     public function review(ReviewRecruitmentRequest $request, Recruitment $recruitment)
     {
         $recruitment->update([
-            '$reviewer_result' => $request->reviewer_result,
+            'reviewer_result' => $request->reviewer_result,
             'reviewer_comment' => $request->reviewer_comment,
             'reviewer_id' => Auth::user()->id,
+            'reviewed_time' => Carbon::now(),
             'status' => 'Đã kiểm tra',
         ]);
 
@@ -263,6 +264,7 @@ class RecruitmentController extends Controller
         $recruitment->approver_result = $request->approver_result;
         $recruitment->approver_comment = $request->approver_comment;
         $recruitment->approver_id = Auth::user()->id;
+        $recruitment->approved_time = Carbon::now();
         $recruitment->status = 'Đã duyệt';
         $recruitment->save();
 
