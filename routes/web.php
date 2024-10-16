@@ -53,7 +53,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('/positions', PositionController::class);
 
     //Recruitment
-    Route::post('/recruitments/approve/{id}', [RecruitmentController::class, 'approve'])->name('recruitments.approve');
+    Route::post('/recruitments/approve/{recruitment}', [RecruitmentController::class, 'approve'])->name('recruitments.approve');
     Route::post('/recruitments/review/{recruitment}', [RecruitmentController::class, 'review'])->name('recruitments.review');
     Route::get('/recruitments/data', [RecruitmentController::class, 'anyData'])->name('recruitments.data');
     Route::resource('/recruitments', RecruitmentController::class);

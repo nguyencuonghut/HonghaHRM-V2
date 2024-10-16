@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApproveRecruitmentRequest;
 use App\Http\Requests\ReviewRecruitmentRequest;
 use App\Http\Requests\StoreRecruitmentRequest;
 use App\Http\Requests\UpdateRecruitmentRequest;
@@ -257,17 +258,8 @@ class RecruitmentController extends Controller
         return redirect()->back();
     }
 
-    public function approve(Request $request, $id)
+    public function approve(ApproveRecruitmentRequest $request, Recruitment $recruitment)
     {
-        $rules = [
-            'approver_result' => 'required',
-        ];
-        $messages = [
-            'approver_result.required' => 'Bạn phải chọn kết quả.',
-        ];
-        $request->validate($rules,$messages);
-
-        $recruitment = Recruitment::findOrFail($id);
         $recruitment->approver_result = $request->approver_result;
         $recruitment->approver_comment = $request->approver_comment;
         $recruitment->approver_id = Auth::user()->id;
