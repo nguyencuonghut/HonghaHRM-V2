@@ -36,7 +36,7 @@
                 @can('create', App\Models\User::class)
                     <a href="{{ route('users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
-                @can('import', App\Models\Role::class)
+                @can('import', App\Models\User::class)
                     <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_users">
                     <i class="fas fa-file-excel"></i> Import
                     </button>

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportUserRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Imports\UserImport;
 use App\Models\Department;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserDepartment;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -46,25 +48,8 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $rules = [
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'role_id' => 'required',
-            'department_id' => 'required',
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'email.required' => 'Bạn phải nhập email.',
-            'email.unique' => 'Email đã tồn tại.',
-            'role_id.required' => 'Bạn phải chọn vai trò.',
-            'department_id.required' => 'Bạn phải chọn phòng ban.',
-        ];
-
-        $request->validate($rules, $messages);
-
         $password = Str::random(8);
 
         $user = new User();
@@ -117,32 +102,14 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $rules = [
-            'name' => 'required',
-            'email' => 'required|unique:users,email,'.$user->id,
-            'role_id' => 'required',
-            'status' => 'required',
-            'department_id' => 'required',
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'email.required' => 'Bạn phải nhập email.',
-            'email.unique' => 'Email bị trùng',
-            'role_id.required' => 'Bạn phải chọn vai trò.',
-            'status.required' => 'Bạn phải chọn trạng thái.',
-            'department_id.required' => 'Bạn phải chọn phòng/ban.',
-        ];
-
-        $request->validate($rules, $messages);
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role_id = $request->role_id;
-        $user->status = $request->status;
-        $user->save();
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role_id' => $request->role_id,
+            'status' => $request->status,
+        ]);
 
         // Delete all old pivot items
         $user->departments()->detach();
@@ -216,19 +183,8 @@ class UsersController extends Controller
             ->make(true);
     }
 
-    public function import(Request $request)
+    public function import(ImportUserRequest $request)
     {
-        $rules = [
-            'file' => 'required|mimes:xlsx,xls|max:5000',
-        ];
-        $messages = [
-            'file.required' => 'Bạn phải chọn file import.',
-            'file.mimes' => 'Bạn phải chọn định dạng file .xlsx, .xls.',
-            'file.max' => 'File vượt quá 5MB.',
-        ];
-
-        $request->validate($rules, $messages);
-
         try {
             $import = new UserImport;
             Excel::import($import, $request->file('file')->store('files'));
