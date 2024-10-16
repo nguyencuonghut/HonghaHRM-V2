@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportDivisionRequest;
+use App\Http\Requests\StoreDivisionRequest;
+use App\Http\Requests\UpdateDivisionRequest;
 use App\Imports\DivisionImport;
 use App\Models\Department;
 use App\Models\Division;
@@ -41,21 +44,8 @@ class DivisionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreDivisionRequest $request): RedirectResponse
     {
-        $rules = [
-            'name' => 'required|unique:divisions',
-            'department_id' => 'required',
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Phòng/ban đã tồn tại.',
-            'department_id.required' => 'Bạn phải chọn phòng/ban.',
-        ];
-
-        $request->validate($rules, $messages);
-
         $division = new Division();
         $division->name = $request->name;
         $division->department_id = $request->department_id;
@@ -94,24 +84,12 @@ class DivisionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Division $division): RedirectResponse
+    public function update(UpdateDivisionRequest $request, Division $division): RedirectResponse
     {
-        $rules = [
-            'name' => 'required|unique:divisions,name,'.$division->id,
-            'department_id' => 'required',
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Tên bị trùng',
-            'department_id.required' => 'Bạn phải chọn phòng/ban.',
-        ];
-
-        $request->validate($rules, $messages);
-
-        $division->name = $request->name;
-        $division->department_id = $request->department_id;
-        $division->save();
+        $division->update([
+            'name' => $request->name,
+            'department_id' => $request->department_id,
+        ]);
 
         Alert::toast('Sửa bộ phận thành công!', 'success', 'top-right');
         return redirect()->route('divisions.index');
@@ -163,19 +141,8 @@ class DivisionController extends Controller
             ->make(true);
     }
 
-    public function import(Request $request)
+    public function import(ImportDivisionRequest $request)
     {
-        $rules = [
-            'file' => 'required|mimes:xlsx,xls|max:5000',
-        ];
-        $messages = [
-            'file.required' => 'Bạn phải chọn file import.',
-            'file.mimes' => 'Bạn phải chọn định dạng file .xlsx, .xls.',
-            'file.max' => 'File vượt quá 5MB.',
-        ];
-
-        $request->validate($rules, $messages);
-
         try {
             $import = new DivisionImport;
             Excel::import($import, $request->file('file')->store('files'));
