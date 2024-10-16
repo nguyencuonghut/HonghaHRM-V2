@@ -41,7 +41,7 @@
                   <tr>
                     <th>STT</th>
                     <th>Vị trí</th>
-                    <th>Số lương</th>
+                    <th>Số lượng</th>
                     <th>Lý do</th>
                     <th>Thời gian cần</th>
                     <th>Người tạo</th>
