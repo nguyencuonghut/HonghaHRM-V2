@@ -63,15 +63,21 @@
                                     <label class="control-label">Bộ phận</label>
                                     <div class="controls">
                                         <select name="division_id" id="division_id" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
-                                            <option value='0' disabled="disabled">-- Chọn --</option>
-                                            @foreach($divisions as $division)
-                                                <option value="{{$division->id}}"
-                                                    @if($division->id == $position->division_id)
-                                                        selected="selected"
-                                                    @endif>
-                                                    {{$division->name}}
-                                                </option>
-                                            @endforeach
+                                            @if($position->division_id)
+                                                <option value='0' disabled="disabled">-- Chọn --</option>
+                                                @foreach($divisions as $division)
+                                                    <option @if($position->division_id == $division->id) selected="selected" @endif value="{{$division->id}}">
+                                                        {{$division->name}}
+                                                    </option>
+                                                @endforeach
+                                            @else
+                                                <option value='0' selected="selected" disabled="disabled">-- Chọn --</option>
+                                                @foreach($divisions as $division)
+                                                    <option value="{{$division->id}}">
+                                                        {{$division->name}}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
