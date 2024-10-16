@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReviewRecruitmentRequest;
 use App\Http\Requests\StoreRecruitmentRequest;
 use App\Http\Requests\UpdateRecruitmentRequest;
 use App\Models\Position;
@@ -231,22 +232,14 @@ class RecruitmentController extends Controller
         ->make(true);
     }
 
-    public function review(Request $request, $id)
+    public function review(ReviewRecruitmentRequest $request, Recruitment $recruitment)
     {
-        $rules = [
-            'reviewer_result' => 'required',
-        ];
-        $messages = [
-            'reviewer_result.required' => 'Bạn phải chọn kết quả.',
-        ];
-        $request->validate($rules,$messages);
-
-        $recruitment = Recruitment::findOrFail($id);
-        $recruitment->reviewer_result = $request->reviewer_result;
-        $recruitment->reviewer_comment = $request->reviewer_comment;
-        $recruitment->reviewer_id = Auth::user()->id;
-        $recruitment->status = 'Đã kiểm tra';
-        $recruitment->save();
+        $recruitment->update([
+            '$reviewer_result' => $request->reviewer_result,
+            'reviewer_comment' => $request->reviewer_comment,
+            'reviewer_id' => Auth::user()->id,
+            'status' => 'Đã kiểm tra',
+        ]);
 
         //Send notification
         if ('Đồng ý' == $recruitment->reviewer_result) {
