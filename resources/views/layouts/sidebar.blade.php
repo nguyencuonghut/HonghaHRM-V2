@@ -100,6 +100,16 @@
               </p>
             </a>
           </li>
+
+          <!-- Cách thức -->
+          <li class="nav-item">
+            <a href="{{route('methods.index')}}" class="nav-link {{ Request::is('methods*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Cách thức
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

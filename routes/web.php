@@ -4,6 +4,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MethodController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoleController;
@@ -57,4 +58,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('/recruitments/review/{recruitment}', [RecruitmentController::class, 'review'])->name('recruitments.review');
     Route::get('/recruitments/data', [RecruitmentController::class, 'anyData'])->name('recruitments.data');
     Route::resource('/recruitments', RecruitmentController::class);
+
+    //Methods
+    Route::get('/methods/data', [MethodController::class, 'anyData'])->name('methods.data');
+    Route::resource('/methods', MethodController::class);
 });
