@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRecruitmentRequest;
+use App\Http\Requests\UpdateRecruitmentRequest;
 use App\Models\Position;
 use App\Models\RecruitmentRequest;
 use App\Models\User;
@@ -44,24 +46,8 @@ class RecruitmentRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRecruitmentRequest $request)
     {
-        $rules = [
-            'position_id' => 'required',
-            'quantity' => 'required',
-            'reason' => 'required',
-            'requirement' => 'required',
-            'work_time' => 'required',
-        ];
-        $messages = [
-            'position_id.required' => 'Bạn phải chọn vị trí.',
-            'quantity.required' => 'Bạn phải nhập số lượng.',
-            'reason.required' => 'Bạn phải nhập lý do.',
-            'requirement.required' => 'Bạn phải nhập yêu cầu.',
-            'work_time.required' => 'Bạn phải nhập thời gian.',
-        ];
-        $request->validate($rules,$messages);
-
         //Create new RecruitmentRequest
         $recruitment_request = new RecruitmentRequest();
         $recruitment_request->position_id  = $request->position_id;
@@ -134,24 +120,8 @@ class RecruitmentRequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RecruitmentRequest $recruitmentRequest)
+    public function update(UpdateRecruitmentRequest $request, RecruitmentRequest $recruitmentRequest)
     {
-        $rules = [
-            'position_id' => 'required',
-            'quantity' => 'required',
-            'reason' => 'required',
-            'requirement' => 'required',
-            'work_time' => 'required',
-        ];
-        $messages = [
-            'position_id.required' => 'Bạn phải chọn vị trí.',
-            'quantity.required' => 'Bạn phải nhập số lượng.',
-            'reason.required' => 'Bạn phải nhập lý do.',
-            'requirement.required' => 'Bạn phải nhập yêu cầu.',
-            'work_time.required' => 'Bạn phải nhập thời gian.',
-        ];
-        $request->validate($rules,$messages);
-
         //Create new RecruitmentRequest
         $recruitmentRequest->position_id  = $request->position_id;
         $recruitmentRequest->quantity     = $request->quantity;
