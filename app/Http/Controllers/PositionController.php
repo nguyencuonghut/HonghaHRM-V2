@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportPositionRequest;
+use App\Http\Requests\StorePositionRequest;
+use App\Http\Requests\UpdatePositionRequest;
 use App\Imports\PositionImport;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Position;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -44,27 +46,8 @@ class PositionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePositionRequest $request)
     {
-        $rules = [
-            'name' => 'required|unique:positions',
-            'department_id' => 'required',
-            'insurance_salary' => 'required',
-            'position_salary' => 'required',
-            'max_capacity_salary' => 'required',
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Phòng/ban đã tồn tại.',
-            'department_id.required' => 'Bạn phải chọn phòng/ban.',
-            'insurance_salary.required' => 'Bạn phải điền lương bảo hiểm.',
-            'position_salary.required' => 'Bạn phải điền lương vị trí.',
-            'max_capacity_salary.required' => 'Bạn phải điền lương năng lực max',
-        ];
-
-        $request->validate($rules, $messages);
-
         $position = new Position();
         $position->name = $request->name;
         $position->department_id = $request->department_id;
@@ -127,27 +110,8 @@ class PositionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Position $position)
+    public function update(UpdatePositionRequest $request, Position $position)
     {
-        $rules = [
-            'name' => 'required|unique:positions,name,'.$position->id,
-            'department_id' => 'required',
-            'insurance_salary' => 'required',
-            'position_salary' => 'required',
-            'max_capacity_salary' => 'required',
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Phòng/ban đã tồn tại.',
-            'department_id.required' => 'Bạn phải chọn phòng/ban.',
-            'insurance_salary.required' => 'Bạn phải điền lương bảo hiểm.',
-            'position_salary.required' => 'Bạn phải điền lương vị trí.',
-            'max_capacity_salary.required' => 'Bạn phải điền lương năng lực max',
-        ];
-
-        $request->validate($rules, $messages);
-
         $position->name = $request->name;
         $position->department_id = $request->department_id;
         if ($request->division_id) {
@@ -156,9 +120,7 @@ class PositionController extends Controller
         $position->insurance_salary = $request->insurance_salary;
         $position->position_salary = $request->position_salary;
         $position->max_capacity_salary = $request->max_capacity_salary;
-        if ($request->position_allowance) {
-            $position->position_allowance = $request->position_allowance;
-        }
+        $position->position_allowance = $request->position_allowance;
 
         //Store uploaded file
         if ($request->hasFile('recruitment_standard_file')) {
@@ -248,19 +210,8 @@ class PositionController extends Controller
             ->make(true);
     }
 
-    public function import(Request $request)
+    public function import(ImportPositionRequest $request)
     {
-        $rules = [
-            'file' => 'required|mimes:xlsx,xls|max:5000',
-        ];
-        $messages = [
-            'file.required' => 'Bạn phải chọn file import.',
-            'file.mimes' => 'Bạn phải chọn định dạng file .xlsx, .xls.',
-            'file.max' => 'File vượt quá 5MB.',
-        ];
-
-        $request->validate($rules, $messages);
-
         try {
             $import = new PositionImport;
             Excel::import($import, $request->file('file')->store('files'));
