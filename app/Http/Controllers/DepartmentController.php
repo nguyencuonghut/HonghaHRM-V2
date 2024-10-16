@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportDepartmentRequest;
+use App\Http\Requests\StoreDepartmentRequest;
+use App\Http\Requests\UpdateDepartmentRequest;
 use App\Imports\DepartmentImport;
 use App\Models\Department;
 use App\Models\Division;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
@@ -39,19 +41,8 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreDepartmentRequest $request): RedirectResponse
     {
-        $rules = [
-            'name' => 'required|unique:departments',
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Phòng/ban đã tồn tại.'
-        ];
-
-        $request->validate($rules, $messages);
-
         $department = new Department();
         $department->name = $request->name;
         $department->save();
@@ -84,21 +75,9 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department): RedirectResponse
+    public function update(UpdateDepartmentRequest $request, Department $department): RedirectResponse
     {
-        $rules = [
-            'name' => 'required|unique:departments,name,'.$department->id,
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Tên bị trùng',
-        ];
-
-        $request->validate($rules, $messages);
-
-        $department->name = $request->name;
-        $department->save();
+        $department->update(['name' => $request->name]);
 
         Alert::toast('Sửa phòng/ban thành công!', 'success', 'top-right');
         return redirect()->route('departments.index');
@@ -146,19 +125,8 @@ class DepartmentController extends Controller
             ->make(true);
     }
 
-    public function import(Request $request)
+    public function import(ImportDepartmentRequest $request)
     {
-        $rules = [
-            'file' => 'required|mimes:xlsx,xls|max:5000',
-        ];
-        $messages = [
-            'file.required' => 'Bạn phải chọn file import.',
-            'file.mimes' => 'Bạn phải chọn định dạng file .xlsx, .xls.',
-            'file.max' => 'File vượt quá 5MB.',
-        ];
-
-        $request->validate($rules, $messages);
-
         try {
             $import = new DepartmentImport;
             Excel::import($import, $request->file('file')->store('files'));
