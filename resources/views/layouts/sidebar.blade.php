@@ -31,8 +31,8 @@
             </a>
           </li>
 
-          <li class="nav-item {{ Request::is('recruitment_*') ? 'menu-open' : '' }}">
-            <a href="{{route('recruitment_requests.index')}}" class="nav-link {{ Request::is('recruitment_*') ? 'active' : '' }}">
+          <li class="nav-item {{ Request::is('recruitments*') ? 'menu-open' : '' }}">
+            <a href="{{route('recruitments.index')}}" class="nav-link {{ Request::is('recruitment*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-search-location"></i>
               <p>
                 Tuyển dụng
@@ -41,7 +41,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('recruitment_requests.index')}}" class="nav-link {{ Request::is('recruitment_requests*') ? 'active' : '' }}">
+                <a href="{{route('recruitments.index')}}" class="nav-link {{ Request::is('recruitments*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Yêu cầu</p>
                 </a>

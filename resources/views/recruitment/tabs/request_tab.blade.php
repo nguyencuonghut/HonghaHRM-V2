@@ -7,21 +7,21 @@
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Vị trí</strong><br>
-                    {{$recruitment_request->position->name}}
+                    {{$recruitment->position->name}}
                   </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Số lượng</strong><br>
-                    {{$recruitment_request->quantity}}<br>
+                    {{$recruitment->quantity}}<br>
                   </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Thời gian cần</strong><br>
-                    {{date('d/m/Y', strtotime($recruitment_request->work_time))}}<br>
+                    {{date('d/m/Y', strtotime($recruitment->work_time))}}<br>
                   </address>
                 </div>
             </div>
@@ -32,21 +32,21 @@
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Lý do</strong><br>
-                    {!! $recruitment_request->reason !!}<br>
+                    {!! $recruitment->reason !!}<br>
                   </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Yêu cầu</strong><br>
-                    {!! $recruitment_request->requirement !!}<br>
+                    {!! $recruitment->requirement !!}<br>
                   </address>
                 </div>
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Mức lương</strong><br>
-                    @if ($recruitment_request->salary)
-                        {{number_format($recruitment_request->salary, 0, '.', ',')}} <sup>đ</sup><br>
+                    @if ($recruitment->salary)
+                        {{number_format($recruitment->salary, 0, '.', ',')}} <sup>đ</sup><br>
                     @endif
                   </address>
                 </div>
@@ -59,21 +59,21 @@
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Ghi chú</strong><br>
-                    {!!$recruitment_request->note!!}<br>
+                    {!!$recruitment->note!!}<br>
                   </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Thời gian tạo</strong><br>
-                    {{date('d/m/Y H:i', strtotime($recruitment_request->created_at))}}<br>
+                    {{date('d/m/Y H:i', strtotime($recruitment->created_at))}}<br>
                   </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Người tạo</strong><br>
-                    {{$recruitment_request->creator->name}}<br>
+                    {{$recruitment->creator->name}}<br>
                   </address>
                 </div>
             </div>
@@ -84,9 +84,9 @@
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Trạng thái</strong><br>
-                    @if($recruitment_request->status == 'Mở')
+                    @if($recruitment->status == 'Mở')
                         <span class="badge badge-primary">Mở</span>
-                    @elseif($recruitment_request->status == 'Đã kiểm tra')
+                    @elseif($recruitment->status == 'Đã kiểm tra')
                         <span class="badge badge-warning">Đã kiểm tra</span>
                     @else
                         <span class="badge badge-success">Đã duyệt</span>
@@ -97,16 +97,16 @@
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Người kiểm tra</strong><br>
-                    @if ($recruitment_request->reviewer_id)
-                      {{$recruitment_request->reviewer->name}}
+                    @if ($recruitment->reviewer_id)
+                      {{$recruitment->reviewer->name}}
                     @endif
-                    @if ($recruitment_request->reviewer_result)
-                        @if($recruitment_request->reviewer_result == 'Đồng ý')
+                    @if ($recruitment->reviewer_result)
+                        @if($recruitment->reviewer_result == 'Đồng ý')
                             <span class="badge badge-success">Đồng ý</span>
                         @else
                             <span class="badge badge-danger">Từ chối</span> <br>
-                            @if ($recruitment_request->reviewer_comment)
-                                (<small>{{$recruitment_request->reviewer_comment}}</small>)
+                            @if ($recruitment->reviewer_comment)
+                                (<small>{{$recruitment->reviewer_comment}}</small>)
                             @endif
                         @endif
                     @endif
@@ -116,16 +116,16 @@
                 <div class="col-sm-4 invoice-col">
                   <address>
                     <strong>Người phê duyệt</strong><br>
-                    @if ($recruitment_request->approver_id)
-                      {{$recruitment_request->approver->name}}
+                    @if ($recruitment->approver_id)
+                      {{$recruitment->approver->name}}
                     @endif
-                    @if ($recruitment_request->approver_result)
-                        @if($recruitment_request->approver_result == 'Đồng ý')
+                    @if ($recruitment->approver_result)
+                        @if($recruitment->approver_result == 'Đồng ý')
                             <span class="badge badge-success">Đồng ý</span>
                         @else
                             <span class="badge badge-danger">Từ chối</span> <br>
-                            @if ($recruitment_request->approver_comment)
-                                (<small>{{$recruitment_request->approver_comment}}</small>)
+                            @if ($recruitment->approver_comment)
+                                (<small>{{$recruitment->approver_comment}}</small>)
                             @endif
                         @endif
                     @endif
@@ -135,12 +135,12 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer clearfix">
-            @can('review', $recruitment_request)
+            @can('review', $recruitment)
                 <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_review">
                     Kiểm tra
                 </button>
             @endcan
-            @can('approve', $recruitment_request)
+            @can('approve', $recruitment)
                 <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_approve">
                     Phê duyệt
                 </button>
@@ -150,7 +150,7 @@
 </div>
 
 <!-- Modals for review-->
-<form class="form-horizontal" method="post" action="{{route('recruitment_requests.review', $recruitment_request->id)}}" name="make_review" id="make_review" novalidate="novalidate">
+<form class="form-horizontal" method="post" action="{{route('recruitments.review', $recruitment->id)}}" name="make_review" id="make_review" novalidate="novalidate">
     {{ csrf_field() }}
     <div class="modal fade" id="create_review">
         <div class="modal-dialog modal-lg">
@@ -197,7 +197,7 @@
 </form>
 
 <!-- Modals for proposal approve -->
-<form class="form-horizontal" method="post" action="{{route('recruitment_requests.approve', $recruitment_request->id)}}" name="make_approve" id="make_approve" novalidate="novalidate">
+<form class="form-horizontal" method="post" action="{{route('recruitments.approve', $recruitment->id)}}" name="make_approve" id="make_approve" novalidate="novalidate">
     {{ csrf_field() }}
     <div class="modal fade" id="create_approve">
         <div class="modal-dialog modal-lg">

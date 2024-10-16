@@ -10,11 +10,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Tuyển dụng {{$recruitment_request->position->name}}</h1>
+            <h1 class="m-0">Tuyển dụng {{$recruitment->position->name}}</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('recruitment_requests.index') }}">Tất cả yêu cầu</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('recruitments.index') }}">Tất cả yêu cầu</a></li>
               <li class="breadcrumb-item active">Chi tiết</li>
             </ol>
           </div><!-- /.col -->
@@ -40,8 +40,8 @@
                       </div>
                       <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
-                            @include('recruitment_request.tabs.request_tab')
-                            @include('recruitment_request.tabs.plan_tab')
+                            @include('recruitment.tabs.request_tab')
+                            @include('recruitment.tabs.plan_tab')
                       </div>
                       <!-- /.card -->
                     </div>

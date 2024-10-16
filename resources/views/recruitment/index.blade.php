@@ -33,8 +33,8 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                @can('create', App\Models\RecruitmentRequest::class)
-                    <a href="{{ route('recruitment_requests.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @can('create', App\Models\Recruitment::class)
+                    <a href="{{ route('recruitments.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
                 <table id="recruitment-requests-table" class="table table-bordered table-striped">
                   <thead>
@@ -120,7 +120,7 @@
             }
         ],
         dom: 'Blfrtip',
-        ajax: ' {!! route('recruitment_requests.data') !!}',
+        ajax: ' {!! route('recruitments.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'position', name: 'position'},

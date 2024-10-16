@@ -15,7 +15,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('recruitment_requests.index') }}">Tất cả yêu cầu tuyển dụng</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('recruitments.index') }}">Tất cả yêu cầu tuyển dụng</a></li>
             <li class="breadcrumb-item active">Sửa</li>
           </ol>
         </div><!-- /.col -->
@@ -31,7 +31,7 @@
       <div class="row">
         <div class="col-12">
             <div class="card">
-                <form class="form-horizontal" method="post" action="{{ route('recruitment_requests.update', $recruitment_request->id) }}" name="edit_request" id="edit_request" novalidate="novalidate">{{ csrf_field() }}
+                <form class="form-horizontal" method="post" action="{{ route('recruitments.update', $recruitment->id) }}" name="edit_request" id="edit_request" novalidate="novalidate">{{ csrf_field() }}
                     @method('PATCH')
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -43,7 +43,7 @@
                                         <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
                                             <option value="-- Chọn --" disabled="disabled">-- Chọn --</option>
                                             @foreach ($positions as $position)
-                                                <option @if($position->id == $recruitment_request->position_id) selected="selected" @endif value="{{$position->id}}">{{$position->name}}</option>
+                                                <option @if($position->id == $recruitment->position_id) selected="selected" @endif value="{{$position->id}}">{{$position->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -53,7 +53,7 @@
                                 <div class="control-group">
                                     <label class="required-field" class="control-label">Số lượng</label>
                                     <div class="controls">
-                                        <input type="number" class="form-control" name="quantity" id="quantity" value="{{$recruitment_request->quantity}}" required="">
+                                        <input type="number" class="form-control" name="quantity" id="quantity" value="{{$recruitment->quantity}}" required="">
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                     <label class="required-field" class="control-label">Lý do</label>
                                     <div class="controls">
                                         <textarea id="reason" name="reason">
-                                            {{$recruitment_request->reason}}
+                                            {{$recruitment->reason}}
                                         </textarea>
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@
                                     <label class="required-field" class="control-label">Yêu cầu</label>
                                     <div class="controls">
                                         <textarea id="requirement" name="requirement">
-                                            {{$recruitment_request->requirement}}
+                                            {{$recruitment->requirement}}
                                         </textarea>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Mức lương (VNĐ)</label>
                                     <div class="controls">
-                                        <input type="number" class="form-control" name="salary" id="salary" value="{{$recruitment_request->salary}}" required="">
+                                        <input type="number" class="form-control" name="salary" id="salary" value="{{$recruitment->salary}}" required="">
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                             <div class="col-6">
                                 <label class="required-field">Thời gian cần</label>
                                 <div class="input-group date" id="work_time" data-target-input="nearest">
-                                    <input type="text" name="work_time" class="form-control datetimepicker-input" value="{{date('d/m/Y', strtotime($recruitment_request->work_time))}}" data-target="#work_time"/>
+                                    <input type="text" name="work_time" class="form-control datetimepicker-input" value="{{date('d/m/Y', strtotime($recruitment->work_time))}}" data-target="#work_time"/>
                                     <div class="input-group-append" data-target="#work_time" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
@@ -108,7 +108,7 @@
                                     <label class="control-label">Ghi chú</label>
                                     <div class="controls">
                                         <textarea id="note" name="note">
-                                            {{$recruitment_request->note}}
+                                            {{$recruitment->note}}
                                         </textarea>
                                     </div>
                                 </div>

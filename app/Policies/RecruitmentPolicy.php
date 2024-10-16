@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\RecruitmentRequest;
+use App\Models\Recruitment;
 use App\Models\User;
 use App\Models\UserDepartment;
 use Illuminate\Auth\Access\Response;
 
-class RecruitmentRequestPolicy
+class RecruitmentPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -20,10 +20,10 @@ class RecruitmentRequestPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, RecruitmentRequest $recruitmentRequest): bool
+    public function view(User $user, Recruitment $recruitment): bool
     {
         // Check authorization
-        $dept_position_id = $recruitmentRequest->position->department_id;
+        $dept_position_id = $recruitment->position->department_id;
         $user_department_ids = [];
         $user_department_ids = UserDepartment::where('user_id', $user->id)->pluck('department_id')->toArray();
         if ('Trưởng đơn vị' == $user->role->name
@@ -45,7 +45,7 @@ class RecruitmentRequestPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, RecruitmentRequest $recruitmentRequest): bool
+    public function update(User $user, Recruitment $recruitment): bool
     {
         return true;
     }
@@ -53,7 +53,7 @@ class RecruitmentRequestPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, RecruitmentRequest $recruitmentRequest): bool
+    public function delete(User $user, Recruitment $recruitment): bool
     {
         return true;
     }
@@ -61,7 +61,7 @@ class RecruitmentRequestPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, RecruitmentRequest $recruitmentRequest): bool
+    public function restore(User $user, Recruitment $recruitment): bool
     {
         //
     }
@@ -69,22 +69,22 @@ class RecruitmentRequestPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, RecruitmentRequest $recruitmentRequest): bool
+    public function forceDelete(User $user, Recruitment $recruitment): bool
     {
         //
     }
 
-    public function review(User $user, RecruitmentRequest $recruitmentRequest): bool
+    public function review(User $user, Recruitment $recruitment): bool
     {
-        return ('Mở' == $recruitmentRequest->status
-                || 'Đã kiểm tra' == $recruitmentRequest->status)
+        return ('Mở' == $recruitment->status
+                || 'Đã kiểm tra' == $recruitment->status)
                 && 'Nhân sự' == $user->role->name;
     }
 
-    public function approve(User $user, RecruitmentRequest $recruitmentRequest): bool
+    public function approve(User $user, Recruitment $recruitment): bool
     {
-        return ('Đã kiểm tra' == $recruitmentRequest->status
-                || 'Đã duyệt' == $recruitmentRequest->status)
+        return ('Đã kiểm tra' == $recruitment->status
+                || 'Đã duyệt' == $recruitment->status)
                 && 'Ban lãnh đạo' == $user->role->name;
     }
 }

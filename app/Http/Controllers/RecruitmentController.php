@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRecruitmentRequest;
 use App\Http\Requests\UpdateRecruitmentRequest;
 use App\Models\Position;
-use App\Models\RecruitmentRequest;
+use App\Models\Recruitment;
 use App\Models\User;
 use App\Models\UserDepartment;
-use App\Notifications\RecruitmentRequestApproved;
-use App\Notifications\RecruitmentRequestCreated;
-use App\Notifications\RecruitmentRequestReviewerRejected;
-use App\Notifications\RecruitmentRequestToApprover;
+use App\Notifications\RecruitmentApproved;
+use App\Notifications\RecruitmentCreated;
+use App\Notifications\RecruitmentReviewerRejected;
+use App\Notifications\RecruitmentToApprover;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,14 +19,14 @@ use Illuminate\Support\Facades\Notification;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
-class RecruitmentRequestController extends Controller
+class RecruitmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('recruitment_request.index');
+        return view('recruitment.index');
     }
 
     /**
@@ -34,13 +34,13 @@ class RecruitmentRequestController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->cannot('create', RecruitmentRequest::class)) {
+        if (Auth::user()->cannot('create', Recruitment::class)) {
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
-            return redirect()->route('recruitment_requests.index');
+            return redirect()->route('recruitments.index');
         }
         $positions = Position::orderBy('name', 'asc')->get();
 
-        return view('recruitment_request.create', ['positions' => $positions]);
+        return view('recruitment.create', ['positions' => $positions]);
     }
 
     /**
@@ -48,57 +48,57 @@ class RecruitmentRequestController extends Controller
      */
     public function store(StoreRecruitmentRequest $request)
     {
-        //Create new RecruitmentRequest
-        $recruitment_request = new RecruitmentRequest();
-        $recruitment_request->position_id  = $request->position_id;
-        $recruitment_request->quantity     = $request->quantity;
-        $recruitment_request->reason       = $request->reason;
-        $recruitment_request->requirement  = $request->requirement;
+        //Create new Recruitment
+        $recruitment = new Recruitment();
+        $recruitment->position_id  = $request->position_id;
+        $recruitment->quantity     = $request->quantity;
+        $recruitment->reason       = $request->reason;
+        $recruitment->requirement  = $request->requirement;
         if ($request->salary) {
-            $recruitment_request->salary   = $request->salary;
+            $recruitment->salary   = $request->salary;
         }
-        $recruitment_request->work_time    = Carbon::createFromFormat('d/m/Y', $request->work_time);
+        $recruitment->work_time    = Carbon::createFromFormat('d/m/Y', $request->work_time);
         if ($request->note) {
-            $recruitment_request->note = $request->note;
+            $recruitment->note = $request->note;
         }
-        $recruitment_request->creator_id   = Auth::user()->id;
+        $recruitment->creator_id   = Auth::user()->id;
         // Trường hợp người tạo là Ban lãnh đạo, không cần review và phê duyệt nữa
         if ('Ban lãnh đạo' == Auth::user()->role->name) {
-            $recruitment_request->reviewer_id      = Auth::user()->id;
-            $recruitment_request->reviewer_result  = 'Đồng ý';
-            $recruitment_request->approver_id      = Auth::user()->id;
-            $recruitment_request->approver_result  = 'Đồng ý';
-            $recruitment_request->status = 'Đã duyệt';
+            $recruitment->reviewer_id      = Auth::user()->id;
+            $recruitment->reviewer_result  = 'Đồng ý';
+            $recruitment->approver_id      = Auth::user()->id;
+            $recruitment->approver_result  = 'Đồng ý';
+            $recruitment->status = 'Đã duyệt';
 
         } else {
-            $recruitment_request->status = 'Mở';
+            $recruitment->status = 'Mở';
         }
-        $recruitment_request->save();
+        $recruitment->save();
 
         //Send notification to reviewer
         $reviewers = User::where('status', 'Mở')->where('role_id', 4)->get(); //4: Nhân sự
         foreach ($reviewers as $reviewer) {
-            Notification::route('mail' , $reviewer->email)->notify(new RecruitmentRequestCreated($recruitment_request->id));
+            Notification::route('mail' , $reviewer->email)->notify(new RecruitmentCreated($recruitment->id));
         }
 
         Alert::toast('Thêm yêu cầu tuyển dụng mới thành công!', 'success', 'top-right');
-        return redirect()->route('recruitment_requests.index');
+        return redirect()->route('recruitments.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(RecruitmentRequest $recruitmentRequest)
+    public function show(Recruitment $recruitment)
     {
         //Check authorization
-        if (Auth::user()->cannot('view', $recruitmentRequest)) {
+        if (Auth::user()->cannot('view', $recruitment)) {
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
-            return redirect()->route('recruitment_requests.index');
+            return redirect()->route('recruitments.index');
         }
 
         $positions = Position::orderBy('name', 'asc')->get();
-        return view('recruitment_request.show',
-                    ['recruitment_request' => $recruitmentRequest,
+        return view('recruitment.show',
+                    ['recruitment' => $recruitment,
                      'positions' => $positions,
                     ]);
     }
@@ -106,13 +106,13 @@ class RecruitmentRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RecruitmentRequest $recruitmentRequest)
+    public function edit(Recruitment $recruitment)
     {
         $positions = Position::orderBy('name', 'asc')->get();
 
-        return view('recruitment_request.edit',
+        return view('recruitment.edit',
                     [
-                        'recruitment_request' => $recruitmentRequest,
+                        'recruitment' => $recruitment,
                         'positions' => $positions,
                     ]);
     }
@@ -120,64 +120,64 @@ class RecruitmentRequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRecruitmentRequest $request, RecruitmentRequest $recruitmentRequest)
+    public function update(UpdateRecruitmentRequest $request, Recruitment $recruitment)
     {
-        //Create new RecruitmentRequest
-        $recruitmentRequest->position_id  = $request->position_id;
-        $recruitmentRequest->quantity     = $request->quantity;
-        $recruitmentRequest->reason       = $request->reason;
-        $recruitmentRequest->requirement  = $request->requirement;
-        $recruitmentRequest->salary   = $request->salary;
-        $recruitmentRequest->work_time    = Carbon::createFromFormat('d/m/Y', $request->work_time);
-        $recruitmentRequest->note = $request->note;
-        $recruitmentRequest->creator_id   = Auth::user()->id;
+        //Create new Recruitment
+        $recruitment->position_id  = $request->position_id;
+        $recruitment->quantity     = $request->quantity;
+        $recruitment->reason       = $request->reason;
+        $recruitment->requirement  = $request->requirement;
+        $recruitment->salary   = $request->salary;
+        $recruitment->work_time    = Carbon::createFromFormat('d/m/Y', $request->work_time);
+        $recruitment->note = $request->note;
+        $recruitment->creator_id   = Auth::user()->id;
         // Trường hợp người sửa là Ban lãnh đạo, không cần review và phê duyệt nữa
         if ('Ban lãnh đạo' == Auth::user()->role->name) {
-            $recruitmentRequest->reviewer_id      = Auth::user()->id;
-            $recruitmentRequest->reviewer_result  = 'Đồng ý';
-            $recruitmentRequest->approver_id      = Auth::user()->id;
-            $recruitmentRequest->approver_result  = 'Đồng ý';
-            $recruitmentRequest->status = 'Đã duyệt';
+            $recruitment->reviewer_id      = Auth::user()->id;
+            $recruitment->reviewer_result  = 'Đồng ý';
+            $recruitment->approver_id      = Auth::user()->id;
+            $recruitment->approver_result  = 'Đồng ý';
+            $recruitment->status = 'Đã duyệt';
 
         } else {
-            $recruitmentRequest->status = 'Mở';
+            $recruitment->status = 'Mở';
         }
-        $recruitmentRequest->save();
+        $recruitment->save();
 
         //Send notification to reviewer
         $reviewers = User::where('status', 'Mở')->where('role_id', 4)->get(); //4: Nhân sự
         foreach ($reviewers as $reviewer) {
-            Notification::route('mail' , $reviewer->email)->notify(new RecruitmentRequestCreated($recruitmentRequest->id));
+            Notification::route('mail' , $reviewer->email)->notify(new RecruitmentCreated($recruitment->id));
         }
 
         Alert::toast('Sửa yêu cầu tuyển dụng mới thành công!', 'success', 'top-right');
-        return redirect()->route('recruitment_requests.index');
+        return redirect()->route('recruitments.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RecruitmentRequest $recruitmentRequest)
+    public function destroy(Recruitment $recruitment)
     {
         //
     }
 
     public function anyData()
     {
-        $data = RecruitmentRequest::with(['position', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
+        $data = Recruitment::with(['position', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
 
         if ('Admin' == Auth::user()->role->name
         || 'Ban lãnh đạo' == Auth::user()->role->name
         || 'Nhân sự' == Auth::user()->role->name) {
-        $data = RecruitmentRequest::with(['position', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
+        $data = Recruitment::with(['position', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
 
     } else {
-        // Only fetch the RecruitmentRequest according to User's department
+        // Only fetch the Recruitment according to User's department
         $department_ids = [];
         $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
         $positions_ids = [];
         $positions_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
-        $data = RecruitmentRequest::with(['position', 'creator', 'reviewer', 'approver'])
+        $data = Recruitment::with(['position', 'creator', 'reviewer', 'approver'])
                                             ->whereIn('position_id', $positions_ids)
                                             ->orderBy('id', 'desc')
                                             ->get();
@@ -186,7 +186,7 @@ class RecruitmentRequestController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->editColumn('position', function ($data) {
-            return '<a href="'.route('recruitment_requests.show', $data->id).'">'.$data->position->name.'</a>';
+            return '<a href="'.route('recruitments.show', $data->id).'">'.$data->position->name.'</a>';
         })
         ->addColumn('quantity', function($row) {
             return $row->quantity;
@@ -220,8 +220,8 @@ class RecruitmentRequestController extends Controller
             return $status;
         })
         ->addColumn('actions', function($row){
-            $action = '<a href="' . route("recruitment_requests.edit", $row->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-            <form style="display:inline" action="'. route("recruitment_requests.destroy", $row->id) . '" method="POST">
+            $action = '<a href="' . route("recruitments.edit", $row->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+            <form style="display:inline" action="'. route("recruitments.destroy", $row->id) . '" method="POST">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                 <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
@@ -241,23 +241,23 @@ class RecruitmentRequestController extends Controller
         ];
         $request->validate($rules,$messages);
 
-        $recruitment_request = RecruitmentRequest::findOrFail($id);
-        $recruitment_request->reviewer_result = $request->reviewer_result;
-        $recruitment_request->reviewer_comment = $request->reviewer_comment;
-        $recruitment_request->reviewer_id = Auth::user()->id;
-        $recruitment_request->status = 'Đã kiểm tra';
-        $recruitment_request->save();
+        $recruitment = Recruitment::findOrFail($id);
+        $recruitment->reviewer_result = $request->reviewer_result;
+        $recruitment->reviewer_comment = $request->reviewer_comment;
+        $recruitment->reviewer_id = Auth::user()->id;
+        $recruitment->status = 'Đã kiểm tra';
+        $recruitment->save();
 
         //Send notification
-        if ('Đồng ý' == $recruitment_request->reviewer_result) {
+        if ('Đồng ý' == $recruitment->reviewer_result) {
             // Send notification to request approve
             $leaders = User::where('role_id', 2)->get(); //2: Ban lãnh đạo
             foreach ($leaders as $leader) {
-                Notification::route('mail' , $leader->email)->notify(new RecruitmentRequestToApprover($recruitment_request->id));
+                Notification::route('mail' , $leader->email)->notify(new RecruitmentToApprover($recruitment->id));
             }
         } else {
             // Send notification for reject status to the creator
-            Notification::route('mail' , $recruitment_request->creator->email)->notify(new RecruitmentRequestReviewerRejected($recruitment_request->id));
+            Notification::route('mail' , $recruitment->creator->email)->notify(new RecruitmentReviewerRejected($recruitment->id));
         }
 
         Alert::toast('Kiểm tra thành công!', 'success', 'top-right');
@@ -274,16 +274,16 @@ class RecruitmentRequestController extends Controller
         ];
         $request->validate($rules,$messages);
 
-        $recruitment_request = RecruitmentRequest::findOrFail($id);
-        $recruitment_request->approver_result = $request->approver_result;
-        $recruitment_request->approver_comment = $request->approver_comment;
-        $recruitment_request->approver_id = Auth::user()->id;
-        $recruitment_request->status = 'Đã duyệt';
-        $recruitment_request->save();
+        $recruitment = Recruitment::findOrFail($id);
+        $recruitment->approver_result = $request->approver_result;
+        $recruitment->approver_comment = $request->approver_comment;
+        $recruitment->approver_id = Auth::user()->id;
+        $recruitment->status = 'Đã duyệt';
+        $recruitment->save();
 
         //Send notification to creator and reviewer
-        Notification::route('mail' , $recruitment_request->creator->email)->notify(new RecruitmentRequestApproved($recruitment_request->id));
-        Notification::route('mail' , $recruitment_request->reviewer->email)->notify(new RecruitmentRequestApproved($recruitment_request->id));
+        Notification::route('mail' , $recruitment->creator->email)->notify(new RecruitmentApproved($recruitment->id));
+        Notification::route('mail' , $recruitment->reviewer->email)->notify(new RecruitmentApproved($recruitment->id));
 
         Alert::toast('Phê duyệt thành công!', 'success', 'top-right');
         return redirect()->back();

@@ -15,7 +15,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('recruitment_requests.index') }}">Tất cả yêu cầu tuyển dụng</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('recruitments.index') }}">Tất cả yêu cầu tuyển dụng</a></li>
             <li class="breadcrumb-item active">Thêm</li>
           </ol>
         </div><!-- /.col -->
@@ -31,7 +31,7 @@
       <div class="row">
         <div class="col-12">
             <div class="card">
-                <form class="form-horizontal" method="post" action="{{ url('recruitment_requests') }}" name="add_request" id="add_request" novalidate="novalidate">{{ csrf_field() }}
+                <form class="form-horizontal" method="post" action="{{ url('recruitments') }}" name="add_request" id="add_request" novalidate="novalidate">{{ csrf_field() }}
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
