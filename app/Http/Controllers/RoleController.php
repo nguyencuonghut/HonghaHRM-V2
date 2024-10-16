@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportRoleRequest;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use App\Imports\RoleImport;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -35,19 +38,8 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        $rules = [
-            'name' => 'required|unique:roles',
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Vai trò đã tồn tại.'
-        ];
-
-        $request->validate($rules, $messages);
-
         $role = new Role();
         $role->name = $request->name;
         $role->save();
@@ -80,21 +72,9 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        $rules = [
-            'name' => 'required|unique:roles,name,'.$role->id,
-        ];
-
-        $messages = [
-            'name.required' => 'Bạn phải nhập tên.',
-            'name.unique' => 'Tên bị trùng',
-        ];
-
-        $request->validate($rules, $messages);
-
-        $role->name = $request->name;
-        $role->save();
+        $role->update(['name' => $request->name]);
 
         Alert::toast('Sửa vai trò thành công!', 'success', 'top-right');
         return redirect()->route('roles.index');
@@ -141,19 +121,8 @@ class RoleController extends Controller
             ->make(true);
     }
 
-    public function import(Request $request)
+    public function import(ImportRoleRequest $request)
     {
-        $rules = [
-            'file' => 'required|mimes:xlsx,xls|max:5000',
-        ];
-        $messages = [
-            'file.required' => 'Bạn phải chọn file import.',
-            'file.mimes' => 'Bạn phải chọn định dạng file .xlsx, .xls.',
-            'file.max' => 'File vượt quá 5MB.',
-        ];
-
-        $request->validate($rules, $messages);
-
         try {
             $import = new RoleImport;
             Excel::import($import, $request->file('file')->store('files'));

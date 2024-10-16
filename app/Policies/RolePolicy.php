@@ -29,7 +29,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->role->name == 'Admin';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
@@ -45,7 +45,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return $user->role->name == 'Admin';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
@@ -66,6 +66,6 @@ class RolePolicy
 
     public function import(User $user): bool
     {
-        return $user->role->name == 'Admin';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 }
