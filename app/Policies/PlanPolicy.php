@@ -45,7 +45,11 @@ class PlanPolicy
                 ||
                 ('Nhân sự' == Auth::user()->role->name
                     && 'Đã duyệt' == $plan->status
-                    && !$plan->budget);
+                    && !$plan->budget)
+                ||
+                ('Nhân sự' == Auth::user()->role->name
+                    && 'Đã duyệt' == $plan->status
+                    && 'Từ chối' == $plan->approver_result);
     }
 
     /**

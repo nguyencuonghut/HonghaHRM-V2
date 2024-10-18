@@ -6,15 +6,12 @@ use App\Http\Requests\ApprovePlanRequest;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
-use App\Models\Recruitment;
 use App\Models\User;
 use App\Notifications\PlanApproved;
-use App\Notifications\PlanRequestApprove;
-use Illuminate\Http\Request;
+use App\Notifications\PlanCreated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use RealRashid\SweetAlert\Facades\Alert;
-use Yajra\DataTables\Facades\DataTables;
 
 class PlanController extends Controller
 {
@@ -63,7 +60,7 @@ class PlanController extends Controller
         if ($request->budget) {
             $approvers = User::where('role_id', 2)->get(); //2: Ban lãnh đạo
             foreach ($approvers as $approver) {
-                Notification::route('mail' , $approver->email)->notify(new PlanRequestApprove($plan->id));
+                Notification::route('mail' , $approver->email)->notify(new PlanCreated($plan->id));
             }
         }
 
@@ -116,7 +113,7 @@ class PlanController extends Controller
         if ($request->budget) {
             $approvers = User::where('role_id', 2)->get(); //2: Ban lãnh đạo
             foreach ($approvers as $approver) {
-                Notification::route('mail' , $approver->email)->notify(new PlanRequestApprove($plan->id));
+                Notification::route('mail' , $approver->email)->notify(new PlanCreated($plan->id));
             }
         }
 

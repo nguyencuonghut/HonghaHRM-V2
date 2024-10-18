@@ -113,15 +113,6 @@
             @endif
             </div>
         </div>
-
-        <div class="card-footer clearfix">
-            @if ('Ban lãnh đạo' == Auth::user()->role->name
-                && $recruitment->plan)
-                <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_plan_approve">
-                    Phê duyệt
-                </button>
-            @endif
-        </div>
     </div>
 </div>
 
