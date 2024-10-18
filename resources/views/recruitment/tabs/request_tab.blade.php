@@ -146,9 +146,11 @@
                 </button>
             @endcan
             @can('approve', $recruitment)
-                <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_approve">
-                    Phê duyệt
-                </button>
+                @if (!$recruitment->plan)
+                    <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_approve">
+                        Phê duyệt
+                    </button>
+                @endif
             @endcan
         </div>
     </div>
