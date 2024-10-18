@@ -65,5 +65,6 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('/methods', MethodController::class);
 
     //Plans
+    Route::post('/plans/approve/{plan}', [PlanController::class, 'approve'])->name('plans.approve');
     Route::resource('/plans', PlanController::class);
 });

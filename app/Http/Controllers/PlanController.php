@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApprovePlanRequest;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 use App\Models\Recruitment;
 use App\Models\User;
+use App\Notifications\PlanApproved;
 use App\Notifications\PlanRequestApprove;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -135,5 +137,21 @@ class PlanController extends Controller
         $plan->delete();
         Alert::toast('Xóa kế hoạch thành công!', 'success', 'top-right');
         return redirect()->route('recruitments.show', $plan->recruitment_id);
+    }
+
+    public function approve(ApprovePlanRequest $request, Plan $plan)
+    {
+        $plan->update([
+            'approver_id' => Auth::user()->id,
+            'approver_result' => $request->approver_result,
+            'approver_comment' => $request->approver_comment,
+            'status' => 'Đã duyệt',
+        ]);
+
+        //Send notification to creator
+        Notification::route('mail' , $plan->creator->email)->notify(new PlanApproved($plan->id));
+
+        Alert::toast('Phê duyệt thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 }

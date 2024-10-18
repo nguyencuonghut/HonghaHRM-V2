@@ -14,8 +14,8 @@ class Plan extends Model
     protected $fillable = [
         'recruitment_id',
         'budget',
-        'creator',
-        'approver',
+        'creator_id',
+        'approver_id',
         'approver_result',
         'approver_comment',
         'status',

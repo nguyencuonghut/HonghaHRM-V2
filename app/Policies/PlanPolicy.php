@@ -78,4 +78,9 @@ class PlanPolicy
     {
         //
     }
+
+    public function approve(User $user, Plan $plan): bool
+    {
+        return 'Ban lãnh đạo' == Auth::user()->role->name;
+    }
 }

@@ -20,8 +20,14 @@
                         <th>Người tạo</th>
                         <th>Ngân sách</th>
                         <th>Cách thức</th>
+                        <th>Người duyệt</th>
                         <th>Trạng thái</th>
+                        @if (Auth::user()->can('create', App\Models\Plan::class)
+                            || Auth::user()->can('update', $recruitment->plan)
+                            || Auth::user()->can('delete', $recruitment->plan)
+                            || Auth::user()->can('approve', $recruitment->plan))
                         <th>Thao tác</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -45,27 +51,58 @@
                         </td>
                         <td>
                             @php
-                                if ('Chưa duyệt' == $recruitment->plan->status) {
-                                    $status_str = '<span class="badge badge-primary">' . $recruitment->plan->status . '</span>';
+                                if ('Đồng ý' == $recruitment->plan->approver_result) {
+                                    $approver_result_str = '<span class="badge badge-success">' . $recruitment->plan->approver_result . '</span>';
                                 } else {
-                                    $status_str = '<span class="badge badge-success">' . $recruitment->plan->status . '</span>';
+                                    $approver_result_str = '<span class="badge badge-danger">' . $recruitment->plan->approver_result . '</span>';
                                 }
                             @endphp
-                            {!! $status_str !!}
-                            @if ($recruitment->plan->approve_id)
-                                {{$recruitment->plan->approver->name}}
+                            @if ($recruitment->plan->approver_id)
+                                {{$recruitment->plan->approver->name}} - {!! $approver_result_str !!}
+                                @if ($recruitment->plan->approver_comment)
+                                    <br>
+                                    <small>({!!$recruitment->plan->approver_comment !!})</small>
+                                @endif
                             @endif
                         </td>
                         <td>
                             @php
-                            $action = '<a href="#edit{{' . $recruitment->plan->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit-plan-' . $recruitment->plan->id. '"><i class="fas fa-edit"></i></a>
-                                        <form style="display:inline" action="'. route("plans.destroy", $recruitment->plan->id) . '" method="POST">
+                                if ('Chưa duyệt' == $recruitment->plan->status) {
+                                    $status_str = '<span class="badge badge-secondary">' . $recruitment->plan->status . '</span>';
+                                } else {
+                                    $status_str = '<span class="badge badge-success">' . $recruitment->plan->status . '</span>';
+                                }
+
+                            @endphp
+                            {!! $status_str !!}
+                        </td>
+                        @if (Auth::user()->can('create', App\Models\Plan::class)
+                            || Auth::user()->can('update', $recruitment->plan)
+                            || Auth::user()->can('delete', $recruitment->plan)
+                            || Auth::user()->can('approve', $recruitment->plan))
+                        <td>
+                            @php
+                            $update = '';
+                            $delete = '';
+                            $approve = '';
+                            if (Auth::user()->can('update', $recruitment->plan)) {
+                                $update = '<a href="#edit{{' . $recruitment->plan->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit-plan-' . $recruitment->plan->id. '"><i class="fas fa-edit"></i></a>';
+                            }
+                            if (Auth::user()->can('delete', $recruitment->plan)) {
+                                $delete = '<form style="display:inline" action="'. route("plans.destroy", $recruitment->plan->id) . '" method="POST">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                         <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                            }
+
+                            if (Auth::user()->can('approve', $recruitment->plan)) {
+                                $approve = '<a href="#approve-plan-{{' . $recruitment->plan->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#approve-plan-' . $recruitment->plan->id. '"><i class="fas fa-check-square"></i></a>';
+                            }
+                            $action = $update . $delete . $approve;
                             @endphp
                             {!! $action !!}
                         </td>
+                        @endif
                     </tr>
                 </tbody>
             </table>
@@ -196,9 +233,9 @@
 
 @if ($recruitment->plan)
 <!-- Modals for plan approve -->
-<form class="form-horizontal" method="post" action="#" name="make_plan_approve" id="make_plan_approve" novalidate="novalidate">
+<form class="form-horizontal" method="post" action="{{route('plans.approve', $recruitment->plan->id)}}" name="make_plan_approve" id="make_plan_approve" novalidate="novalidate">
     {{ csrf_field() }}
-    <div class="modal fade" id="create_plan_approve">
+    <div class="modal fade" id="approve-plan-{{$recruitment->plan->id}}">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -221,6 +258,7 @@
                             </div>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="col-12">
                             <div class="control-group">
