@@ -1,5 +1,5 @@
 <!-- Request Tab -->
-<div class="tab-pane fade show active" id="recruitment-request-1" role="tabpanel" aria-labelledby="recruitment-request-tab-1">
+<div class="tab-pane fade show active" id="recruitment-1" role="tabpanel" aria-labelledby="recruitment-tab-1">
     <div class="card">
         <!-- /.card-header -->
         <div class="card-body">

@@ -6,6 +6,7 @@ use App\Http\Requests\ApproveRecruitmentRequest;
 use App\Http\Requests\ReviewRecruitmentRequest;
 use App\Http\Requests\StoreRecruitmentRequest;
 use App\Http\Requests\UpdateRecruitmentRequest;
+use App\Models\Method;
 use App\Models\Position;
 use App\Models\Recruitment;
 use App\Models\User;
@@ -15,7 +16,6 @@ use App\Notifications\RecruitmentCreated;
 use App\Notifications\RecruitmentReviewerRejected;
 use App\Notifications\RecruitmentToApprover;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -99,9 +99,11 @@ class RecruitmentController extends Controller
         }
 
         $positions = Position::orderBy('name', 'asc')->get();
+        $methods = Method::orderBy('name', 'asc')->get();
         return view('recruitment.show',
                     ['recruitment' => $recruitment,
                      'positions' => $positions,
+                     'methods' => $methods,
                     ]);
     }
 

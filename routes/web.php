@@ -5,6 +5,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MethodController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoleController;
@@ -62,4 +63,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Methods
     Route::get('/methods/data', [MethodController::class, 'anyData'])->name('methods.data');
     Route::resource('/methods', MethodController::class);
+
+    //Plans
+    Route::resource('/plans', PlanController::class);
 });

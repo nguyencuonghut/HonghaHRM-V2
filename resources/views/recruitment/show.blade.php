@@ -31,10 +31,10 @@
                       <div class="card-header p-0 pt-1 border-bottom-0">
                         <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                           <li class="nav-item">
-                            <a class="nav-link active" id="recruitment-request-tab-1" data-toggle="pill" href="#recruitment-request-1" role="tab" aria-controls="recruitment-request-1" aria-selected="true">Yêu cầu</a>
+                            <a class="nav-link active" id="recruitment-tab-1" data-toggle="pill" href="#recruitment-1" role="tab" aria-controls="recruitment-1" aria-selected="true">Yêu cầu</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="recruitment-request-tab-2" data-toggle="pill" href="#recruitment-request-2" role="tab" aria-controls="recruitment-request-2" aria-selected="false">Kế hoạch</a>
+                            <a class="nav-link" id="recruitment-tab-2" data-toggle="pill" href="#recruitment-2" role="tab" aria-controls="recruitment-2" aria-selected="false">Kế hoạch</a>
                           </li>
                         </ul>
                       </div>
