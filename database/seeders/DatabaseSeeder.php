@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             PositionsTableSeeder::class,
             UserDepartmentsTableSeeder::class,
             MethodsTableSeeder::class,
+            ChannelsTableSeeder::class,
         ]);
     }
 }

@@ -41,7 +41,7 @@ class PlanController extends Controller
             return redirect()->back();
         }
 
-        //Create new RecruitmentPlan
+        //Create new Plan
         $plan = new Plan();
         $plan->recruitment_id = $request->recruitment_id;
         if ($request->budget) {

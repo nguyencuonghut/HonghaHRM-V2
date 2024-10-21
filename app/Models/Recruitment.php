@@ -57,4 +57,9 @@ class Recruitment extends Model
         return $this->hasOne(Plan::class);
     }
 
+    public function announcement(): HasOne
+    {
+        return $this->hasOne(Announcement::class);
+    }
+
 }

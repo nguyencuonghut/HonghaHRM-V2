@@ -110,6 +110,16 @@
               </p>
             </a>
           </li>
+
+          <!-- Channel -->
+          <li class="nav-item">
+            <a href="{{route('channels.index')}}" class="nav-link {{ Request::is('channels*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-bullhorn"></i>
+              <p>
+                Phương tiện
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

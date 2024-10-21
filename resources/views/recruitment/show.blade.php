@@ -36,12 +36,16 @@
                           <li class="nav-item">
                             <a class="nav-link" id="recruitment-tab-2" data-toggle="pill" href="#recruitment-2" role="tab" aria-controls="recruitment-2" aria-selected="false">Kế hoạch</a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="recruitment-tab-3" data-toggle="pill" href="#recruitment-3" role="tab" aria-controls="recruitment-3" aria-selected="false">Đăng tin</a>
+                          </li>
                         </ul>
                       </div>
                       <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             @include('recruitment.tabs.request_tab')
                             @include('recruitment.tabs.plan_tab')
+                            @include('recruitment.tabs.announcement_tab')
                       </div>
                       <!-- /.card -->
                     </div>

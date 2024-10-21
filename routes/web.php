@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MethodController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PositionController;
@@ -67,4 +70,12 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Plans
     Route::post('/plans/approve/{plan}', [PlanController::class, 'approve'])->name('plans.approve');
     Route::resource('/plans', PlanController::class);
+
+    //Social Media
+    Route::get('/channels/data', [ChannelController::class, 'anyData'])->name('channels.data');
+    Route::resource('/channels', ChannelController::class);
+
+    //Announcements
+    Route::resource('/announcements', AnnouncementController::class);
+
 });
