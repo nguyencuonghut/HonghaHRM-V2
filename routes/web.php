@@ -10,6 +10,7 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MethodController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
@@ -77,5 +78,9 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     //Announcements
     Route::resource('/announcements', AnnouncementController::class);
+
+    //Provinces
+    Route::get('/provinces/data', [ProvinceController::class, 'anyData'])->name('provinces.data');
+    Route::resource('/provinces', ProvinceController::class);
 
 });

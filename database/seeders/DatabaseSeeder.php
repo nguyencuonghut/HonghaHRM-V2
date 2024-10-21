@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             UserDepartmentsTableSeeder::class,
             MethodsTableSeeder::class,
             ChannelsTableSeeder::class,
+            ProvincesTableSeeder::class,
         ]);
     }
 }

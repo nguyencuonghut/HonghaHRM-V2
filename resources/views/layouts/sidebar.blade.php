@@ -120,6 +120,16 @@
               </p>
             </a>
           </li>
+
+          <!-- Province -->
+          <li class="nav-item">
+            <a href="{{route('provinces.index')}}" class="nav-link {{ Request::is('provinces*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-map-marked-alt"></i>
+              <p>
+                Tỉnh
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
