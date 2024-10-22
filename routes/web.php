@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -82,5 +83,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Provinces
     Route::get('/provinces/data', [ProvinceController::class, 'anyData'])->name('provinces.data');
     Route::resource('/provinces', ProvinceController::class);
+
+    //Districts
+    Route::get('/districts/data', [DistrictController::class, 'anyData'])->name('districts.data');
+    Route::resource('/districts', DistrictController::class);
 
 });

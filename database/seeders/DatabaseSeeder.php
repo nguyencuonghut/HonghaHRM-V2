@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             MethodsTableSeeder::class,
             ChannelsTableSeeder::class,
             ProvincesTableSeeder::class,
+            DistrictsTableSeeder::class,
         ]);
     }
 }
