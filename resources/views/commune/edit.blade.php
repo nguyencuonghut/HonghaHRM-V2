@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="control-group">
-                                    <label class="required-field" class="control-label">Huyện - Tỉnh</label>
+                                    <label class="required-field" class="control-label">Quận/Huyện - Thàn phố/Tỉnh</label>
                                     <div class="controls">
                                         <select name="district_id" id="district_id" data-placeholder="Chọn tỉnh" class="form-control select2" style="width: 100%;">
                                             @foreach ($districts as $district)

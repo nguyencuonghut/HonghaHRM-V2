@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Sửa huyện' }}
+{{ 'Sửa quận huyện' }}
 @endsection
 
 @extends('layouts.base')
@@ -11,11 +11,11 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Sửa huyện</h1>
+          <h1 class="m-0">Sửa quận huyện</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('districts.index') }}">Tất cả huyện</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('districts.index') }}">Tất cả quận huyện</a></li>
             <li class="breadcrumb-item active">Sửa</li>
           </ol>
         </div><!-- /.col -->

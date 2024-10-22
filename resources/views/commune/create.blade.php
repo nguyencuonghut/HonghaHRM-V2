@@ -45,9 +45,9 @@
                             </div>
                             <div class="col-6">
                                 <div class="control-group">
-                                    <label class="required-field" class="control-label">Thuộc huyện</label>
+                                    <label class="required-field" class="control-label">Thuộc quận huyện</label>
                                     <div class="controls">
-                                        <select name="district_id" id="district_id" data-placeholder="Chọn huyện" class="form-control select2" style="width: 100%;">
+                                        <select name="district_id" id="district_id" data-placeholder="Chọn quận huyện" class="form-control select2" style="width: 100%;">
                                             <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                             @foreach ($districts as $district)
                                                 <option value="{{$district->id}}">{{$district->name}} - {{$district->province->name}}</option>

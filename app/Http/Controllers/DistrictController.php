@@ -44,7 +44,7 @@ class DistrictController extends Controller
         $district->province_id = $request->province_id;
         $district->save();
 
-        Alert::toast('Thêm huyện thành công!', 'success', 'top-right');
+        Alert::toast('Thêm quận huyện thành công!', 'success', 'top-right');
         return redirect()->route('districts.index');
     }
 
@@ -84,7 +84,7 @@ class DistrictController extends Controller
             'province_id' => $request->province_id,
         ]);
 
-        Alert::toast('Sửa huyện thành công!', 'success', 'top-right');
+        Alert::toast('Sửa quận huyện thành công!', 'success', 'top-right');
         return redirect()->route('districts.index');
     }
 
@@ -102,7 +102,7 @@ class DistrictController extends Controller
 
         $district->delete();
 
-        Alert::toast('Xóa huyện thành công!', 'success', 'top-rigth');
+        Alert::toast('Xóa quận huyện thành công!', 'success', 'top-rigth');
         return redirect()->route('districts.index');
     }
 

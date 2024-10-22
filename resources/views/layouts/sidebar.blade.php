@@ -136,7 +136,7 @@
             <a href="{{route('districts.index')}}" class="nav-link {{ Request::is('districts*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-map-marker-alt"></i>
               <p>
-                Huyyện
+                Quận Huyện
               </p>
             </a>
           </li>
