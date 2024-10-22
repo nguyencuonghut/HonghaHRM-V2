@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
@@ -87,5 +88,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Districts
     Route::get('/districts/data', [DistrictController::class, 'anyData'])->name('districts.data');
     Route::resource('/districts', DistrictController::class);
+
+    //Communes
+    Route::get('/communes/data', [CommuneController::class, 'anyData'])->name('communes.data');
+    Route::resource('/communes', CommuneController::class);
 
 });

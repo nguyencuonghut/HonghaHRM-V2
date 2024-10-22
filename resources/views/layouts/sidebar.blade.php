@@ -140,6 +140,16 @@
               </p>
             </a>
           </li>
+
+          <!-- Commune -->
+          <li class="nav-item">
+            <a href="{{route('communes.index')}}" class="nav-link {{ Request::is('communes*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-map-pin"></i>
+              <p>
+                Phường xã
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
