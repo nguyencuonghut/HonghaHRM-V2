@@ -88,6 +88,10 @@ class ProvinceController extends Controller
         }
 
         //TODO: Check if Province is used or not
+        if ($province->districts->count()) {
+            Alert::toast('Tỉnh đang được sử dụng. Không thể xóa!', 'error', 'top-rigth');
+            return redirect()->route('provinces.index');
+        }
         $province->delete();
 
         Alert::toast('Xóa tỉnh thành công!', 'success', 'top-rigth');
