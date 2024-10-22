@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->foreignId('department_id')->constrained('departments');
-            $table->foreignId('division_id')->nullable()->constrained('divisions');
+            $table->foreignId('department_id')->constrained('departments')->onDelete('cascade');
+            $table->foreignId('division_id')->nullable()->constrained('divisions')->onDelete('cascade');
             $table->bigInteger('insurance_salary');
             $table->bigInteger('position_salary');
             $table->bigInteger('max_capacity_salary');
