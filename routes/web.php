@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommuneController;
+use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
@@ -95,9 +96,14 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('/communes/data', [CommuneController::class, 'anyData'])->name('communes.data');
     Route::resource('/communes', CommuneController::class);
 
-    //School
+    //Schools
     Route::post('/schools/import', [SchoolController::class, 'import'])->name('schools.import');
     Route::get('/schools/data', [SchoolController::class, 'anyData'])->name('schools.data');
     Route::resource('/schools', SchoolController::class);
+
+    //Degrees
+    Route::get('/degrees/data', [DegreeController::class, 'anyData'])->name('degrees.data');
+    Route::resource('/degrees', DegreeController::class);
+
 
 });

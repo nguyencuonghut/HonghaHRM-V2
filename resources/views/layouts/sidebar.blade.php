@@ -160,6 +160,16 @@
               </p>
             </a>
           </li>
+
+          <!-- Degree -->
+          <li class="nav-item">
+            <a href="{{route('degrees.index')}}" class="nav-link {{ Request::is('degrees*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                Trình độ
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

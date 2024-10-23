@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Degree;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
             DistrictsTableSeeder::class,
             CommunesTableSeeder::class,
             SchoolsTableSeeder::class,
+            DegreesTableSeeder::class,
         ]);
     }
 }
