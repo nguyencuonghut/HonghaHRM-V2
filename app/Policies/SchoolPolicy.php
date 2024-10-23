@@ -64,4 +64,9 @@ class SchoolPolicy
     {
         //
     }
+
+    public function import(User $user): bool
+    {
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
+    }
 }
