@@ -150,6 +150,16 @@
               </p>
             </a>
           </li>
+
+          <!-- School -->
+          <li class="nav-item">
+            <a href="{{route('schools.index')}}" class="nav-link {{ Request::is('schools*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-graduation-cap"></i>
+              <p>
+                Trường
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

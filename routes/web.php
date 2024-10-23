@@ -15,6 +15,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -92,5 +93,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Communes
     Route::get('/communes/data', [CommuneController::class, 'anyData'])->name('communes.data');
     Route::resource('/communes', CommuneController::class);
+
+    //School
+    Route::get('/schools/data', [SchoolController::class, 'anyData'])->name('schools.data');
+    Route::resource('/schools', SchoolController::class);
 
 });
