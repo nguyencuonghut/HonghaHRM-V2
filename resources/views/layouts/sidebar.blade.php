@@ -61,6 +61,16 @@
             </a>
           </li>
 
+          <!-- Canidate -->
+          <li class="nav-item">
+            <a href="{{route('candidates.index')}}" class="nav-link {{ Request::is('candidates*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user-plus"></i>
+              <p>
+                Ứng viên
+              </p>
+            </a>
+          </li>
+
           <!-- Vai trò -->
           <li class="nav-item">
             <a href="{{route('roles.index')}}" class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">

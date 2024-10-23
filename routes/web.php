@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\DegreeController;
@@ -105,5 +106,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('/degrees/data', [DegreeController::class, 'anyData'])->name('degrees.data');
     Route::resource('/degrees', DegreeController::class);
 
+    //Candidates
+    Route::get('/candidates/data', [CandidateController::class, 'anyData'])->name('candidates.data');
+    Route::resource('/candidates', CandidateController::class);
 
 });
