@@ -91,6 +91,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('/districts', DistrictController::class);
 
     //Communes
+    Route::post('/communes/import', [CommuneController::class, 'import'])->name('communes.import');
     Route::get('/communes/data', [CommuneController::class, 'anyData'])->name('communes.data');
     Route::resource('/communes', CommuneController::class);
 
