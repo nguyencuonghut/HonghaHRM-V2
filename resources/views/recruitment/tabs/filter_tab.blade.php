@@ -13,12 +13,11 @@
                   <th>Tên</th>
                   <th>Nơi làm việc</th>
                   <th>Mức lương</th>
-                  <th>Ghi chú</th>
                   <th>Kết quả</th>
                   <th>Mời phỏng vấn</th>
                   <th>Đợt</th>
                   @can('create', App\Models\Filter::class)
-                  <th style="width: 12%;">Thao tác</th>
+                  <th style="width: 16%;">Thao tác</th>
                   @endcan
                 </tr>
                 </thead>
@@ -33,17 +32,25 @@
                           $recruitment_candidate = App\Models\RecruitmentCandidate::where('recruitment_id', $recruitment->id)->where('candidate_id', $candidate->id)->first();
                           $filter = App\Models\Filter::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
                           $action = '';
-                        //   $first_interview_invitation = App\Models\FirstInterviewInvitation::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
+                          $first_interview_invitation = App\Models\FirstInterviewInvitation::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
                           if ($filter) {
                             if ('Đạt' == $filter->result) {
-                                // if ($first_interview_invitation) {
-                                //     $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>
-                                //     <a href="' . route("admin.recruitment.first_interview_invitation.add", $proposal_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>
-                                //     <a href="' . route("admin.recruitment.first_interview_invitation.feedback", $proposal_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i></a>';
-                                // } else {
-                                //     $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>
-                                //     <a href="' . route("admin.recruitment.first_interview_invitation.add", $proposal_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>';
-                                // }
+                                if ($first_interview_invitation) {
+                                    $action = '<a href="#filter{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '"><i class="fas fa-filter"></i></a>
+                                    <a href="' . route("first_interview_invitations.add", $recruitment_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>
+                                    <a href="' . route("first_interview_invitations.feedback", $recruitment_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i></a>
+                                    <form style="display:inline" action="'. route("filters.destroy", $filter->id) . '" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                                } else {
+                                    $action = '<a href="#filter{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '"><i class="fas fa-filter"></i></a>
+                                    <a href="' . route("first_interview_invitations.add", $recruitment_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>
+                                    <form style="display:inline" action="'. route("filters.destroy", $filter->id) . '" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                                }
                             } else {
                                 $action = '<a href="#filter{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '"><i class="fas fa-filter"></i></a>
                                             <form style="display:inline" action="'. route("filters.destroy", $filter->id) . '" method="POST">
@@ -61,12 +68,6 @@
                       </td>
                       <td>{{number_format($filter->salary, 0, '.', ',')}} <sup>đ</sup></td>
                       <td>
-                        {{$filter->note}}
-                        {{-- @if ($first_interview_invitation)
-                         {{$first_interview_invitation->note}}
-                        @endif --}}
-                      </td>
-                      <td>
                         @if($filter->result == 'Đạt')
                             <span class="badge badge-success">{{$filter->result}}</span>
                         @else
@@ -74,7 +75,7 @@
                         @endif
                       </td>
                       <td>
-                        {{-- @if ($first_interview_invitation)
+                        @if ($first_interview_invitation)
                             @if ('Đã gửi' == $first_interview_invitation->status)
                                 - {{date('d/m/Y H:i', strtotime($first_interview_invitation->interview_time))}} tại {{$first_interview_invitation->interview_location}} <br>
                             @endif
@@ -82,10 +83,12 @@
                                 - <span class="badge badge-success">{{$first_interview_invitation->feedback}}</span>
                             @elseif ('Từ chối' == $first_interview_invitation->feedback)
                                 - <span class="badge badge-danger">{{$first_interview_invitation->feedback}}</span>
+                                <small>({{$first_interview_invitation->note}})</small>
                             @elseif ('Hẹn lại' == $first_interview_invitation->feedback)
                                 - <span class="badge badge-warning">{{$first_interview_invitation->feedback}}</span>
+                                <small>({{$first_interview_invitation->note}})</small>
                             @endif
-                        @endif --}}
+                        @endif
                       </td>
                       @else
                       <td></td>

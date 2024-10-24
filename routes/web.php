@@ -9,6 +9,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\FirstInterviewInvitationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MediaController;
@@ -118,4 +119,10 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     //Candidate Filters
     Route::resource('/filters', FilterController::class);
+
+    //FirstInterviewInvitations
+    Route::get('first_interview_invitations/add/{recruitment_candidate_id}', [FirstInterviewInvitationController::class, 'add'])->name('first_interview_invitations.add');
+    Route::get('first_interview_invitations/feedback/{id}', [FirstInterviewInvitationController::class, 'feedback'])->name('first_interview_invitations.feedback');
+    Route::resource('first_interview_invitations', FirstInterviewInvitationController::class, ['names' => 'first_interview_invitations'], ['except' => 'create']);
+
 });
