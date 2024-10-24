@@ -100,7 +100,7 @@ class CandidateController extends Controller
      */
     public function show(Candidate $candidate)
     {
-        //
+        return view('candidate.show', ['candidate' => $candidate]);
     }
 
     /**
