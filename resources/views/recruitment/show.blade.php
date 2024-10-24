@@ -42,6 +42,9 @@
                           <li class="nav-item">
                             <a class="nav-link" id="recruitment-tab-4" data-toggle="pill" href="#recruitment-4" role="tab" aria-controls="recruitment-4" aria-selected="false">Ứng viên</a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="recruitment-tab-5" data-toggle="pill" href="#recruitment-5" role="tab" aria-controls="recruitment-5" aria-selected="false">Lọc hồ sơ</a>
+                          </li>
                         </ul>
                       </div>
                       <div class="card-body">
@@ -50,6 +53,7 @@
                             @include('recruitment.tabs.plan_tab')
                             @include('recruitment.tabs.announcement_tab')
                             @include('recruitment.tabs.candidate_tab')
+                            @include('recruitment.tabs.filter_tab')
                       </div>
                       <!-- /.card -->
                     </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MediaController;
@@ -115,5 +116,6 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('/recruitment_candidates/data', [RecruitmentCandidateController::class, 'anyData'])->name('recruitment_candidates.data');
     Route::resource('/recruitment_candidates', RecruitmentCandidateController::class);
 
-
+    //Candidate Filters
+    Route::resource('/filters', FilterController::class);
 });
