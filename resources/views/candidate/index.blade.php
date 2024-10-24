@@ -128,7 +128,7 @@
             {data: 'phone', name: 'phone'},
             {data: 'address', name: 'address'},
             {data: 'cccd', name: 'cccd'},
-            {data: 'recruitment', name: 'recruitment'},
+            {data: 'recruitments', name: 'recruitments'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#candidates-table_wrapper .col-md-6:eq(0)');

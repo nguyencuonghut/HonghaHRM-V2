@@ -216,9 +216,13 @@ class CandidateController extends Controller
             ->editColumn('cccd', function ($data) {
                 return $data->cccd;
             })
-            ->addColumn('recruitment', function ($data) {
-                $recruitment = '';
-                return $recruitment;
+            ->addColumn('recruitments', function ($data) {
+                $recruitments = '';
+                foreach ($data->recruitments as $recruitment) {
+                    $url = '<a href="' . route('recruitments.show', $recruitment->id) . '">' . $recruitment->position->name . '</a>';
+                    $recruitments = $recruitments . ' - ' . $url . '<br>';
+                }
+                return $recruitments;
             })
             ->addColumn('actions', function ($data) {
                 $action = '<a href="' . route("candidates.edit", $data->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
@@ -228,7 +232,7 @@ class CandidateController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'name', 'recruitment'])
+            ->rawColumns(['actions', 'name', 'recruitments'])
             ->make(true);
     }
 }
