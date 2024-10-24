@@ -15,6 +15,7 @@ use App\Http\Controllers\MethodController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SchoolController;
@@ -109,5 +110,10 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Candidates
     Route::get('/candidates/data', [CandidateController::class, 'anyData'])->name('candidates.data');
     Route::resource('/candidates', CandidateController::class);
+
+    //RecruitmentCandidates
+    Route::get('/recruitment_candidates/data', [RecruitmentCandidateController::class, 'anyData'])->name('recruitment_candidates.data');
+    Route::resource('/recruitment_candidates', RecruitmentCandidateController::class);
+
 
 });

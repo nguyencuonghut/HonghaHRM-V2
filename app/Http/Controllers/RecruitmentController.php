@@ -6,6 +6,7 @@ use App\Http\Requests\ApproveRecruitmentRequest;
 use App\Http\Requests\ReviewRecruitmentRequest;
 use App\Http\Requests\StoreRecruitmentRequest;
 use App\Http\Requests\UpdateRecruitmentRequest;
+use App\Models\Candidate;
 use App\Models\Channel;
 use App\Models\Method;
 use App\Models\Position;
@@ -102,11 +103,13 @@ class RecruitmentController extends Controller
         $positions = Position::orderBy('name', 'asc')->get();
         $methods = Method::orderBy('name', 'asc')->get();
         $channels = Channel::orderBy('name', 'asc')->get();
+        $candidates = Candidate::orderBy('id', 'desc')->get();
         return view('recruitment.show',
                     ['recruitment' => $recruitment,
                      'positions' => $positions,
                      'methods' => $methods,
                      'channels' => $channels,
+                     'candidates' => $candidates,
                     ]);
     }
 

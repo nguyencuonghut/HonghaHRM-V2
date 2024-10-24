@@ -42,4 +42,9 @@ class Candidate extends Model
     {
         return $this->belongsToMany(School::class, 'candidate_schools', 'candidate_id' ,'school_id')->withTimestamps();;
     }
+
+    public function recruitments(): BelongsToMany
+    {
+        return $this->belongsToMany(Recruitment::class, 'recruitment_candidates')->withTimestamps();;
+    }
 }
