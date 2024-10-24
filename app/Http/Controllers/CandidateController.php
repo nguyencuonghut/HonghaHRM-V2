@@ -211,7 +211,7 @@ class CandidateController extends Controller
                 return $data->phone;
             })
             ->editColumn('addr', function ($data) {
-                return $data->address . ', ' .  $data->commune->name .', ' .  $data->commune->district->name .', ' . $data->commune->district->province->name;
+                return $data->address . ', ' . $data->commune->name .', ' .  $data->commune->district->name .', ' . $data->commune->district->province->name;
             })
             ->editColumn('cccd', function ($data) {
                 return $data->cccd;

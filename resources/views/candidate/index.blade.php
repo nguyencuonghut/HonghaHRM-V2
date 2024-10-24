@@ -126,7 +126,7 @@
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
             {data: 'phone', name: 'phone'},
-            {data: 'address', name: 'address'},
+            {data: 'addr', name: 'addr'},
             {data: 'cccd', name: 'cccd'},
             {data: 'recruitments', name: 'recruitments'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
