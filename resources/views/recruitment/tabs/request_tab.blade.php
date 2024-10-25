@@ -203,7 +203,7 @@
     </div>
 </form>
 
-<!-- Modals for proposal approve -->
+<!-- Modals for recruitment approve -->
 <form class="form-horizontal" method="post" action="{{route('recruitments.approve', $recruitment->id)}}" name="make_approve" id="make_approve" novalidate="novalidate">
     {{ csrf_field() }}
     <div class="modal fade" id="create_approve">
