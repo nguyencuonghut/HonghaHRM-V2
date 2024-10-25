@@ -37,6 +37,11 @@ class FirstInterviewInvitationController extends Controller
      */
     public function store(StoreFirstInterviewInvitationRequest $request)
     {
+        if (Auth::user()->cannot('create', FirstInterviewInvitation::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         // Delete all previous invitation
         $old_invitations = FirstInterviewInvitation::where('recruitment_candidate_id', $request->recruitment_candidate_id)->get();
         foreach ($old_invitations as $old_invitation) {

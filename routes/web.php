@@ -10,7 +10,9 @@ use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\FirstInterviewDetailController;
 use App\Http\Controllers\FirstInterviewInvitationController;
+use App\Http\Controllers\FirstInterviewResultController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InitialInterviewController;
 use App\Http\Controllers\LoginController;
@@ -23,6 +25,7 @@ use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\SecondInterviewInvitationController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -124,7 +127,7 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     //FirstInterviewInvitations
     Route::get('first_interview_invitations/add/{recruitment_candidate_id}', [FirstInterviewInvitationController::class, 'add'])->name('first_interview_invitations.add');
-    Route::get('first_interview_invitations/feedback/{id}', [FirstInterviewInvitationController::class, 'feedback'])->name('first_interview_invitations.feedback');
+    Route::get('first_interview_invitations/feedback/{recruitment_candidate_id}', [FirstInterviewInvitationController::class, 'feedback'])->name('first_interview_invitations.feedback');
     Route::resource('first_interview_invitations', FirstInterviewInvitationController::class, ['names' => 'first_interview_invitations'], ['except' => 'create']);
 
     //InitialInterviews
@@ -132,5 +135,16 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     //Examinations
     Route::resource('examinations', ExaminationController::class, ['names' => 'examinations']);
+
+    //FirstInterviewDetails
+    Route::resource('first_interview_details', FirstInterviewDetailController::class, ['names' => 'first_interview_details']);
+
+    //FirstInterviewResults
+    Route::resource('first_interview_results', FirstInterviewResultController::class, ['names' => 'first_interview_results']);
+
+    //SecondInterviewInvitations
+    Route::get('second_interview_invitations/add/{recruitment_candidate_id}', [SecondInterviewInvitationController::class, 'add'])->name('second_interview_invitations.add');
+    Route::get('second_interview_invitations/feedback/{recruitment_candidate_id}', [SecondInterviewInvitationController::class, 'feedback'])->name('second_interview_invitations.feedback');
+    Route::resource('second_interview_invitations', SecondInterviewInvitationController::class, ['names' => 'second_interview_invitations'], ['except' => 'create']);
 
 });
