@@ -25,7 +25,9 @@ use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\SecondInterviewDetailController;
 use App\Http\Controllers\SecondInterviewInvitationController;
+use App\Http\Controllers\SecondInterviewResultController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -146,5 +148,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('second_interview_invitations/add/{recruitment_candidate_id}', [SecondInterviewInvitationController::class, 'add'])->name('second_interview_invitations.add');
     Route::get('second_interview_invitations/feedback/{recruitment_candidate_id}', [SecondInterviewInvitationController::class, 'feedback'])->name('second_interview_invitations.feedback');
     Route::resource('second_interview_invitations', SecondInterviewInvitationController::class, ['names' => 'second_interview_invitations'], ['except' => 'create']);
+
+    //SecondInterviewerDetails
+    Route::resource('second_interview_details', SecondInterviewDetailController::class, ['names' => 'second_interview_details']);
+
+    //SecondInterviewerResults
+    Route::resource('second_interview_results', SecondInterviewResultController::class, ['names' => 'second_interview_results']);
 
 });
