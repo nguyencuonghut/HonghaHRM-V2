@@ -18,6 +18,7 @@ use App\Http\Controllers\InitialInterviewController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MethodController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProvinceController;
@@ -154,5 +155,9 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     //SecondInterviewerResults
     Route::resource('second_interview_results', SecondInterviewResultController::class, ['names' => 'second_interview_results']);
+
+    //Offers
+    Route::post('offers/approve/{offer}', [OfferController::class, 'approve'])->name('offers.approve');
+    Route::resource('offers', OfferController::class, ['names' => 'offers']);
 
 });
