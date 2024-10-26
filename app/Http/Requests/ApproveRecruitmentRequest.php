@@ -12,9 +12,9 @@ class ApproveRecruitmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return ('Đã kiểm tra' == $this->recruitment->status
-        || 'Đã duyệt' == $this->recruitment->status)
-        && 'Ban lãnh đạo' == Auth::user()->role->name;
+        return ('Đã kiểm tra' == $this->recruitment->status || 'Đã duyệt' == $this->recruitment->status)
+                &&
+                ('Admin' == Auth::user()->role->name ||'Ban lãnh đạo' == Auth::user()->role->name);
     }
 
     /**

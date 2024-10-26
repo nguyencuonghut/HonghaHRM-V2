@@ -30,7 +30,7 @@ class AnnouncementPolicy
      */
     public function create(User $user): bool
     {
-        return 'Nhân sự' == Auth::user()->role->name;
+        return 'Admin' == Auth::user()->role->name || 'Nhân sự' == Auth::user()->role->name;
     }
 
     /**
@@ -38,7 +38,7 @@ class AnnouncementPolicy
      */
     public function update(User $user, Announcement $announcement): bool
     {
-        return 'Nhân sự' == Auth::user()->role->name;
+        return 'Admin' == Auth::user()->role->name || 'Nhân sự' == Auth::user()->role->name;
     }
 
     /**
@@ -46,7 +46,7 @@ class AnnouncementPolicy
      */
     public function delete(User $user, Announcement $announcement): bool
     {
-        return 'Nhân sự' == Auth::user()->role->name;
+        return 'Admin' == Auth::user()->role->name || 'Nhân sự' == Auth::user()->role->name;
     }
 
     /**

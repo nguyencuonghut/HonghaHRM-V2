@@ -12,7 +12,7 @@ class ApprovePlanRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return 'Ban lãnh đạo' == Auth::user()->role->name;
+        return 'Admin' == Auth::user()->role->name || 'Ban lãnh đạo' == Auth::user()->role->name;
     }
 
     /**

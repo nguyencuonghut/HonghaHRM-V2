@@ -30,7 +30,7 @@ class PlanPolicy
      */
     public function create(User $user): bool
     {
-        return 'Nhân sự' == Auth::user()->role->name;
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
@@ -85,6 +85,6 @@ class PlanPolicy
 
     public function approve(User $user, Plan $plan): bool
     {
-        return 'Ban lãnh đạo' == Auth::user()->role->name;
+        return 'Admin' == Auth::user()->role->name || 'Ban lãnh đạo' == Auth::user()->role->name;
     }
 }

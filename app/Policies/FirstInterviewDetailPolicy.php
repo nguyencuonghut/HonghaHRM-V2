@@ -29,7 +29,7 @@ class FirstInterviewDetailPolicy
      */
     public function create(User $user): bool
     {
-        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+        return 'Admin' == $user->role->name || 'Ban lãnh đạo' == $user->role->name || 'Trưởng đơn vị' == $user->role->name;
     }
 
     /**
@@ -37,7 +37,7 @@ class FirstInterviewDetailPolicy
      */
     public function update(User $user, FirstInterviewDetail $firstInterviewDetail): bool
     {
-        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+        return 'Admin' == $user->role->name || 'Ban lãnh đạo' == $user->role->name || 'Trưởng đơn vị' == $user->role->name;
     }
 
     /**
@@ -45,7 +45,7 @@ class FirstInterviewDetailPolicy
      */
     public function delete(User $user, FirstInterviewDetail $firstInterviewDetail): bool
     {
-        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+        return 'Admin' == $user->role->name || 'Ban lãnh đạo' == $user->role->name || 'Trưởng đơn vị' == $user->role->name;
     }
 
     /**
