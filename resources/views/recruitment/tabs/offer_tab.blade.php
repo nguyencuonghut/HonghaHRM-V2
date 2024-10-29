@@ -49,12 +49,12 @@
                                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                             $action_approve_offer = '<a href="#approve_offer{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#approve_offer' . $recruitment_candidate->id. '"><i class="fas fa-check"></i></a>';
 
-                            //TODO: $action_create_employee = '<a href="' . route("admin.hr.employees.create_from_candidate", $recruitment_candidate->id) . '" class="btn btn-success btn-sm"' . $recruitment_candidate->id. '"><i class="fas fa-user-plus"></i></a>';
+                            $action_create_employee = '<a href="' . route("employees.create_from_candidate", $recruitment_candidate->id) . '" class="btn btn-success btn-sm"' . $recruitment_candidate->id. '"><i class="fas fa-user-plus"></i></a>';
                             $action = '';
                             if (Auth::user()->can('create', App\Models\Offer::class)) {
                                 $action = $action . $action_create_offer;
                                 if (null != $offer->result && 'Không đạt' != $offer->result) {
-                                    // $action = $action . $action_create_employee;
+                                    $action = $action . $action_create_employee;
                                 }
                             }
                             if (Auth::user()->can('approve', $offer)) {

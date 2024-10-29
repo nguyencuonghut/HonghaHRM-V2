@@ -188,13 +188,12 @@ class CandidateController extends Controller
             return redirect()->route('candidates.index');
         }
 
-        //TODO: heck if Candidate is used or not
+        //TODO: check if Candidate is used or not
         $candidate->delete();
 
         Alert::toast('Xóa ứng viên thành công!', 'success', 'top-rigth');
         return redirect()->route('candidates.index');
     }
-
 
     public function anyData()
     {

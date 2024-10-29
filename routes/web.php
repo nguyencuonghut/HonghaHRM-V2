@@ -8,6 +8,7 @@ use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\FirstInterviewDetailController;
@@ -159,5 +160,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Offers
     Route::post('offers/approve/{offer}', [OfferController::class, 'approve'])->name('offers.approve');
     Route::resource('offers', OfferController::class, ['names' => 'offers']);
+
+    //Employees
+    Route::get('employees/data', [EmployeeController::class, 'anyData'])->name('employees.data');
+    Route::get('employees/create_from_candidate/{recruitment_candidate_id}', [EmployeeController::class, 'createFromCandidate'])->name('employees.create_from_candidate');
+    Route::post('employees/store_from_candidate', [EmployeeController::class, 'storeFromCandidate'])->name('employees.store_from_candidate');
+    Route::resource('employees', EmployeeController::class, ['names' => 'employees']);
 
 });
