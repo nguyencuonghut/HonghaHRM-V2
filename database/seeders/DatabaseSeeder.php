@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             CommunesTableSeeder::class,
             SchoolsTableSeeder::class,
             DegreesTableSeeder::class,
+            ContractTypesTableSeeder::class,
         ]);
     }
 }

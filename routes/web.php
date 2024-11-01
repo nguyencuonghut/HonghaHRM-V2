@@ -4,6 +4,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommuneController;
+use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DistrictController;
@@ -167,4 +168,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('employees/store_from_candidate', [EmployeeController::class, 'storeFromCandidate'])->name('employees.store_from_candidate');
     Route::resource('employees', EmployeeController::class, ['names' => 'employees']);
 
+    //ContractTypes
+    Route::get('/contract_types/data', [ContractTypeController::class, 'anyData'])->name('contract_types.data');
+    Route::resource('contract_types', ContractTypeController::class, ['names' => 'contract_types']);
 });

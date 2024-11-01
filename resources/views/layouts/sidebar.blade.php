@@ -189,6 +189,16 @@
               </p>
             </a>
           </li>
+
+          <!-- ContractType -->
+          <li class="nav-item">
+            <a href="{{route('contract_types.index')}}" class="nav-link {{ Request::is('contract_types*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-th-list"></i>
+              <p>
+                Loại HĐ
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
