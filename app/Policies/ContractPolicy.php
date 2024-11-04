@@ -63,4 +63,9 @@ class ContractPolicy
     {
         //
     }
+
+    public function off(User $user, Contract $contract): bool
+    {
+        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+    }
 }

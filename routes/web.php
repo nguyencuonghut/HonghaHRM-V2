@@ -174,6 +174,10 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('contract_types', ContractTypeController::class, ['names' => 'contract_types']);
 
     //Contracts
+    Route::get('contracts/terminate_form/{contract}', [ContractController::class, 'terminateForm'])->name('contracts.terminate_form');
+    Route::post('contracts/off/{contract}', [ContractController::class, 'off'])->name('contracts.off');
+    Route::get('contracts/off/{contract}', [ContractController::class, 'getOff'])->name('contracts.getOff');
+    Route::resource('hr/contracts', ContractController::class, ['names' => 'hr.contracts']);
     Route::get('/contracts/data', [ContractController::class, 'anyData'])->name('contracts.data');
     Route::resource('contracts', ContractController::class, ['names' => 'contracts']);
 });

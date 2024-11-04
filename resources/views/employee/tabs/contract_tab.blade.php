@@ -36,6 +36,7 @@
                       @php
                           $position = App\Models\Position::findOrFail($contract->position_id);
                           $action_edit_contracts = '<a href="' . route("contracts.edit", $contract->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                  <a href="'.route("contracts.getOff", $contract->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
                                   <form style="display:inline" action="'. route("contracts.destroy", $contract->id) . '" method="POST">
                                   <input type="hidden" name="_method" value="DELETE">
                                   <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -85,11 +86,14 @@
                       <td>{{$contract->request_terminate_date ? date('d/m/Y', strtotime($contract->request_terminate_date)) : ''}}</td>
                       @php
                             $terminate_form_url = '';
-                            if ('Off' == $contract->status) {
-                                $terminate_form_url = '<a href="'.route("admin.hr.contracts.terminate_form", $contract->id) . '"><i class="fas fa-file-excel"></i></a>';
+                            if ('Off' == $contract->status
+                                && $contract->request_terminate_date) {
+                                $terminate_form_url = '<a href="'.route("contracts.terminate_form", $contract->id) . '"><i class="fas fa-file-excel"></i></a>';
                             }
                       @endphp
-                      <td>{!! $terminate_form_url !!}</td>
+                      <td>
+                        {!! $terminate_form_url !!}
+                      </td>
                       @can('create', App\Models\Contract::class)
                       <td>{!! $action !!}</td>
                       @endcan

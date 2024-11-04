@@ -45,7 +45,7 @@
                     <th>Ngày kết thúc</th>
                     <th>Trạng thái</th>
                     <th>File</th>
-                    <th>Thao tác</th>
+                    <th style="width:11%;">Thao tác</th>
                   </tr>
                   </thead>
                 </table>
