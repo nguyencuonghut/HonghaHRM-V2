@@ -4,6 +4,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommuneController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
@@ -171,4 +172,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     //ContractTypes
     Route::get('/contract_types/data', [ContractTypeController::class, 'anyData'])->name('contract_types.data');
     Route::resource('contract_types', ContractTypeController::class, ['names' => 'contract_types']);
+
+    //Contracts
+    Route::get('/contracts/data', [ContractController::class, 'anyData'])->name('contracts.data');
+    Route::resource('contracts', ContractController::class, ['names' => 'contracts']);
 });

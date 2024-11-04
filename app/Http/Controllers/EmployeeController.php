@@ -6,6 +6,8 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Candidate;
 use App\Models\Commune;
+use App\Models\Contract;
+use App\Models\ContractType;
 use App\Models\Degree;
 use App\Models\District;
 use App\Models\Employee;
@@ -134,7 +136,16 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return view('employee.show', ['employee' => $employee]);
+        $contracts = Contract::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+        $positions = Position::all();
+        $contract_types = ContractType::all();
+
+        return view('employee.show', [
+            'employee' => $employee,
+            'contracts' => $contracts,
+            'positions' => $positions,
+            'contract_types' => $contract_types,
+        ]);
     }
 
     /**

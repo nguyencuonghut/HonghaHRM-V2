@@ -49,12 +49,32 @@
             </ul>
           </li>
 
+          <!-- Canidate -->
+          <li class="nav-item">
+            <a href="{{route('candidates.index')}}" class="nav-link {{ Request::is('candidates*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user-plus"></i>
+              <p>
+                Ứng viên
+              </p>
+            </a>
+          </li>
+
           <!-- Employee -->
           <li class="nav-item">
             <a href="{{route('employees.index')}}" class="nav-link {{ Request::is('employees*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Nhân sự
+              </p>
+            </a>
+          </li>
+
+          <!-- Contract -->
+          <li class="nav-item">
+            <a href="{{route('contracts.index')}}" class="nav-link {{ Request::is('contracts*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-signature"></i>
+              <p>
+                Hợp đồng
               </p>
             </a>
           </li>
@@ -66,16 +86,6 @@
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Người dùng
-              </p>
-            </a>
-          </li>
-
-          <!-- Canidate -->
-          <li class="nav-item">
-            <a href="{{route('candidates.index')}}" class="nav-link {{ Request::is('candidates*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-plus"></i>
-              <p>
-                Ứng viên
               </p>
             </a>
           </li>
