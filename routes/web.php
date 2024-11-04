@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AppendixController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommuneController;
@@ -180,4 +181,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('hr/contracts', ContractController::class, ['names' => 'hr.contracts']);
     Route::get('/contracts/data', [ContractController::class, 'anyData'])->name('contracts.data');
     Route::resource('contracts', ContractController::class, ['names' => 'contracts']);
+
+    //Appendixes
+    Route::get('appendixes/data', [AppendixController::class, 'anyData'])->name('appendixes.data');
+    Route::post('appendixes/add/{contract_id}', [AppendixController::class, 'add'])->name('appendixes.add');
+    Route::get('appendixes/add/{contract_id}', [AppendixController::class, 'getAdd'])->name('appendixes.getAdd');
+    Route::resource('appendixes', AppendixController::class, ['names' => 'appendixes']);
+
 });

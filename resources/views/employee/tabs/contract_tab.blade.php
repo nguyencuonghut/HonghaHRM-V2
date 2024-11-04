@@ -37,6 +37,7 @@
                           $position = App\Models\Position::findOrFail($contract->position_id);
                           $action_edit_contracts = '<a href="' . route("contracts.edit", $contract->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
                                   <a href="'.route("contracts.getOff", $contract->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
+                                  <a href="'.route("appendixes.getAdd", $contract->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-code-branch"></i></a>
                                   <form style="display:inline" action="'. route("contracts.destroy", $contract->id) . '" method="POST">
                                   <input type="hidden" name="_method" value="DELETE">
                                   <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -202,7 +203,55 @@
         <div class="card-header">
             Phụ lục
         </div>
-        <!-- /.card-header -->
+
+        <div class="card-body">
+            <table id="employee-appendixes-table" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th>Số HĐ</th>
+                      <th>Số phụ lục</th>
+                      <th>Mô tả</th>
+                      <th>Lý do</th>
+                      <th>File</th>
+                      @can('create', App\Models\Appendix::class)
+                      <th>Thao tác</th>
+                      @endcan
+                    </tr>
+                  </thead>
+                  <tbody>
+                      @foreach ($appendixes as $appendix)
+                      <tr>
+                          <td>{{$appendix->contract->code}}</td>
+                          <td>{{$appendix->code}}</td>
+                          <td>{!! $appendix->description !!}</td>
+                          <td>{{$appendix->reason}}</td>
+                        @php
+                            $action_edit_appendixes = '<a href="' . route("appendixes.edit", $appendix->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                    <form style="display:inline" action="'. route("appendixes.destroy", $appendix->id) . '" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+
+                            $action = '';
+                            if (Auth::user()->can('create', App\Models\Appendix::class)) {
+                                $action = $action . $action_edit_appendixes;
+                            }
+                        @endphp
+                        @php
+                              $url = '';
+                              if ($appendix->file_path) {
+                                  $url .= '<a target="_blank" href="../../../' . $appendix->file_path . '"><i class="far fa-file-pdf"></i></a>';
+                              }
+                        @endphp
+                        <td>{!! $url !!}</td>
+                        @can('create', App\Models\Appendix::class)
+                        <td>{!! $action !!}</td>
+                        @endcan
+                      </tr>
+                    @endforeach
+                  </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

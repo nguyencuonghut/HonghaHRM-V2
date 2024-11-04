@@ -79,6 +79,16 @@
             </a>
           </li>
 
+          <!-- Appendix -->
+          <li class="nav-item">
+            <a href="{{route('appendixes.index')}}" class="nav-link {{ Request::is('appendixes*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-code-branch"></i>
+              <p>
+                Phụ lục
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Models\Appendix;
 use App\Models\Candidate;
 use App\Models\Commune;
 use App\Models\Contract;
@@ -137,6 +138,7 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         $contracts = Contract::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+        $appendixes = Appendix::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $positions = Position::all();
         $contract_types = ContractType::all();
 
@@ -145,6 +147,7 @@ class EmployeeController extends Controller
             'contracts' => $contracts,
             'positions' => $positions,
             'contract_types' => $contract_types,
+            'appendixes' => $appendixes,
         ]);
     }
 
