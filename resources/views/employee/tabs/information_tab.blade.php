@@ -6,7 +6,41 @@
           <span class="username">
             <a href="#">{{$employee->code}} - {{$employee->name}}</a>
           </span>
-          <span class="description">TODO: QT công tác</span>
+
+          @php
+            $works = App\Models\Work::where('employee_id', $employee->id)->where('status', 'On')->get();
+            $work_str = '';
+            $i = 0;
+            $length = count($works);
+            // Trường hợp nhân sự đang có QT công tác ở trạng thái On
+            if ($length) {
+                foreach ($works as $work) {
+                    $position = App\Models\Position::findOrFail($work->position_id);
+                    if(++$i === $length) {
+                        $work_str .= $position->name . ' - ' . $position->department->name;
+                    } else {
+                        $work_str .= $position->name . ' - ' . $position->department->name . ' | ';
+                    }
+                }
+            }
+            // Trường hợp nhân sự đang không có QT công tác ở trạng thái On
+            else {
+                // Trường hợp đã có QT công tác, nhưng ở trạng thái Off
+                $off_works = App\Models\Work::where('employee_id', $employee->id)->where('status', 'Off')->get();
+                $latest_work = App\Models\Work::where('employee_id', $employee->id)->where('status', 'Off')->orderBy('id', 'desc')->first();
+                if ($off_works->count()) {
+                    if ($latest_work->off_type) {
+                        $work_str .= $latest_work->position->name . ' - ' . $latest_work->off_type->name;
+                    } else {
+                        $work_str .= $latest_work->position->name;
+                    }
+                } else {
+                    $work_str .= '!! Chưa tạo QT công tác !!';
+                }
+            }
+          @endphp
+
+          <span class="description">{{$work_str}}</span>
         </div>
         <!-- /.user-block -->
         <div class="row invoice-info">

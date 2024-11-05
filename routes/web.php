@@ -34,6 +34,7 @@ use App\Http\Controllers\SecondInterviewDetailController;
 use App\Http\Controllers\SecondInterviewInvitationController;
 use App\Http\Controllers\SecondInterviewResultController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -187,5 +188,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('appendixes/add/{contract_id}', [AppendixController::class, 'add'])->name('appendixes.add');
     Route::get('appendixes/add/{contract_id}', [AppendixController::class, 'getAdd'])->name('appendixes.getAdd');
     Route::resource('appendixes', AppendixController::class, ['names' => 'appendixes']);
+
+    //Works
+    Route::get('works/data', [WorkController::class, 'anyData'])->name('works.data');
+    Route::post('works/off/{work}', [WorkController::class, 'off'])->name('works.off');
+    Route::get('works/off/{work}', [WorkController::class, 'getOff'])->name('works.getOff');
+    Route::resource('works', WorkController::class, ['names' => 'works']);
 
 });

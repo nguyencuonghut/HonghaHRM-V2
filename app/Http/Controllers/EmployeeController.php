@@ -13,12 +13,14 @@ use App\Models\Degree;
 use App\Models\District;
 use App\Models\Employee;
 use App\Models\EmployeeSchool;
+use App\Models\OnType;
 use App\Models\Position;
 use App\Models\Province;
 use App\Models\Recruitment;
 use App\Models\RecruitmentCandidate;
 use App\Models\School;
 use App\Models\UserDepartment;
+use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -139,8 +141,10 @@ class EmployeeController extends Controller
     {
         $contracts = Contract::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $appendixes = Appendix::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+        $works = Work::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $positions = Position::all();
         $contract_types = ContractType::all();
+        $on_types = OnType::all();
 
         return view('employee.show', [
             'employee' => $employee,
@@ -148,6 +152,8 @@ class EmployeeController extends Controller
             'positions' => $positions,
             'contract_types' => $contract_types,
             'appendixes' => $appendixes,
+            'works' => $works,
+            'on_types' => $on_types,
         ]);
     }
 

@@ -89,6 +89,16 @@
             </a>
           </li>
 
+          <!-- Work -->
+          <li class="nav-item">
+            <a href="{{route('works.index')}}" class="nav-link {{ Request::is('works*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user-clock"></i>
+              <p>
+                Công tác
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">
