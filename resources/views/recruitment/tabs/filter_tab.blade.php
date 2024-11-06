@@ -90,7 +90,6 @@
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td></td>
                       @endif
                       <td>{{$recruitment_candidate->batch}}</td>
                       @can('create', App\Models\Filter::class)
