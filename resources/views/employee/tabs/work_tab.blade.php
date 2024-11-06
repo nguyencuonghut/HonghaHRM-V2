@@ -52,7 +52,7 @@
                             if ($position->division_id) {
                                 $position_str .= $position->name . ' - '. $position->division->name . ' - ' . $position->department->name;
                             } else {
-                                $position_str .= $companpositiony_job->name . ' - ' . $position->department->name;
+                                $position_str .= $position->name . ' - ' . $position->department->name;
                             }
                         @endphp
                         {!! $position_str !!}

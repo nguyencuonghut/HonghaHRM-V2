@@ -33,9 +33,9 @@
                       <div class="card-header p-0 pt-1 border-bottom-0">
                         <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                             <li class="nav-item"><a class="nav-link active" href="#tab-information" data-toggle="tab">Thông tin</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-salary" data-toggle="tab">Lương</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-contract" data-toggle="tab">Hợp đồng</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-work" data-toggle="tab">Công tác</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-salary" data-toggle="tab">Lương</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-document" data-toggle="tab">Hồ sơ</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-probation" data-toggle="tab">Thử việc</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-family" data-toggle="tab">Gia đình</a></li>
@@ -50,9 +50,9 @@
                       <div class="card-body">
                         <div class="tab-content">
                           @include('employee.tabs.information_tab')
-                          @include('employee.tabs.salary_tab')
                           @include('employee.tabs.contract_tab')
                           @include('employee.tabs.work_tab')
+                          @include('employee.tabs.salary_tab')
                           @include('employee.tabs.document_tab')
                           @include('employee.tabs.probation_tab')
                           @include('employee.tabs.family_tab')

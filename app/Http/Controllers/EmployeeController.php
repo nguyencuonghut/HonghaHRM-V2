@@ -289,9 +289,9 @@ class EmployeeController extends Controller
             // $positions_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
             // $employee_ids = EmployeeWork::whereIn('company_job_id', $positions_ids)->pluck('employee_id')->toArray();
             // $employees = Employee::with(['commune'])->whereIn('id', $employee_ids)->orderBy('code', 'desc')->get();
-            $data = Employee::with(['commune'])->orderBy('code', 'desc')->get();
+            $data = Employee::with(['commune'])->orderBy('code', 'asc')->get();
         } else {
-            $data = Employee::with(['commune'])->orderBy('code', 'desc')->get();
+            $data = Employee::with(['commune'])->orderBy('code', 'asc')->get();
         }
         return DataTables::of($data)
             ->addIndexColumn()

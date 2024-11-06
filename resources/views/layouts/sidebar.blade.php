@@ -99,6 +99,16 @@
             </a>
           </li>
 
+          <!-- Salry -->
+          <li class="nav-item">
+            <a href="{{route('salaries.index')}}" class="nav-link {{ Request::is('salaries*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-hand-holding-usd"></i>
+              <p>
+                Lương
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">

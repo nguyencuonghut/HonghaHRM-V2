@@ -29,6 +29,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SecondInterviewDetailController;
 use App\Http\Controllers\SecondInterviewInvitationController;
@@ -194,5 +195,12 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('works/off/{work}', [WorkController::class, 'off'])->name('works.off');
     Route::get('works/off/{work}', [WorkController::class, 'getOff'])->name('works.getOff');
     Route::resource('works', WorkController::class, ['names' => 'works']);
+
+    //Salary
+    Route::get('salaries/off/{salary}', [SalaryController::class, 'getOff'])->name('salaries.getOff');
+    Route::post('salaries/off/{salary}', [SalaryController::class, 'off'])->name('salaries.off');
+    Route::get('salaries/data', [SalaryController::class, 'anyData'])->name('salaries.data');
+    Route::get('salaries/employeeData/{employee_id}', [SalaryController::class, 'employeeData'])->name('salaries.employeeData');
+    Route::resource('salaries', SalaryController::class, ['names' => 'salaries']);
 
 });
