@@ -68,4 +68,9 @@ class ContractPolicy
     {
         return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
     }
+
+    public function export(User $user, Contract $contract): bool
+    {
+        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+    }
 }

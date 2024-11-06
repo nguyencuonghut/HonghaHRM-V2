@@ -74,7 +74,7 @@
                         </span>
                       </td>
                       @php
-                            $contract_form_url = '<a href="' . '"><i class="fas fa-file-excel"></i></a>';
+                            $contract_form_url = '<a href="'.route("contracts.export", $contract->id) . '"><i class="fas fa-file-excel"></i></a>';
                       @endphp
                       <td>{!! $contract_form_url !!}</td>
                       @php
