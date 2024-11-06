@@ -57,6 +57,9 @@
                           <li class="nav-item">
                             <a class="nav-link" id="recruitment-tab-9" data-toggle="pill" href="#recruitment-9" role="tab" aria-controls="recruitment-9" aria-selected="false">Offer chế độ</a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="recruitment-tab-10" data-toggle="pill" href="#recruitment-10" role="tab" aria-controls="recruitment-10" aria-selected="false">Báo cáo</a>
+                          </li>
                         </ul>
                       </div>
                       <div class="card-body">
@@ -70,6 +73,7 @@
                             @include('recruitment.tabs.first_interview_tab')
                             @include('recruitment.tabs.second_interview_tab')
                             @include('recruitment.tabs.offer_tab')
+                            @include('recruitment.tabs.report_tab')
                       </div>
                       <!-- /.card -->
                     </div>
