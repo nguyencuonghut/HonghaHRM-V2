@@ -41,6 +41,7 @@
                                     <a href="' . route("first_interview_invitations.feedback", $recruitment_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i></a>';
                                 } else {
                                     $action = '<a href="#filter{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '"><i class="fas fa-filter"></i></a>
+                                    <a href="' . route("first_interview_invitations.add", $recruitment_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>
                                     <form style="display:inline" action="'. route("filters.destroy", $filter->id) . '" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>

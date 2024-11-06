@@ -12,7 +12,7 @@ class ApproveOfferRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return 'Admin' == Auth::user()->role->name || 'Ban giám đốc' == Auth::user()->role->name;
+        return 'Admin' == Auth::user()->role->name || 'Ban lãnh đạo' == Auth::user()->role->name;
     }
 
     /**

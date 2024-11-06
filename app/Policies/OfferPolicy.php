@@ -66,6 +66,6 @@ class OfferPolicy
 
     public function approve(User $user, Offer $offer): bool
     {
-        return 'Admin' == $user->role->name || 'Ban giám đốc' == $user->role->name;
+        return 'Admin' == $user->role->name || 'Ban lãnh đạo' == $user->role->name;
     }
 }

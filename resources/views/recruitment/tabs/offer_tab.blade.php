@@ -34,9 +34,11 @@
                             <th>Ghi chú</th>
                             <th>Phản hồi</th>
                             <th>Kết quả</th>
-                            @can('create', App\Models\Offer::class)
-                            <th>Thao tác</th>
-                            @endcan
+                            @if (Auth::user()->can('create', App\Models\Offer::class)
+                            || Auth::user()->can('update', $offer)
+                            || Auth::user()->can('approve', $offer))
+                                <th>Thao tác</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +60,7 @@
                                 }
                             }
                             if (Auth::user()->can('approve', $offer)) {
-                                $action = $action . $action_approve_offer;
+                                $action = $action . '&nbsp' . $action_approve_offer;
                             }
                           @endphp
                           <tr>
