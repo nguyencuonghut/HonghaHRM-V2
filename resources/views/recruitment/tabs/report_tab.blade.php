@@ -44,7 +44,7 @@
                             <br>
                             <i class="fas fa-graduation-cap">
                             </i>
-                            <small>
+                            <small style="margin:5px;">
                               @php
                                   $schools_info = '';
 
