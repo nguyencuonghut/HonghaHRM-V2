@@ -239,6 +239,16 @@
               </p>
             </a>
           </li>
+
+          <!-- DocType -->
+          <li class="nav-item">
+            <a href="{{route('doc_types.index')}}" class="nav-link {{ Request::is('doc_types*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Loại giấy tờ
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

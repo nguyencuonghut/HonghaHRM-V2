@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             ContractTypesTableSeeder::class,
             OnTypesTableSeeder::class,
             OffTypesTableSeeder::class,
+            DocTypesTableSeeder::class,
         ]);
     }
 }

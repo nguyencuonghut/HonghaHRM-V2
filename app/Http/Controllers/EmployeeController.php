@@ -11,6 +11,8 @@ use App\Models\Contract;
 use App\Models\ContractType;
 use App\Models\Degree;
 use App\Models\District;
+use App\Models\DocType;
+use App\Models\Document;
 use App\Models\Employee;
 use App\Models\EmployeeSchool;
 use App\Models\OnType;
@@ -142,9 +144,11 @@ class EmployeeController extends Controller
         $contracts = Contract::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $appendixes = Appendix::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $works = Work::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+        $documents = Document::where('employee_id', $employee->id)->get();
         $positions = Position::all();
         $contract_types = ContractType::all();
         $on_types = OnType::all();
+        $doc_types = DocType::all();
 
         return view('employee.show', [
             'employee' => $employee,
@@ -152,8 +156,10 @@ class EmployeeController extends Controller
             'positions' => $positions,
             'contract_types' => $contract_types,
             'appendixes' => $appendixes,
+            'documents' => $documents,
             'works' => $works,
             'on_types' => $on_types,
+            'doc_types' => $doc_types,
         ]);
     }
 

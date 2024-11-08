@@ -11,6 +11,8 @@ use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\DocTypeController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\FilterController;
@@ -203,4 +205,10 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('salaries/employeeData/{employee_id}', [SalaryController::class, 'employeeData'])->name('salaries.employeeData');
     Route::resource('salaries', SalaryController::class, ['names' => 'salaries']);
 
+    //DocTypes
+    Route::get('doc_types/data', [DocTypeController::class, 'anyData'])->name('doc_types.data');
+    Route::resource('doc_types', DocTypeController::class);
+
+    //Documents
+    Route::resource('documents', DocumentController::class);
 });
