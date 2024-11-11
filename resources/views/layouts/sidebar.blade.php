@@ -109,6 +109,16 @@
             </a>
           </li>
 
+          <!-- Probation -->
+          <li class="nav-item">
+            <a href="{{route('probations.index')}}" class="nav-link {{ Request::is('probations*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-hourglass-start"></i>
+              <p>
+                Thử việc
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">

@@ -27,6 +27,8 @@ use App\Http\Controllers\MethodController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ProbationController;
+use App\Http\Controllers\ProbationPlanController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
@@ -211,4 +213,14 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     //Documents
     Route::resource('documents', DocumentController::class);
+
+    //Probations
+    Route::post('probations/approve/{probation}', [ProbationController::class, 'approve'])->name('probations.approve');
+    Route::post('probations/review/{probation}', [ProbationController::class, 'review'])->name('probations.review');
+    Route::post('probations/evaluate/{probation}', [ProbationController::class, 'evaluate'])->name('probations.evaluate');
+    Route::get('probations/data', [ProbationController::class, 'anyData'])->name('probations.data');
+    Route::resource('probations', ProbationController::class, ['names' => 'probations']);
+
+    //ProbationPlans
+    Route::resource('probation_plans', ProbationPlanController::class);
 });

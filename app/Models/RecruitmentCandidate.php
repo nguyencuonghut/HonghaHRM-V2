@@ -23,4 +23,9 @@ class RecruitmentCandidate extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function recruitment(): BelongsTo
+    {
+        return $this->belongsTo(Recruitment::class);
+    }
 }
