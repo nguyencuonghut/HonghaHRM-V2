@@ -15,6 +15,7 @@ use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExaminationController;
+use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\FirstInterviewDetailController;
 use App\Http\Controllers\FirstInterviewInvitationController;
@@ -223,4 +224,7 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     //ProbationPlans
     Route::resource('probation_plans', ProbationPlanController::class);
+
+    //Families
+    Route::resource('families', FamilyController::class);
 });

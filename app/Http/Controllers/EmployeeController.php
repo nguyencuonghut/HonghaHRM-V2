@@ -15,6 +15,7 @@ use App\Models\DocType;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\EmployeeSchool;
+use App\Models\Family;
 use App\Models\OnType;
 use App\Models\Position;
 use App\Models\Probation;
@@ -147,6 +148,7 @@ class EmployeeController extends Controller
         $works = Work::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $documents = Document::where('employee_id', $employee->id)->get();
         $probations = Probation::where('employee_id', $employee->id)->get();
+        $families = Family::where('employee_id', $employee->id)->get();
         $positions = Position::all();
         $contract_types = ContractType::all();
         $on_types = OnType::all();
@@ -163,6 +165,7 @@ class EmployeeController extends Controller
             'on_types' => $on_types,
             'doc_types' => $doc_types,
             'probations' => $probations,
+            'families' => $families,
         ]);
     }
 
