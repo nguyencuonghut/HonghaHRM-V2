@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
             OnTypesTableSeeder::class,
             OffTypesTableSeeder::class,
             DocTypesTableSeeder::class,
+            InsuranceTypesTableSeeder::class,
+            RegimeTypesTableSeeder::class,
         ]);
     }
 }

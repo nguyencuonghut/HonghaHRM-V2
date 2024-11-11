@@ -22,6 +22,7 @@ use App\Http\Controllers\FirstInterviewInvitationController;
 use App\Http\Controllers\FirstInterviewResultController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InitialInterviewController;
+use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MethodController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\ProbationPlanController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
+use App\Http\Controllers\RegimeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SchoolController;
@@ -227,4 +229,13 @@ Route::group(['middleware'=>'auth:web'], function() {
 
     //Families
     Route::resource('families', FamilyController::class);
+
+    //Insurances
+    Route::get('insurances/data', [InsuranceController::class, 'anyData'])->name('insurances.data');
+    Route::resource('insurances', InsuranceController::class, ['names' => 'insurances']);
+
+    //Regimes
+    Route::get('regimes/data', [RegimeController::class, 'anyData'])->name('regimes.data');
+    Route::resource('regimes', RegimeController::class, ['names' => 'regimes']);
+
 });

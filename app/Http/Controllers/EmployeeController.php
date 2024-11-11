@@ -16,12 +16,16 @@ use App\Models\Document;
 use App\Models\Employee;
 use App\Models\EmployeeSchool;
 use App\Models\Family;
+use App\Models\Insurance;
+use App\Models\InsuranceType;
 use App\Models\OnType;
 use App\Models\Position;
 use App\Models\Probation;
 use App\Models\Province;
 use App\Models\Recruitment;
 use App\Models\RecruitmentCandidate;
+use App\Models\Regime;
+use App\Models\RegimeType;
 use App\Models\School;
 use App\Models\UserDepartment;
 use App\Models\Work;
@@ -149,10 +153,14 @@ class EmployeeController extends Controller
         $documents = Document::where('employee_id', $employee->id)->get();
         $probations = Probation::where('employee_id', $employee->id)->get();
         $families = Family::where('employee_id', $employee->id)->get();
+        $insurances = Insurance::where('employee_id', $employee->id)->get();
+        $regimes = Regime::where('employee_id', $employee->id)->get();
         $positions = Position::all();
         $contract_types = ContractType::all();
         $on_types = OnType::all();
         $doc_types = DocType::all();
+        $insurance_types = InsuranceType::all();
+        $regime_types = RegimeType::all();
 
         return view('employee.show', [
             'employee' => $employee,
@@ -166,6 +174,10 @@ class EmployeeController extends Controller
             'doc_types' => $doc_types,
             'probations' => $probations,
             'families' => $families,
+            'insurances' => $insurances,
+            'regimes' => $regimes,
+            'insurance_types' => $insurance_types,
+            'regime_types' => $regime_types,
         ]);
     }
 

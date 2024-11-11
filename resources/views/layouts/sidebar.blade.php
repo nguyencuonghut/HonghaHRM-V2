@@ -119,6 +119,26 @@
             </a>
           </li>
 
+          <!-- Insurance -->
+          <li class="nav-item">
+            <a href="{{route('insurances.index')}}" class="nav-link {{ Request::is('insurances*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-hand-holding-medical"></i>
+              <p>
+                Bảo hiểm
+              </p>
+            </a>
+          </li>
+
+          <!-- Regime -->
+          <li class="nav-item">
+            <a href="{{route('regimes.index')}}" class="nav-link {{ Request::is('regimes*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-hands"></i>
+              <p>
+                Chế độ
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">
