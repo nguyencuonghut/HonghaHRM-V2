@@ -1,4 +1,4 @@
-<!-- Probation Tab -->
+<!-- Probation Tab -->typ
 <div class="tab-pane" id="tab-probation">
     @php
         //Find the Recruitment according to this Employee
@@ -50,7 +50,8 @@
             <tr>
               @php
                   $probation = App\Models\Probation::findOrFail($probation->id);
-                  $action_edit_probation = '<a href="' . route("probations.edit", $probation->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                  $action_edit_probation = '<a href="' . route("probations.show", $probation->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                          <a href="' . route("probations.edit", $probation->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                           <form style="display:inline" action="'. route("probations.destroy", $probation->id) . '" method="POST">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>

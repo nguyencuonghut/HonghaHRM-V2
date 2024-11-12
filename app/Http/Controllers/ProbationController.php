@@ -225,7 +225,8 @@ class ProbationController extends Controller
                 }
             })
             ->addColumn('actions', function ($data) {
-                $action = '<a href="' . route("probations.edit", $data->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                $action = '<a href="' . route("probations.show", $data->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                           <a href="' . route("probations.edit", $data->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                            <form style="display:inline" action="'. route("probations.destroy", $data->id) . '" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
