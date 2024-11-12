@@ -89,6 +89,11 @@ class FirstInterviewInvitationController extends Controller
      */
     public function update(UpdateFirstInterviewInvitationRequest $request, FirstInterviewInvitation $firstInterviewInvitation)
     {
+        if (Auth::user()->cannot('update', $firstInterviewInvitation)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $firstInterviewInvitation->feedback = $request->feedback;
         if ($request->note) {
             $firstInterviewInvitation->note = $request->note;
