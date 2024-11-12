@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Welfare;
+use App\Models\YearReview;
 use Illuminate\Auth\Access\Response;
 
-class WelfarePolicy
+class YearReviewPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class WelfarePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Welfare $welfare): bool
+    public function view(User $user, YearReview $yearReview): bool
     {
         //
     }
@@ -29,29 +29,29 @@ class WelfarePolicy
      */
     public function create(User $user): bool
     {
-        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Welfare $welfare): bool
+    public function update(User $user, YearReview $yearReview): bool
     {
-        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Welfare $welfare): bool
+    public function delete(User $user, YearReview $yearReview): bool
     {
-        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Welfare $welfare): bool
+    public function restore(User $user, YearReview $yearReview): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class WelfarePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Welfare $welfare): bool
+    public function forceDelete(User $user, YearReview $yearReview): bool
     {
         //
     }

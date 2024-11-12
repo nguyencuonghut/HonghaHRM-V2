@@ -18,6 +18,7 @@ use App\Models\EmployeeSchool;
 use App\Models\Family;
 use App\Models\Insurance;
 use App\Models\InsuranceType;
+use App\Models\Kpi;
 use App\Models\OnType;
 use App\Models\Position;
 use App\Models\Probation;
@@ -158,6 +159,7 @@ class EmployeeController extends Controller
         $insurances = Insurance::where('employee_id', $employee->id)->get();
         $regimes = Regime::where('employee_id', $employee->id)->get();
         $welfares = Welfare::where('employee_id', $employee->id)->get();
+        $kpis = Kpi::where('employee_id', $employee->id)->get();
         $positions = Position::all();
         $contract_types = ContractType::all();
         $on_types = OnType::all();
@@ -165,6 +167,17 @@ class EmployeeController extends Controller
         $insurance_types = InsuranceType::all();
         $regime_types = RegimeType::all();
         $welfare_types = WelfareType::all();
+
+        $this_year_total_kpi = 0;
+        $this_year_my_kpis = Kpi::where('employee_id', $employee->id)->where('year', Carbon::now()->year)->get();
+        foreach ($this_year_my_kpis as $this_year_my_kpi) {
+            $this_year_total_kpi += $this_year_my_kpi->score;
+        }
+        if ($this_year_my_kpis->count()) {
+            $this_year_kpi_average = $this_year_total_kpi/$this_year_my_kpis->count();
+        } else {
+            $this_year_kpi_average = 0;
+        }
 
         return view('employee.show', [
             'employee' => $employee,
@@ -184,6 +197,8 @@ class EmployeeController extends Controller
             'regime_types' => $regime_types,
             'welfares' => $welfares,
             'welfare_types' => $welfare_types,
+            'kpis' => $kpis,
+            'this_year_kpi_average' => $this_year_kpi_average,
         ]);
     }
 

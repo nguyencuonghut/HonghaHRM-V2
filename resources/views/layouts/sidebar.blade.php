@@ -149,6 +149,26 @@
             </a>
           </li>
 
+          <!-- Kpi -->
+          <li class="nav-item">
+            <a href="{{route('kpis.index')}}" class="nav-link {{ Request::is('kpis*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                KPI
+              </p>
+            </a>
+          </li>
+
+          <!-- YearReview -->
+          <li class="nav-item">
+            <a href="{{route('year_reviews.index')}}" class="nav-link {{ Request::is('year_reviews*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-medal"></i>
+              <p>
+                Đánh giá năm
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">

@@ -23,6 +23,7 @@ use App\Http\Controllers\FirstInterviewResultController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InitialInterviewController;
 use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\KpiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MethodController;
@@ -44,6 +45,7 @@ use App\Http\Controllers\SecondInterviewResultController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WelfareController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\YearReviewController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -242,5 +244,15 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Welfares
     Route::get('welfares/data', [WelfareController::class, 'anyData'])->name('welfares.data');
     Route::resource('welfares', WelfareController::class, ['names' => 'welfares']);
+
+    //Kpi
+    Route::get('kpis/employeeData/{employee_id}', [KpiController::class, 'employeeData'])->name('kpis.employeeData');
+    Route::get('kpis/data', [KpiController::class, 'anyData'])->name('kpis.data');
+    Route::resource('kpis', KpiController::class, ['names' => 'kpis']);
+
+    //YearReview
+    Route::get('hyear_reviews/data', [YearReviewController::class, 'anyData'])->name('year_reviews.data');
+    Route::get('year_reviews/employeeData/{employee_id}', [YearReviewController::class, 'employeeData'])->name('year_reviews.employeeData');
+    Route::resource('year_reviews', YearReviewController::class, ['names' => 'year_reviews']);
 
 });
