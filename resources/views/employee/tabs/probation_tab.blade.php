@@ -1,4 +1,4 @@
-<!-- Probation Tab -->typ
+<!-- Probation Tab -->
 <div class="tab-pane" id="tab-probation">
     @php
         //Find the Recruitment according to this Employee
