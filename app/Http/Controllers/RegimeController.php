@@ -78,7 +78,7 @@ class RegimeController extends Controller
      */
     public function edit(Regime $regime)
     {
-        if (Auth::user()->cannot('create', $regime)) {
+        if (Auth::user()->cannot('update', $regime)) {
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
             return redirect()->back();
         }

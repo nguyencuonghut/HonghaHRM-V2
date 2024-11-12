@@ -162,9 +162,29 @@
           <!-- YearReview -->
           <li class="nav-item">
             <a href="{{route('year_reviews.index')}}" class="nav-link {{ Request::is('year_reviews*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-medal"></i>
+                <i class="nav-icon fas fa-calendar-check"></i>
               <p>
                 Đánh giá năm
+              </p>
+            </a>
+          </li>
+
+          <!-- Reward -->
+          <li class="nav-item">
+            <a href="{{route('rewards.index')}}" class="nav-link {{ Request::is('rewards*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-medal"></i>
+              <p>
+                Khen thưởng
+              </p>
+            </a>
+          </li>
+
+          <!-- Discipline -->
+          <li class="nav-item">
+            <a href="{{route('disciplines.index')}}" class="nav-link {{ Request::is('disciplines*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-gavel"></i>
+              <p>
+                Kỷ luật
               </p>
             </a>
           </li>

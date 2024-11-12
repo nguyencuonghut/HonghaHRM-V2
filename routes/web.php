@@ -9,6 +9,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\DocTypeController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RegimeController;
+use App\Http\Controllers\RewardController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SchoolController;
@@ -254,5 +256,15 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('hyear_reviews/data', [YearReviewController::class, 'anyData'])->name('year_reviews.data');
     Route::get('year_reviews/employeeData/{employee_id}', [YearReviewController::class, 'employeeData'])->name('year_reviews.employeeData');
     Route::resource('year_reviews', YearReviewController::class, ['names' => 'year_reviews']);
+
+    //Rewards
+    Route::get('rewards/data', [RewardController::class, 'anyData'])->name('rewards.data');
+    Route::get('rewards/employeeData/{employee_id}', [RewardController::class, 'employeeData'])->name('rewards.employeeData');
+    Route::resource('rewards', RewardController::class, ['names' => 'rewards']);
+
+    //Discipline
+    Route::get('disciplines/data', [DisciplineController::class, 'anyData'])->name('disciplines.data');
+    Route::get('disciplines/employeeData/{employee_id}', [DisciplineController::class, 'employeeData'])->name('disciplines.employeeData');
+    Route::resource('disciplines', DisciplineController::class, ['names' => 'disciplines']);
 
 });
