@@ -88,7 +88,11 @@ class ContractTypeController extends Controller
             return redirect()->route('contract_types.index');
         }
 
-        //TODO: Check if ContractType is used or not
+        //Check if ContractType is used or not
+        if ($contractType->contracts->count()) {
+            Alert::toast('Loại hợp đồng đang được sử dụng. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('contract_types.index');
+        }
         $contractType->delete();
 
         Alert::toast('Xóa loại hợp đồng thành công!', 'success', 'top-rigth');
