@@ -101,7 +101,12 @@ class CommuneController extends Controller
             return redirect()->route('communes.index');
         }
 
-        //TODO: Check if Commune is used or not
+        //Check if Commune is used or not
+        if ($commune->employees->count()
+            || $commune->candidates->count()) {
+            Alert::toast('Phường xã này đang được sử dụng. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('communes.index');
+        }
 
         $commune->delete();
 
