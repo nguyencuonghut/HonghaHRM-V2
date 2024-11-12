@@ -28,6 +28,8 @@ use App\Models\Regime;
 use App\Models\RegimeType;
 use App\Models\School;
 use App\Models\UserDepartment;
+use App\Models\Welfare;
+use App\Models\WelfareType;
 use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -155,12 +157,14 @@ class EmployeeController extends Controller
         $families = Family::where('employee_id', $employee->id)->get();
         $insurances = Insurance::where('employee_id', $employee->id)->get();
         $regimes = Regime::where('employee_id', $employee->id)->get();
+        $welfares = Welfare::where('employee_id', $employee->id)->get();
         $positions = Position::all();
         $contract_types = ContractType::all();
         $on_types = OnType::all();
         $doc_types = DocType::all();
         $insurance_types = InsuranceType::all();
         $regime_types = RegimeType::all();
+        $welfare_types = WelfareType::all();
 
         return view('employee.show', [
             'employee' => $employee,
@@ -178,6 +182,8 @@ class EmployeeController extends Controller
             'regimes' => $regimes,
             'insurance_types' => $insurance_types,
             'regime_types' => $regime_types,
+            'welfares' => $welfares,
+            'welfare_types' => $welfare_types,
         ]);
     }
 

@@ -42,6 +42,7 @@ use App\Http\Controllers\SecondInterviewDetailController;
 use App\Http\Controllers\SecondInterviewInvitationController;
 use App\Http\Controllers\SecondInterviewResultController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\WelfareController;
 use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Route;
 
@@ -237,5 +238,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     //Regimes
     Route::get('regimes/data', [RegimeController::class, 'anyData'])->name('regimes.data');
     Route::resource('regimes', RegimeController::class, ['names' => 'regimes']);
+
+    //Welfares
+    Route::get('welfares/data', [WelfareController::class, 'anyData'])->name('welfares.data');
+    Route::resource('welfares', WelfareController::class, ['names' => 'welfares']);
 
 });

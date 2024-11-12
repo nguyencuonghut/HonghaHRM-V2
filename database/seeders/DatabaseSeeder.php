@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             DocTypesTableSeeder::class,
             InsuranceTypesTableSeeder::class,
             RegimeTypesTableSeeder::class,
+            WelfareTypesTableSeeder::class,
         ]);
     }
 }

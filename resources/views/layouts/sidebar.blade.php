@@ -139,6 +139,16 @@
             </a>
           </li>
 
+          <!-- Welfare -->
+          <li class="nav-item">
+            <a href="{{route('welfares.index')}}" class="nav-link {{ Request::is('welfares*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-hand-holding-heart"></i>
+              <p>
+                Phúc lợi
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">
