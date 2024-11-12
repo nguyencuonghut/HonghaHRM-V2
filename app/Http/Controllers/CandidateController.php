@@ -188,7 +188,11 @@ class CandidateController extends Controller
             return redirect()->route('candidates.index');
         }
 
-        //TODO: check if Candidate is used or not
+        //Check if Candidate is used or not
+        if ($candidate->recruitments) {
+            Alert::toast('Ứng viên đang được sử dụng. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('candidates.index');
+        }
         $candidate->delete();
 
         Alert::toast('Xóa ứng viên thành công!', 'success', 'top-rigth');
