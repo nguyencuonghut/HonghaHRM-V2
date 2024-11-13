@@ -329,12 +329,11 @@ class EmployeeController extends Controller
     public function anyData()
     {
         if ('Trưởng đơn vị' == Auth::user()->role->name) {
-            //TODO: Only fetch the Employee according to User's Department
-            // $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
-            // $positions_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
-            // $employee_ids = EmployeeWork::whereIn('company_job_id', $positions_ids)->pluck('employee_id')->toArray();
-            // $employees = Employee::with(['commune'])->whereIn('id', $employee_ids)->orderBy('code', 'desc')->get();
-            $data = Employee::with(['commune'])->orderBy('code', 'asc')->get();
+            //Only fetch the Employee according to User's Department
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $positions_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $positions_ids)->pluck('employee_id')->toArray();
+            $data = Employee::with(['commune'])->whereIn('id', $employee_ids)->orderBy('code', 'desc')->get();
         } else {
             $data = Employee::with(['commune'])->orderBy('code', 'asc')->get();
         }
