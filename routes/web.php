@@ -9,6 +9,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DepartmentManagerController;
 use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
@@ -267,4 +268,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('disciplines/employeeData/{employee_id}', [DisciplineController::class, 'employeeData'])->name('disciplines.employeeData');
     Route::resource('disciplines', DisciplineController::class, ['names' => 'disciplines']);
 
+    //DepartmentManager
+    Route::get('department_managers/data', [DepartmentManagerController::class, 'anyData'])->name('department_managers.data');
+    Route::resource('department_managers', DepartmentManagerController::class);
 });

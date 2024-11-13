@@ -240,6 +240,16 @@
             </a>
           </li>
 
+          <!-- Lãnh đạo phòng/ban -->
+          <li class="nav-item">
+            <a href="{{route('department_managers.index')}}" class="nav-link {{ Request::is('department_managers*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-bookmark"></i>
+              <p>
+                QL phòng/ban
+              </p>
+            </a>
+          </li>
+
           <!-- Cách thức -->
           <li class="nav-item">
             <a href="{{route('methods.index')}}" class="nav-link {{ Request::is('methods*') ? 'active' : '' }}">
