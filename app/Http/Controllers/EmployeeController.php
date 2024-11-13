@@ -427,12 +427,6 @@ class EmployeeController extends Controller
                                     ->where('commune_id', $request->commune_id)
                                     ->first();
         if ($existed_employee) {
-            //TODO: Create ProposalCandidateEmployee
-            // $proposal_candidate_employee = new ProposalCandidateEmployee();
-            // $proposal_candidate_employee->proposal_candidate_id = $request->proposal_candidate_id;
-            // $proposal_candidate_employee->employee_id = $existed_employee->id;
-            // $proposal_candidate_employee->save();
-
             Alert::toast('Nhân sự đã có hồ sơ!', 'error', 'top-right');
             return redirect()->back();
         }
@@ -501,12 +495,6 @@ class EmployeeController extends Controller
             }
             $employee_school->save();
         }
-
-        //TODO: Create ProposalCandidateEmployee
-        // $proposal_candidate_employee = new ProposalCandidateEmployee();
-        // $proposal_candidate_employee->proposal_candidate_id = $request->proposal_candidate_id;
-        // $proposal_candidate_employee->employee_id = $employee->id;
-        // $proposal_candidate_employee->save();
 
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
         return redirect()->route('employees.show', $employee);
