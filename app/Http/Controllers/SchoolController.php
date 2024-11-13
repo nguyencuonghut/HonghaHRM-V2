@@ -90,7 +90,13 @@ class SchoolController extends Controller
             return redirect()->route('schools.index');
         }
 
-        //TODO: Check if School is used or not
+        //Check if School is used or not
+        if ($school->candidates->count()
+            || $school->employees->count()) {
+            Alert::toast('Trường đang được sử dụng. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('schools.index');
+
+        }
         $school->delete();
 
         Alert::toast('Xóa trường thành công!', 'success', 'top-rigth');
