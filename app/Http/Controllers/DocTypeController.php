@@ -88,7 +88,11 @@ class DocTypeController extends Controller
             return redirect()->route('doc_types.index');
         }
 
-        //TODO: check if doc_type is used
+        //Check if doc_type is used
+        if ($doc_type->documents->count()){
+            Alert::toast('Loại giấy tờ đang được sử dụng. Bạn không thể xóa!', 'error', 'top-right');
+            return redirect()->route('doc_types.index');
+        }
         $doc_type->delete();
         Alert::toast('Xóa loại giấy tờ thành công!', 'success', 'top-right');
         return redirect()->route('doc_types.index');
