@@ -154,7 +154,7 @@ class PositionController extends Controller
             return redirect()->route('positions.index');
         }
 
-        //TODO: Check if Position is used or not
+        //Check if Position is used or not
         if ($position->recruitments->count()
             || $position->contracts->count()
             || $position->works->count()) {
