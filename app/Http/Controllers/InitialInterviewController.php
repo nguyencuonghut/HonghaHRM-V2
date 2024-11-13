@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreInitialInterviewRequest;
 use App\Http\Requests\UpdateInitialInterviewRequest;
+use App\Models\FirstInterviewDetail;
 use App\Models\InitialInterview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -117,7 +118,12 @@ class InitialInterviewController extends Controller
             return redirect()->back();
         }
 
-        //TODO: Check if InitialInterview is used or not
+        //Check condition before deleting
+        $first_interview_detail = FirstInterviewDetail::where('recruitment_candidate_id', $initialInterview->recruitment_candidate_id)->get();
+        if ($first_interview_detail->count()) {
+            Alert::toast('Đã có phỏng vấn lần 1. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $initialInterview->delete();
 
         Alert::toast('Xóa kết quả phỏng vấn sơ bộ thành công!', 'success', 'top-right');
