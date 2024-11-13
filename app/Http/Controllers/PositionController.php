@@ -155,6 +155,12 @@ class PositionController extends Controller
         }
 
         //TODO: Check if Position is used or not
+        if ($position->recruitments->count()
+            || $position->contracts->count()
+            || $position->works->count()) {
+            Alert::toast('Vị trí đang được sử dụng. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('positions.index');
+        }
         $position->delete();
 
         Alert::toast('Xóa vị trí thành công!', 'success', 'top-rigth');
