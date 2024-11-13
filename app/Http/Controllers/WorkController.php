@@ -125,8 +125,6 @@ class WorkController extends Controller
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
             return redirect()->back();
         }
-
-        //TODO: Check if Work is used or not
         $work->delete();
 
         Alert::toast('Xóa quá trình công tác thành công!', 'success', 'top-rigth');
