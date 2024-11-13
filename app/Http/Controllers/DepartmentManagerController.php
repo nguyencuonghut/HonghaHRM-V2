@@ -70,7 +70,7 @@ class DepartmentManagerController extends Controller
     {
         if (Auth::user()->cannot('update', $departmentManager)) {
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
-            return redirect()->route('degrees.index');
+            return redirect()->back();
         }
 
 

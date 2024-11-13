@@ -13,6 +13,7 @@ use App\Http\Controllers\DepartmentManagerController;
 use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\DivisionManagerController;
 use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmployeeController;
@@ -271,4 +272,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     //DepartmentManager
     Route::get('department_managers/data', [DepartmentManagerController::class, 'anyData'])->name('department_managers.data');
     Route::resource('department_managers', DepartmentManagerController::class);
+
+    //DivisionManager
+    Route::get('division_managers/data', [DivisionManagerController::class, 'anyData'])->name('division_managers.data');
+    Route::resource('division_managers', DivisionManagerController::class);
 });

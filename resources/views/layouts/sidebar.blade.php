@@ -250,6 +250,16 @@
             </a>
           </li>
 
+          <!-- Lãnh đạo bộ phận -->
+          <li class="nav-item">
+            <a href="{{route('division_managers.index')}}" class="nav-link {{ Request::is('division_managers*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-thumbtack"></i>
+              <p>
+                QL bộ phận
+              </p>
+            </a>
+          </li>
+
           <!-- Cách thức -->
           <li class="nav-item">
             <a href="{{route('methods.index')}}" class="nav-link {{ Request::is('methods*') ? 'active' : '' }}">
