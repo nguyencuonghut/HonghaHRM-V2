@@ -48,6 +48,7 @@
                     <th>STT</th>
                     <th>Bộ phận</th>
                     <th>Thuộc phòng/ban</th>
+                    <th>Vị trí</th>
                     <th>Thao tác</th>
                   </tr>
                   </thead>
@@ -118,14 +119,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
 
             },
@@ -133,28 +134,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             }
         ],
@@ -164,6 +165,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
             {data: 'department', name: 'department'},
+            {data: 'position_lists', name: 'position_lists'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#divisions-table_wrapper .col-md-6:eq(0)');

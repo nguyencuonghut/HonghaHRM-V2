@@ -129,6 +129,20 @@ class DivisionController extends Controller
             ->addColumn('department', function($row) {
                 return $row->department->name;
             })
+            ->editColumn('position_lists', function ($divisions) {
+                $positions = Position::where('division_id', $divisions->id)->orderBy('name')->get();
+                $i = 0;
+                $length = count($positions);
+                $position_lists = '';
+                foreach ($positions as $position) {
+                    if(++$i === $length) {
+                        $position_lists =  $position_lists . $position->name;
+                    } else {
+                        $position_lists = $position_lists . $position->name . ', <br>';
+                    }
+                }
+                return $position_lists;
+            })
             ->addColumn('actions', function($row){
                 $action = '<a href="' . route("divisions.edit", $row->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                 <form style="display:inline" action="'. route("divisions.destroy", $row->id) . '" method="POST">
@@ -137,7 +151,7 @@ class DivisionController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'position_lists'])
             ->make(true);
     }
 
