@@ -98,12 +98,12 @@ class FirstInterviewResultController extends Controller
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
             return redirect()->back();
         }
-        // TODO: Do not allow to delete when SecondInterviewResult committed.
-        // $second_interview_result = SecondInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
-        // if ($second_interview_result) {
-        //     Alert::toast('Đã có kết quả PV lần 2. Không thể xóa!', 'error', 'top-right');
-        //     return redirect()->back();
-        // }
+        //Do not allow to delete when SecondInterviewResult committed.
+        $second_interview_result = SecondInterviewResult::where('recruitment_candidate_id', $firstInterviewResult->recruitment_candidate_id)->first();
+        if ($second_interview_result) {
+            Alert::toast('Đã có kết quả PV lần 2. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
 
         $firstInterviewResult->delete();
         Alert::toast('Xóa kết quả thành công!', 'success', 'top-right');
