@@ -96,8 +96,6 @@ class FilterController extends Controller
             return redirect()->back();
         }
 
-        //TODO: Check if Filter is used or not
-
         $filter->delete();
 
         Alert::toast('Xóa kết quả lọc thành công!', 'success', 'top-rigth');
