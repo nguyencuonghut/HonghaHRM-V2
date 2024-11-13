@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSecondInterviewResultRequest;
 use App\Http\Requests\UpdateSecondInterviewResultRequest;
+use App\Models\Offer;
 use App\Models\SecondInterviewResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,12 +74,12 @@ class SecondInterviewResultController extends Controller
             return redirect()->back();
         }
 
-        // TODO: Do not allow to update when Offer committed.
-        // $offer = Offer::where('recruitment_candidate_id', $secondInterviewResult->recruitment_candidate_id)->first();
-        // if ($offer) {
-        //     Alert::toast('Đã có kết quả offer. Không thể sửa!', 'error', 'top-right');
-        //     return redirect()->back();
-        // }
+        //Do not allow to update when Offer committed.
+        $offer = Offer::where('recruitment_candidate_id', $secondInterviewResult->recruitment_candidate_id)->first();
+        if ($offer) {
+            Alert::toast('Đã có kết quả offer. Không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
 
         $secondInterviewResult->recruitment_candidate_id = $request->recruitment_candidate_id;
         $secondInterviewResult->interviewer_id = Auth::user()->id;
