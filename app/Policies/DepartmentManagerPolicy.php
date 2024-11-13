@@ -29,7 +29,7 @@ class DepartmentManagerPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role->name == 'Admin' || $user->role->name == 'Trưởng đơn vị';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
@@ -37,7 +37,7 @@ class DepartmentManagerPolicy
      */
     public function update(User $user, DepartmentManager $departmentManager): bool
     {
-        return $user->role->name == 'Admin' || $user->role->name == 'Trưởng đơn vị';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
@@ -45,7 +45,7 @@ class DepartmentManagerPolicy
      */
     public function delete(User $user, DepartmentManager $departmentManager): bool
     {
-        return $user->role->name == 'Admin' || $user->role->name == 'Trưởng đơn vị';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
