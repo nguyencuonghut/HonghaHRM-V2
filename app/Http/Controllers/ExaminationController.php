@@ -93,7 +93,6 @@ class ExaminationController extends Controller
             return redirect()->back();
         }
 
-        //TODO: Check if Examination is used or not
         $examination->delete();
 
         Alert::toast('Xóa kết quả thi tuyển thành công!', 'success', 'top-right');
