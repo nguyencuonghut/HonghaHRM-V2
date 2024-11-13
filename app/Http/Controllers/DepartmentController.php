@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateDepartmentRequest;
 use App\Imports\DepartmentImport;
 use App\Models\Department;
 use App\Models\Division;
+use App\Models\Position;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -113,6 +114,33 @@ class DepartmentController extends Controller
             ->addColumn('name', function($row) {
                 return $row->name;
             })
+            ->editColumn('divisions', function ($departments) {
+                $i = 0;
+                $length = count($departments->divisions);
+                $divisions = '';
+                foreach ($departments->divisions as $division) {
+                    if(++$i === $length) {
+                        $divisions =  $divisions . $division->name;
+                    } else {
+                        $divisions = $divisions . $division->name . '<br>';
+                    }
+                }
+                return $divisions;
+            })
+            ->editColumn('position_lists', function ($departments) {
+                $positions = Position::where('department_id', $departments->id)->orderBy('name')->get();
+                $i = 0;
+                $length = count($positions);
+                $position_lists = '';
+                foreach ($positions as $company_job) {
+                    if(++$i === $length) {
+                        $position_lists =  $position_lists . $company_job->name;
+                    } else {
+                        $position_lists = $position_lists . $company_job->name . '<br>';
+                    }
+                }
+                return $position_lists;
+            })
             ->addColumn('actions', function($row){
                 $action = '<a href="' . route("departments.edit", $row->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                 <form style="display:inline" action="'. route("departments.destroy", $row->id) . '" method="POST">
@@ -121,7 +149,7 @@ class DepartmentController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'divisions', 'position_lists'])
             ->make(true);
     }
 
