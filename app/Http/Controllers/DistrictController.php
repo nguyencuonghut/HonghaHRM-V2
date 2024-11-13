@@ -98,7 +98,11 @@ class DistrictController extends Controller
             return redirect()->route('districts.index');
         }
 
-        //TODO: Check if District is used or not
+        //Check if District is used or not
+        if ($district->communes->count()) {
+            Alert::toast('Quận huyện đang được sử dụng. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('districts.index');
+        }
 
         $district->delete();
 
