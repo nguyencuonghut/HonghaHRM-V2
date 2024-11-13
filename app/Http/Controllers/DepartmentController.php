@@ -122,7 +122,7 @@ class DepartmentController extends Controller
                     if(++$i === $length) {
                         $divisions =  $divisions . $division->name;
                     } else {
-                        $divisions = $divisions . $division->name . '<br>';
+                        $divisions = $divisions . $division->name . ', <br>';
                     }
                 }
                 return $divisions;
@@ -136,7 +136,7 @@ class DepartmentController extends Controller
                     if(++$i === $length) {
                         $position_lists =  $position_lists . $company_job->name;
                     } else {
-                        $position_lists = $position_lists . $company_job->name . '<br>';
+                        $position_lists = $position_lists . $company_job->name . ', <br>';
                     }
                 }
                 return $position_lists;

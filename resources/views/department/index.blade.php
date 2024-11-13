@@ -120,14 +120,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2,3]
                 }
 
             },
@@ -135,28 +135,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1]
+                    columns: [0,1,2,3]
                 }
             }
         ],
