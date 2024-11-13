@@ -100,12 +100,12 @@ class SecondInterviewResultController extends Controller
             return redirect()->back();
         }
 
-        //TODO: Do not allow to delete when Offer committed.
-        // $offer = Offer::where('recruitment_candidate_id', $recruitment_candidate_id)->first();
-        // if ($offer) {
-        //     Alert::toast('Đã có kết quả offer. Không thể xóa!', 'error', 'top-right');
-        //     return redirect()->back();
-        // }
+        //Do not allow to delete when Offer committed.
+        $offer = Offer::where('recruitment_candidate_id', $secondInterviewResult->recruitment_candidate_id)->first();
+        if ($offer) {
+            Alert::toast('Đã có kết quả offer. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
 
         $secondInterviewResult->delete();
         Alert::toast('Xóa kết quả thành công!', 'success', 'top-right');
