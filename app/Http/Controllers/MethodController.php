@@ -87,7 +87,11 @@ class MethodController extends Controller
             return redirect()->route('methods.index');
         }
 
-        //TODO: Check if Method is used or not
+        //Check if Method is used or not
+        if ($method->plans->count()) {
+            Alert::toast('Cách thức đang được sử dụng. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('methods.index');
+        }
         $method->delete();
 
         Alert::toast('Xóa cách thức thành công!', 'success', 'top-rigth');
