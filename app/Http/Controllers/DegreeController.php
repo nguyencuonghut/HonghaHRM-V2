@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDegreeRequest;
 use App\Http\Requests\UpdateDegreeRequest;
+use App\Models\CandidateSchool;
 use App\Models\Degree;
+use App\Models\EmployeeSchool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -89,6 +91,13 @@ class DegreeController extends Controller
         }
 
         //Check if Degree is used or not
+        $candidate_schools = CandidateSchool::where('degree_id', $degree->id)->get();
+        $employee_schools = EmployeeSchool::where('degree_id', $degree->id)->get();
+        if ($candidate_schools->count()
+            || $employee_schools->count()) {
+            Alert::toast('Trình độ đang được dùng. Bạn không thể xóa!', 'error', 'top-right');
+            return redirect()->route('degrees.index');
+        }
         $degree->delete();
 
         Alert::toast('Xóa trình độ thành công!', 'success', 'top-rigth');
