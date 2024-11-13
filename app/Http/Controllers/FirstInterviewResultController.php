@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFirstInterviewResultRequest;
 use App\Http\Requests\UpdateFirstInterviewResultRequest;
 use App\Models\FirstInterviewResult;
+use App\Models\SecondInterviewResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -72,12 +73,12 @@ class FirstInterviewResultController extends Controller
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
             return redirect()->back();
         }
-        // TODO: Do not allow to update when SecondInterviewResult committed.
-        // $second_interview_result = SecondInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
-        // if ($second_interview_result) {
-        //     Alert::toast('Đã có kết quả PV lần 2. Không thể sửa!', 'error', 'top-right');
-        //     return redirect()->back();
-        // }
+        //Do not allow to update when SecondInterviewResult committed.
+        $second_interview_result = SecondInterviewResult::where('recruitment_candidate_id', $firstInterviewResult->recruitment_candidate_id)->first();
+        if ($second_interview_result) {
+            Alert::toast('Đã có kết quả PV lần 2. Không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
 
         $firstInterviewResult->recruitment_candidate_id = $request->recruitment_candidate_id;
         $firstInterviewResult->interviewer_id = Auth::user()->id;
