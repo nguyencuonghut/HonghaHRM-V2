@@ -251,6 +251,15 @@ class EmployeeSchoolsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            26 =>
+                array (
+                    'id' => 27,
+                    'degree_id' => 8,
+                    'school_id' => 3,
+                    'employee_id' => 27,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

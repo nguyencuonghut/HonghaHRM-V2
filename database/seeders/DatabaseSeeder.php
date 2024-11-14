@@ -38,6 +38,8 @@ class DatabaseSeeder extends Seeder
             EmployeesTableSeeder::class,
             EmployeeSchoolsTableSeeder::class,
             WorksTableSeeder::class,
+            DepartmentManagersTableSeeder::class,
+            DivisionManagersTableSeeder::class,
         ]);
     }
 }

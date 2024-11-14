@@ -539,6 +539,19 @@ class WorksTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            40 =>
+                array (
+                    'id' => 41,
+                    'contract_code' => '170/2013/HH-HĐLĐ',
+                    'employee_id' => 27,
+                    'position_id' => 83,
+                    'status' => 'On',
+                    'on_type_id' => 2,
+                    'start_date' => '2013-06-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

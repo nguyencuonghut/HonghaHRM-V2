@@ -693,6 +693,32 @@ class EmployeesTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            26 =>
+                array (
+                    'id' => 27,
+                    'code' => '170',
+                    'name' => 'Dương Thị Hằng',
+                    'img_path' => 'dist/employee_img/hangdt.jpeg',
+                    'private_email' => null,
+                    'company_email' => 'duongthihang@honghafeed.com.vn',
+                    'phone' => '0999999973',
+                    'relative_phone' => '0999999973',
+                    'date_of_birth' => '1989-06-03',
+                    'cccd' => '0999999973',
+                    'issued_date' => '2024-01-09',
+                    'issued_by' => 'công an tỉnh Hà Nam',
+                    'gender' => 'Nữ',
+                    'address' => 'số 1',
+                    'commune_id' => 6,
+                    'temporary_address' => null,
+                    'temporary_commune_id' => null,
+                    'experience' => '10 năm',
+                    'join_date' => '2021-01-01',
+                    'marriage_status' => 'Kết hôn',
+                    'bhxh' => '3509000847',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }
