@@ -35,6 +35,9 @@ class DatabaseSeeder extends Seeder
             InsuranceTypesTableSeeder::class,
             RegimeTypesTableSeeder::class,
             WelfareTypesTableSeeder::class,
+            EmployeesTableSeeder::class,
+            EmployeeSchoolsTableSeeder::class,
+            WorksTableSeeder::class,
         ]);
     }
 }

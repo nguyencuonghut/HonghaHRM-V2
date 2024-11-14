@@ -2,210 +2,252 @@
 
 namespace Database\Seeders;
 
-use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
-class DivisionsTableSeeder extends Seeder
+class EmployeeSchoolsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('divisions')->delete();
+        DB::table('employee_schools')->delete();
 
-        DB::table('divisions')->insert(array (
+        DB::table('employee_schools')->insert(array (
             0 =>
                 array (
                     'id' => 1,
-                    'name' => 'Tổ bốc xếp',
-                    'department_id' => 7,
+                    'degree_id' => 1,
+                    'school_id' => 1,
+                    'employee_id' => 1,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             1 =>
                 array (
                     'id' => 2,
-                    'name' => 'Tổ Mixer',
-                    'department_id' => 7,
+                    'degree_id' => 1,
+                    'school_id' => 2,
+                    'employee_id' => 2,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             2 =>
                 array (
                     'id' => 3,
-                    'name' => 'Bộ phận Admin',
-                    'department_id' => 8,
+                    'degree_id' => 1,
+                    'school_id' => 3,
+                    'employee_id' => 3,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             3 =>
                 array (
                     'id' => 4,
-                    'name' => 'Ban bảo vệ',
-                    'department_id' => 9,
+                    'degree_id' => 1,
+                    'school_id' => 4,
+                    'employee_id' => 4,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             4 =>
                 array (
                     'id' => 5,
-                    'name' => 'Phòng phân tích',
-                    'department_id' => 11,
+                    'degree_id' => 1,
+                    'school_id' => 5,
+                    'employee_id' => 5,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             5 =>
                 array (
                     'id' => 6,
-                    'name' => 'Kỹ thuật thị trường',
-                    'department_id' => 8,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 6,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             6 =>
                 array (
                     'id' => 7,
-                    'name' => 'KD gia súc gia cầm',
-                    'department_id' => 8,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 7,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             7 =>
                 array (
                     'id' => 8,
-                    'name' => 'Kỹ thuật trại',
-                    'department_id' => 8,
+                    'degree_id' => 2,
+                    'school_id' => 7,
+                    'employee_id' => 8,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             8 =>
                 array (
                     'id' => 9,
-                    'name' => 'KD thủy sản',
-                    'department_id' => 8,
+                    'degree_id' => 2,
+                    'school_id' => 2,
+                    'employee_id' => 9,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             9 =>
                 array (
                     'id' => 10,
-                    'name' => 'Thuốc thú y',
-                    'department_id' => 8,
+                    'degree_id' => 1,
+                    'school_id' => 2,
+                    'employee_id' => 10,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             10 =>
                 array (
                     'id' => 11,
-                    'name' => 'SX gia súc gia cầm',
-                    'department_id' => 6,
+                    'degree_id' => 2,
+                    'school_id' => 6,
+                    'employee_id' => 11,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             11 =>
                 array (
                     'id' => 12,
-                    'name' => 'SX thủy sản',
-                    'department_id' => 6,
+                    'degree_id' => 2,
+                    'school_id' => 3,
+                    'employee_id' => 12,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             12 =>
                 array (
                     'id' => 13,
-                    'name' => 'Tổ bán hàng',
-                    'department_id' => 4,
+                    'degree_id' => 1,
+                    'school_id' => 3,
+                    'employee_id' => 13,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             13 =>
                 array (
                     'id' => 14,
-                    'name' => 'Tổ cân',
-                    'department_id' => 4,
+                    'degree_id' => 2,
+                    'school_id' => 3,
+                    'employee_id' => 14,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             14 =>
                 array (
                     'id' => 15,
-                    'name' => 'Tổ tạp vụ',
-                    'department_id' => 9,
+                    'degree_id' => 2,
+                    'school_id' => 4,
+                    'employee_id' => 15,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             15 =>
                 array (
                     'id' => 16,
-                    'name' => 'Tổ nấu ăn',
-                    'department_id' => 9,
+                    'degree_id' => 1,
+                    'school_id' => 2,
+                    'employee_id' => 16,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             16 =>
                 array (
                     'id' => 17,
-                    'name' => 'Tổ nguyên liệu',
-                    'department_id' => 7,
+                    'degree_id' => 1,
+                    'school_id' => 2,
+                    'employee_id' => 17,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            17 =>
+                array (
+                    'id' => 18,
+                    'degree_id' => 1,
+                    'school_id' => 3,
+                    'employee_id' => 18,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             18 =>
                 array (
                     'id' => 19,
-                    'name' => 'Tổ trồng rau',
-                    'department_id' => 9,
+                    'degree_id' => 1,
+                    'school_id' => 4,
+                    'employee_id' => 19,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             19 =>
                 array (
                     'id' => 20,
-                    'name' => 'Tổ KCS nguyên liệu',
-                    'department_id' => 11,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 20,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             20 =>
                 array (
                     'id' => 21,
-                    'name' => 'Tổ KCS thành phẩm thủy sản',
-                    'department_id' => 11,
+                    'degree_id' => 2,
+                    'school_id' => 8,
+                    'employee_id' => 21,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             21 =>
                 array (
                     'id' => 22,
-                    'name' => 'Tổ KCS thành phẩm gia súc',
-                    'department_id' => 11,
+                    'degree_id' => 1,
+                    'school_id' => 3,
+                    'employee_id' => 22,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             22 =>
                 array (
                     'id' => 23,
-                    'name' => 'Ban tài chính',
-                    'department_id' => 4,
+                    'degree_id' => 1,
+                    'school_id' => 5,
+                    'employee_id' => 23,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             23 =>
                 array (
                     'id' => 24,
-                    'name' => 'Bộ phận IT',
-                    'department_id' => 2,
+                    'degree_id' => 1,
+                    'school_id' => 7,
+                    'employee_id' => 24,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
             24 =>
                 array (
                     'id' => 25,
-                    'name' => 'Tổ kiểm soát',
-                    'department_id' => 2,
+                    'degree_id' => 1,
+                    'school_id' => 4,
+                    'employee_id' => 25,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            25 =>
+                array (
+                    'id' => 26,
+                    'degree_id' => 8,
+                    'school_id' => 4,
+                    'employee_id' => 26,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
