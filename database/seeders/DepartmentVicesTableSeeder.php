@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ViceManagersTableSeeder extends Seeder
+class DepartmentVicesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,9 @@ class ViceManagersTableSeeder extends Seeder
     public function run(): void
     {
 
-        DB::table('vice_managers')->delete();
+        DB::table('department_vices')->delete();
 
-        DB::table('vice_managers')->insert(array (
+        DB::table('department_vices')->insert(array (
             0 => array (
                 'id' => 1,
                 'department_id' => 4,
