@@ -10,6 +10,7 @@ use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentManagerController;
+use App\Http\Controllers\DepartmentViceController;
 use App\Http\Controllers\DisciplineController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
@@ -276,4 +277,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     //DivisionManager
     Route::get('division_managers/data', [DivisionManagerController::class, 'anyData'])->name('division_managers.data');
     Route::resource('division_managers', DivisionManagerController::class);
+
+    //DepartmentVice
+    Route::get('department_vices/data', [DepartmentViceController::class, 'anyData'])->name('department_vices.data');
+    Route::resource('department_vices', DepartmentViceController::class);
+
 });

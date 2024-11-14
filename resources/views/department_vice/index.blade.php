@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Tất quản lý phòng/ban' }}
+{{ 'Tất phó phòng' }}
 @endsection
 
 @extends('layouts.base')
@@ -11,12 +11,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tất cả quản lý phòng/ban</h1>
+          <h1 class="m-0">Tất cả phó phòng</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Quản lý phòng/ban</li>
+            <li class="breadcrumb-item active">Quản lý phó phòng</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -33,15 +33,15 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                @can('create', App\Models\DepartmentManager::class)
-                <a href="{{ route('department_managers.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                @can('create', App\Models\DepartmentVice::class)
+                <a href="{{ route('department_vices.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
-                <table id="department-managers-table" class="table table-bordered table-striped">
+                <table id="department-vices-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>STT</th>
                     <th>Phòng/ban</th>
-                    <th>Người quản lý</th>
+                    <th>Phó phòng</th>
                     <th>Thao tác</th>
                   </tr>
                   </thead>
@@ -68,7 +68,7 @@
 
 <script>
     $(function () {
-      $("#department-managers-table").DataTable({
+      $("#department-vices-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         buttons: [
             {
@@ -116,14 +116,14 @@
             }
         ],
         dom: 'Blfrtip',
-        ajax: ' {!! route('department_managers.data') !!}',
+        ajax: ' {!! route('department_vices.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'department', name: 'department'},
-            {data: 'manager', name: 'manager'},
+            {data: 'vice', name: 'vice'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
-      }).buttons().container().appendTo('#department-managers-table_wrapper .col-md-6:eq(0)');
+      }).buttons().container().appendTo('#department-vices-table_wrapper .col-md-6:eq(0)');
     });
   </script>
 @endpush

@@ -250,6 +250,16 @@
             </a>
           </li>
 
+          <!-- Phó phòng -->
+          <li class="nav-item">
+            <a href="{{route('department_vices.index')}}" class="nav-link {{ Request::is('department_vices*') ? 'active' : '' }}">
+              <i class="nav-icon far fa-bookmark"></i>
+              <p>
+                Phó phòng
+              </p>
+            </a>
+          </li>
+
           <!-- Lãnh đạo bộ phận -->
           <li class="nav-item">
             <a href="{{route('division_managers.index')}}" class="nav-link {{ Request::is('division_managers*') ? 'active' : '' }}">
