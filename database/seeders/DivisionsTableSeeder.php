@@ -124,7 +124,7 @@ class DivisionsTableSeeder extends Seeder
             13 =>
                 array (
                     'id' => 14,
-                    'name' => 'Tổ cân',
+                    'name' => 'Bộ phận cân',
                     'department_id' => 4,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),

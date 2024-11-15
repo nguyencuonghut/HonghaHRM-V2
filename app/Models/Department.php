@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Department extends Model
 {
@@ -22,4 +23,15 @@ class Department extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function department_manager(): HasOne
+    {
+        return $this->hasOne(DepartmentManager::class);
+    }
+
+    public function department_vice(): HasOne
+    {
+        return $this->hasOne(DepartmentVice::class);
+    }
+
 }

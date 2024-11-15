@@ -245,7 +245,7 @@ class EmployeeSchoolsTableSeeder extends Seeder
             25 =>
                 array (
                     'id' => 26,
-                    'degree_id' => 8,
+                    'degree_id' => 1,
                     'school_id' => 4,
                     'employee_id' => 26,
                     'created_at' => Carbon::now(),
@@ -254,9 +254,72 @@ class EmployeeSchoolsTableSeeder extends Seeder
             26 =>
                 array (
                     'id' => 27,
-                    'degree_id' => 8,
+                    'degree_id' => 1,
                     'school_id' => 3,
                     'employee_id' => 27,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            27 =>
+                array (
+                    'id' => 28,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 28,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            28 =>
+                array (
+                    'id' => 29,
+                    'degree_id' => 1,
+                    'school_id' => 2,
+                    'employee_id' => 29,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            29 =>
+                array (
+                    'id' => 30,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 30,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            30 =>
+                array (
+                    'id' => 31,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 31,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            31 =>
+                array (
+                    'id' => 32,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 32,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            32 =>
+                array (
+                    'id' => 33,
+                    'degree_id' => 1,
+                    'school_id' => 4,
+                    'employee_id' => 33,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            33 =>
+                array (
+                    'id' => 34,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 34,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),

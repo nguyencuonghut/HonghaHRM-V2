@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             RegimeTypesTableSeeder::class,
             WelfareTypesTableSeeder::class,
             EmployeesTableSeeder::class,
+            ContractsTableSeeder::class,
             EmployeeSchoolsTableSeeder::class,
             WorksTableSeeder::class,
             DepartmentManagersTableSeeder::class,

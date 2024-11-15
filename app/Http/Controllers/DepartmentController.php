@@ -7,10 +7,15 @@ use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use App\Imports\DepartmentImport;
 use App\Models\Department;
+use App\Models\DepartmentManager;
+use App\Models\DepartmentVice;
 use App\Models\Division;
+use App\Models\Employee;
 use App\Models\Position;
+use App\Models\Work;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -57,7 +62,14 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+        $datasource = [];
+        $datasource = $this->createDataSource($department);
+
+        return view('department.show',
+                    [
+                        'department' => $department,
+                        'datasource' => $datasource,
+                    ]);
     }
 
     /**
@@ -111,8 +123,8 @@ class DepartmentController extends Controller
         $data = Department::orderBy('id', 'desc');
         return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('name', function($row) {
-                return $row->name;
+            ->addColumn('name', function($data) {
+                return '<a href=' . route("departments.show", $data->id) . '>' . $data->name . '</a>' ;
             })
             ->editColumn('divisions', function ($departments) {
                 $i = 0;
@@ -149,7 +161,7 @@ class DepartmentController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'divisions', 'position_lists'])
+            ->rawColumns(['name', 'actions', 'divisions', 'position_lists'])
             ->make(true);
     }
 
@@ -185,5 +197,514 @@ class DepartmentController extends Controller
 
         return response()->json($divisionData);
 
+    }
+
+    private function createDataSource(Department $department)
+    {
+        $datasource = [];
+        $manager_ids = [];
+
+        // Tạo node trưởng phòng
+        if ($department->department_manager) { // Có trưởng phòng
+            $datasource = [
+                'id' => $department->department_manager->manager->img_path,
+                'name'=> $department->department_manager->manager->name,
+                'title' => 'Trưởng phòng',
+                'children' => [],
+            ];
+            //Gom các employee là quản lý
+            array_push($manager_ids, $department->department_manager->manager->id);
+
+            // Tạo node phó phòng
+            if ($department->department_vice) { // Có phó phòng
+                $child = [
+                    'id' => $department->department_vice->vice->img_path,
+                    'name' =>$department->department_vice->vice->name,
+                    'title' => 'Phó phòng',
+                    'children' => []
+                ];
+                array_push($datasource['children'], $child);
+
+
+                //Gom các employee là quản lý
+                array_push($manager_ids, $department->department_vice->vice->id);
+
+                // Tạo node trưởng bộ phận/tổ/nhóm
+                foreach ($department->divisions as $key => $division) {
+                    if ($division->division_manager) { // Có trưởng bộ phận/tổ/nhóm
+                        $child = [
+                            'id' => $division->division_manager->manager->img_path,
+                            'name' => $division->division_manager->manager->name,
+                            'title' => $division->name,
+                            'children' => []
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+
+                        //Gom các employee là quản lý
+                        array_push($manager_ids, $division->division_manager->manager->id);
+
+                        // Tạo node nhân viên thuộc tổ nhóm
+                        $position_ids = Position::where('department_id', $department->id)
+                                            ->where('division_id', $division->id)
+                                            ->pluck('id')
+                                            ->toArray();
+                        $employee_ids = Work::whereIn('position_id', $position_ids)
+                                            ->where(function ($query) {
+                                                $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                    ->orWhereNull('off_type_id');
+                                            })
+                                            ->where('status', 'On')
+                                            ->pluck('employee_id')
+                                            ->toArray();
+
+                        $final_employe_ids = array_diff($employee_ids, $manager_ids);
+                        $nv_employees = Employee::whereIn('id', $final_employe_ids)->get();
+                        foreach ($nv_employees as $employee) {
+                            $my_employee_work = Work::where('employee_id', $employee->id)
+                                                    ->where('status', 'On')
+                                                    ->first();
+                            $child = [
+                                'id' => $employee->img_path,
+                                'name' => $my_employee_work->off_type_id ? $employee->name . ' (Off)' : $employee->name,
+                                'title' => $my_employee_work->position->name,
+                            ];
+                            array_push($datasource['children'][0]['children'][$key]['children'], $child);
+
+                            //Gom các employee là nhân viên thuộc tổ/nhóm
+                            array_push($manager_ids, $employee->id);
+                        }
+                    } else { // Không có trưởng bộ phận/tổ/nhóm
+                        $child = [
+                            'id' => 'images/default-avatar.png',
+                            'name' => 'Chưa có',
+                            'title' => $division->name,
+                            'children' => []
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+
+                        // Tạo node nhân viên thuộc tổ nhóm
+                        $position_ids = Position::where('department_id', $department->id)
+                                                    ->where('division_id', $division->id)
+                                                    ->pluck('id')
+                                                    ->toArray();
+                        $employee_ids = Work::whereIn('position_id', $position_ids)
+                                            ->where(function ($query) {
+                                                $query->whereIn('off_type_id', [2,3,4,5]) //2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                    ->orWhereNull('off_type_id');
+                                            })
+                                            ->where('status', 'On')
+                                            ->pluck('employee_id')
+                                            ->toArray();
+                        $final_employe_ids = array_diff($employee_ids, $manager_ids);
+                        $nv_employees = Employee::whereIn('id', $final_employe_ids)->get();
+                        foreach ($nv_employees as $employee) {
+                            $my_employee_work = Work::where('employee_id', $employee->id)
+                                                    ->where('status', 'On')
+                                                    ->first();
+                            $child = [
+                                'id' => $employee->img_path,
+                                'name' => $my_employee_work->off_type_id ? $employee->name . ' (Off)' : $employee->name,
+                                'title' => $my_employee_work->position->name,
+                            ];
+                            array_push($datasource['children'][0]['children'][$key]['children'], $child);
+
+                            //Gom các employee là nhân viên thuộc tổ/nhóm
+                            array_push($manager_ids, $employee->id);
+                        }
+                    }
+                }
+
+                // Tạo node nhân viên không thuộc tổ/nhóm
+                $dept_position_ids = Position::where('department_id', $department->id)
+                                            ->pluck('id')
+                                            ->toArray();
+                $dept_employee_ids = Work::whereIn('position_id', $dept_position_ids)
+                                        ->where(function ($query) {
+                                            $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                ->orWhereNull('off_type_id');
+                                        })
+                                        ->where('status', 'On')
+                                        ->pluck('employee_id')
+                                        ->toArray();
+                $remain_dept_employee_ids = array_diff( $dept_employee_ids, $manager_ids);
+                $remain_nv_employees = Employee::whereIn('id', $remain_dept_employee_ids)->get();
+                foreach ($remain_nv_employees as $item) {
+                    $my_work = Work::where('employee_id', $item->id)
+                                    ->where('status', 'On')
+                                    ->first();
+                    $child = [
+                        'id' => $item->img_path,
+                        'name' => $my_work->off_type_id ? $item->name . ' (Off)' : $item->name,
+                        'title' => $my_work->position->name,
+                    ];
+                    array_push($datasource['children'][0]['children'], $child);
+                }
+            } else { //Không có phó phòng
+                $child = [
+                    'id' => 'images/default-avatar.png',
+                    'name' => 'Chưa có',
+                    'title' => 'Phó phòng',
+                    'children' => []
+                ];
+                array_push($datasource['children'], $child);
+
+                // Tạo node trưởng bộ phận/tổ/nhóm
+                foreach ($department->divisions as $key => $division) {
+                    if ($division->division_manager) { // Có trưởng bộ phận/tổ/nhóm
+                        $child = [
+                            'id' => $division->division_manager->manager->img_path,
+                            'name' => $division->division_manager->manager->name,
+                            'title' => $division->name,
+                            'children' => []
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+
+                        //Gom các employee là quản lý
+                        array_push($manager_ids, $division->division_manager->manager->id);
+
+                        // Tạo node nhân viên thuộc tổ nhóm
+                        $position_ids = Position::where('department_id', $department->id)
+                                            ->where('division_id', $division->id)
+                                            ->pluck('id')
+                                            ->toArray();
+                        $employee_ids = Work::whereIn('position_id', $position_ids)
+                                            ->where(function ($query) {
+                                                $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                    ->orWhereNull('off_type_id');
+                                            })
+                                            ->where('status', 'On')
+                                            ->pluck('employee_id')
+                                            ->toArray();
+                        $final_employe_ids = array_diff( $employee_ids, $manager_ids);
+                        $nv_employees = Employee::whereIn('id', $final_employe_ids)->get();
+                        foreach ($nv_employees as $employee) {
+                            $my_employee_work = Work::where('employee_id', $employee->id)
+                                                    ->where('status', 'On')
+                                                    ->first();
+                            $child = [
+                                'id' => $employee->img_path,
+                                'name' => $my_employee_work->off_type_id ? $employee->name . ' (Off)' : $employee->name,
+                                'title' => $my_employee_work->position->name,
+                            ];
+                            array_push($datasource['children'][0]['children'][$key]['children'], $child);
+
+                            //Gom các employee là nhân viên thuộc tổ/nhóm
+                            array_push($manager_ids, $employee->id);
+                        }
+                    } else { // Không có trưởng bộ phận/tổ/nhóm
+                        $child = [
+                            'id' => 'images/default-avatar.png',
+                            'name' => 'Chưa có',
+                            'title' => $division->name,
+                            'children' => []
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+
+                        // Tạo node nhân viên thuộc tổ nhóm
+                        $position_ids = Position::where('department_id', $department->id)
+                                                    ->where('division_id', $division->id)
+                                                    ->pluck('id')
+                                                    ->toArray();
+                        $employee_ids = Work::whereIn('position_id', $position_ids)
+                                            ->where(function ($query) {
+                                                $query->whereIn('off_type_id', [2,3,4,5]) //2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm
+                                                    ->orWhereNull('off_type_id');
+                                            })
+                                            ->where('status', 'On')
+                                            ->pluck('employee_id')
+                                            ->toArray();
+                        $nv_employees = Employee::whereIn('id', $employee_ids)->get();
+                        foreach ($nv_employees as $employee) {
+                            $my_employee_work = Work::where('employee_id', $employee->id)
+                                                    ->where('status', 'On')
+                                                    ->first();
+                            $child = [
+                                'id' => $employee->img_path,
+                                'name' => $my_employee_work->off_type_id ? $employee->name . ' (Off)' : $employee->name,
+                                'title' => $my_employee_work->position->name,
+                            ];
+                            array_push($datasource['children'][0]['children'][$key]['children'], $child);
+
+                            //Gom các employee là nhân viên thuộc tổ/nhóm
+                            array_push($manager_ids, $employee->id);
+                        }
+                    }
+                }
+
+                // Tạo node nhân viên không thuộc tổ/nhóm
+                $dept_position_ids = Position::where('department_id', $department->id)
+                                            ->pluck('id')
+                                            ->toArray();
+                $dept_employee_ids = Work::whereIn('position_id', $dept_position_ids)
+                                        ->where(function ($query) {
+                                            $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                ->orWhereNull('off_type_id');
+                                        })
+                                        ->where('status', 'On')
+                                        ->pluck('employee_id')
+                                        ->toArray();
+                $remain_dept_employee_ids = array_diff( $dept_employee_ids, $manager_ids);
+                $remain_nv_employees = Employee::whereIn('id', $remain_dept_employee_ids)->get();
+                foreach ($remain_nv_employees as $item) {
+                    $my_work = Work::where('employee_id', $item->id)->where('status', 'On')->first();
+                    $child = [
+                        'id' => $item->img_path,
+                        'name' => $my_work->off_type_id ? $item->name . ' (Off)' : $item->name,
+                        'title' => $my_work->position->name,
+                    ];
+                    array_push($datasource['children'][0]['children'], $child);
+                }
+            }
+
+        } else { //Không có trưởng phòng
+            // Tạo node phó phòng
+            $datasource = [
+                'id' => 'images/default-avatar.png',
+                'name'=> 'Chưa có',
+                'title' => 'Trưởng phòng',
+                'children' => [],
+            ];
+
+            // Tạo node phó phòng
+            if ($department->department_vice) { // Có phó phòng
+                $child = [
+                    'id' => $department->department_vice->vice->img_path,
+                    'name' =>$department->department_vice->vice->name,
+                    'title' => 'Phó phòng',
+                    'children' => []
+                ];
+                array_push($datasource['children'], $child);
+
+
+                //Gom các employee là quản lý
+                array_push($manager_ids, $department->department_vice->vice->id);
+
+                // Tạo node trưởng bộ phận/tổ/nhóm
+                foreach ($department->divisions as $key => $division) {
+                    if ($division->division_manager) { // Có trưởng bộ phận/tổ/nhóm
+                        $child = [
+                            'id' => $division->division_manager->manager->img_path,
+                            'name' => $division->division_manager->manager->name,
+                            'title' => $division->name,
+                            'children' => []
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+
+                        //Gom các employee là quản lý
+                        array_push($manager_ids, $division->division_manager->manager->id);
+
+                        // Tạo node nhân viên thuộc tổ nhóm
+                        $position_ids = Position::where('department_id', $department->id)
+                                            ->where('division_id', $division->id)
+                                            ->pluck('id')
+                                            ->toArray();
+                        $employee_ids = Work::whereIn('position_id', $position_ids)
+                                            ->where(function ($query) {
+                                                $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                    ->orWhereNull('off_type_id');
+                                            })
+                                            ->where('status', 'On')
+                                            ->pluck('employee_id')
+                                            ->toArray();
+
+                        $final_employe_ids = array_diff( $employee_ids, $manager_ids);
+                        $nv_employees = Employee::whereIn('id', $final_employe_ids)->get();
+                        foreach ($nv_employees as $employee) {
+                            $my_employee_work = Work::where('employee_id', $employee->id)
+                                                    ->where('status', 'On')
+                                                    ->first();
+                            $child = [
+                                'id' => $employee->img_path,
+                                'name' => $my_employee_work->off_type_id ? $employee->name . ' (Off)' : $employee->name,
+                                'title' => $my_employee_work->position->name,
+                            ];
+                            array_push($datasource['children'][0]['children'][$key]['children'], $child);
+
+                            //Gom các employee là nhân viên thuộc tổ/nhóm
+                            array_push($manager_ids, $employee->id);
+                        }
+                    } else { // Không có trưởng bộ phận/tổ/nhóm
+                        $child = [
+                            'id' => 'images/default-avatar.png',
+                            'name' => 'Chưa có',
+                            'title' => $division->name,
+                            'children' => []
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+
+                        // Tạo node nhân viên thuộc tổ nhóm
+                        $position_ids = Position::where('department_id', $department->id)
+                                                    ->where('division_id', $division->id)
+                                                    ->pluck('id')
+                                                    ->toArray();
+                        $employee_ids = Work::whereIn('position_id', $position_ids)
+                                            ->where(function ($query) {
+                                                $query->whereIn('off_type_id', [2,3,4,5]) //2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                    ->orWhereNull('off_type_id');
+                                            })
+                                            ->pluck('employee_id')
+                                            ->toArray();
+                        $nv_employees = Employee::whereIn('id', $employee_ids)->get();
+                        foreach ($nv_employees as $employee) {
+                            $my_employee_work = Work::where('employee_id', $employee->id)
+                                                    ->where('status', 'On')
+                                                    ->first();
+                            $child = [
+                                'id' => $employee->img_path,
+                                'name' => $my_employee_work->off_type_id ? $employee->name . ' (Off)' : $employee->name,
+                                'title' => $my_employee_work->position->name,
+                            ];
+                            array_push($datasource['children'][0]['children'][$key]['children'], $child);
+
+                            //Gom các employee là nhân viên thuộc tổ/nhóm
+                            array_push($manager_ids, $employee->id);
+                        }
+                    }
+                }
+
+                // Tạo node nhân viên không thuộc tổ/nhóm
+                $dept_position_ids = Position::where('department_id', $department->id)
+                                            ->pluck('id')
+                                            ->toArray();
+                $dept_employee_ids = Work::whereIn('position_id', $dept_position_ids)
+                                        ->where(function ($query) {
+                                            $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                ->orWhereNull('off_type_id');
+                                        })
+                                        ->where('status', 'On')
+                                        ->pluck('employee_id')
+                                        ->toArray();
+                $remain_dept_employee_ids = array_diff( $dept_employee_ids, $manager_ids);
+                $remain_nv_employees = Employee::whereIn('id', $remain_dept_employee_ids)->get();
+                foreach ($remain_nv_employees as $item) {
+                    $my_work = Work::where('employee_id', $item->id)
+                                    ->where('status', 'On')
+                                    ->first();
+                    $child = [
+                        'id' => $item->img_path,
+                        'name' => $my_work->off_type_id ? $item->name . ' (Off)' : $item->name,
+                        'title' => $my_work->position->name,
+                    ];
+                    array_push($datasource['children'][0]['children'], $child);
+                }
+            } else { //Không có phó phòng
+                $child = [
+                    'id' => 'images/default-avatar.png',
+                    'name' => 'Chưa có',
+                    'title' => 'Phó phòng',
+                    'children' => []
+                ];
+                array_push($datasource['children'], $child);
+
+                // Tạo node trưởng bộ phận/tổ/nhóm
+                foreach ($department->divisions as $key => $division) {
+                    if ($division->division_manager) { // Có trưởng bộ phận/tổ/nhóm
+                        $child = [
+                            'id' => $division->division_manager->manager->img_path,
+                            'name' => $division->division_manager->manager->name,
+                            'title' => $division->name,
+                            'children' => []
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+
+                        //Gom các employee là quản lý
+                        array_push($manager_ids, $division->division_manager->manager->id);
+
+                        // Tạo node nhân viên thuộc tổ nhóm
+                        $position_ids = Position::where('department_id', $department->id)
+                                            ->where('division_id', $division->id)
+                                            ->pluck('id')
+                                            ->toArray();
+                        $employee_ids = Work::whereIn('position_id', $position_ids)
+                                            ->where(function ($query) {
+                                                $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                    ->orWhereNull('off_type_id');
+                                            })
+                                            ->where('status', 'On')
+                                            ->pluck('employee_id')
+                                            ->toArray();
+                        $final_employe_ids = array_diff( $employee_ids, $manager_ids);
+                        $nv_employees = Employee::whereIn('id', $final_employe_ids)->get();
+                        foreach ($nv_employees as $employee) {
+                            $my_employee_work = Work::where('employee_id', $employee->id)
+                                                    ->where('status', 'On')
+                                                    ->first();
+                            $child = [
+                                'id' => $employee->img_path,
+                                'name' => $my_employee_work->off_type_id ? $employee->name . ' (Off)' : $employee->name,
+                                'title' => $my_employee_work->position->name,
+                            ];
+                            array_push($datasource['children'][0]['children'][$key]['children'], $child);
+
+                            //Gom các employee là nhân viên thuộc tổ/nhóm
+                            array_push($manager_ids, $employee->id);
+                        }
+                    } else { // Không có trưởng bộ phận/tổ/nhóm
+                        $child = [
+                            'id' => 'images/default-avatar.png',
+                            'name' => 'Chưa có',
+                            'title' => $division->name,
+                            'children' => []
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+
+                        // Tạo node nhân viên thuộc tổ nhóm
+                        $position_ids = Position::where('department_id', $department->id)
+                                                    ->where('division_id', $division->id)
+                                                    ->pluck('id')
+                                                    ->toArray();
+                        $employee_ids = Work::whereIn('position_id', $position_ids)
+                                            ->where(function ($query) {
+                                                $query->whereIn('off_type_id', [2,3,4,5]) //2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm
+                                                    ->orWhereNull('off_type_id');
+                                            })
+                                            ->where('status', 'On')
+                                            ->pluck('employee_id')
+                                            ->toArray();
+                        $nv_employees = Employee::whereIn('id', $employee_ids)->get();
+                        foreach ($nv_employees as $employee) {
+                            $my_employee_work = Work::where('employee_id', $employee->id)
+                                                    ->where('status', 'On')
+                                                    ->first();
+                            $child = [
+                                'id' => $employee->img_path,
+                                'name' => $my_employee_work->off_type_id ? $employee->name . ' (Off)' : $employee->name,
+                                'title' => $my_employee_work->position->name,
+                            ];
+                            array_push($datasource['children'][0]['children'][$key]['children'], $child);
+
+                            //Gom các employee là nhân viên thuộc tổ/nhóm
+                            array_push($manager_ids, $employee->id);
+                        }
+                    }
+                }
+
+                // Tạo node nhân viên không thuộc tổ/nhóm
+                $dept_position_ids = Position::where('department_id', $department->id)
+                                            ->pluck('id')
+                                            ->toArray();
+                $dept_employee_ids = Work::whereIn('position_id', $dept_position_ids)
+                                        ->where(function ($query) {
+                                            $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
+                                                ->orWhereNull('off_type_id');
+                                        })
+                                        ->where('status', 'On')
+                                        ->pluck('employee_id')
+                                        ->toArray();
+                $remain_dept_employee_ids = array_diff( $dept_employee_ids, $manager_ids);
+                $remain_nv_employees = Employee::whereIn('id', $remain_dept_employee_ids)->get();
+                foreach ($remain_nv_employees as $item) {
+                    $my_work = Work::where('employee_id', $item->id)->where('status', 'On')->first();
+                    $child = [
+                        'id' => $item->img_path,
+                        'name' => $my_work->off_type_id ? $item->name . ' (Off)' : $item->name,
+                        'title' => $my_work->position->name,
+                    ];
+                    array_push($datasource['children'][0]['children'], $child);
+                }
+            }
+
+        }
+        return $datasource;
     }
 }

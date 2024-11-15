@@ -1221,6 +1221,20 @@ class PositionsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            86 =>
+                array (
+                    'id' => 87,
+                    'name' => 'Tổ trưởng tổ bán hàng',
+                    'department_id' => 4,
+                    'division_id' => null,
+                    'insurance_salary' => 1200000,
+                    'position_salary' => 0,
+                    'max_capacity_salary' => 0,
+                    'position_allowance' => 1500000,
+                    'recruitment_standard_file' => 'dist/recruitment_standard/gdkt_hn.pdf',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

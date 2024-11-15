@@ -45,6 +45,13 @@ class DivisionManagersTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ),
+            4 => array (
+                'id' => 5,
+                'division_id' => 13,
+                'manager_id' => 32,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ),
         ));
     }
 }
