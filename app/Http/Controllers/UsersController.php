@@ -157,9 +157,9 @@ class UsersController extends Controller
                 $departments_list = '';
                 foreach ($row->departments as $item) {
                     if(++$i === $length) {
-                        $departments_list =  $departments_list . $item->name;
+                        $departments_list =  $departments_list . '<a href="' . route("departments.show", $item->id) . '">' . $item->name . '</a>';
                     } else {
-                        $departments_list = $departments_list . $item->name . ', ';
+                        $departments_list = $departments_list . '<a href="' . route("departments.show", $item->id) . '">' . $item->name . '</a>' . ', ';
                     }
                 }
                 return $departments_list;

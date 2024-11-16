@@ -118,8 +118,7 @@ class DepartmentViceController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('department', function ($data) {
-                return $data->department->name;
-
+                return '<a href="' . route("departments.show", $data->department->id) . '">' . $data->department->name . '</a>';
             })
             ->editColumn('vice', function ($data) {
                 return '<a href="' . route("employees.show", $data->vice_id) . '">' . $data->vice->name . '</a>';

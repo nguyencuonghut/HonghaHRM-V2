@@ -127,7 +127,7 @@ class DivisionController extends Controller
                 return $row->name;
             })
             ->addColumn('department', function($row) {
-                return $row->department->name;
+                return '<a href="' . route("departments.show", $row->department->id) . '">' . $row->department->name . '</a>';
             })
             ->editColumn('position_lists', function ($divisions) {
                 $positions = Position::where('division_id', $divisions->id)->orderBy('name')->get();
@@ -151,7 +151,7 @@ class DivisionController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'position_lists'])
+            ->rawColumns(['department', 'actions', 'position_lists'])
             ->make(true);
     }
 

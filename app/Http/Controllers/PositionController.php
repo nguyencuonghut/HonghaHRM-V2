@@ -176,7 +176,7 @@ class PositionController extends Controller
                 return $row->name;
             })
             ->addColumn('department', function($row) {
-                return $row->department->name;
+                return '<a href="' . route("departments.show", $row->department->id) . '">' . $row->department->name . '</a>';
             })
             ->addColumn('division', function($row) {
                 if ($row->division_id) {
@@ -212,7 +212,7 @@ class PositionController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'insurance_salary', 'position_salary', 'max_capacity_salary', 'position_allowance', 'recruitment_standard_file'])
+            ->rawColumns(['actions', 'department', 'insurance_salary', 'position_salary', 'max_capacity_salary', 'position_allowance', 'recruitment_standard_file'])
             ->make(true);
     }
 
