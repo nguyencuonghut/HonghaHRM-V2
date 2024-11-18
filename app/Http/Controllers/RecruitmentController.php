@@ -118,6 +118,12 @@ class RecruitmentController extends Controller
      */
     public function edit(Recruitment $recruitment)
     {
+        //Check authorization
+        if (Auth::user()->cannot('update', $recruitment)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('recruitments.index');
+        }
+
         $positions = Position::orderBy('name', 'asc')->get();
 
         return view('recruitment.edit',
@@ -169,7 +175,20 @@ class RecruitmentController extends Controller
      */
     public function destroy(Recruitment $recruitment)
     {
-        //
+        //Check authorization
+        if (Auth::user()->cannot('update', $recruitment)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('recruitments.index');
+        }
+
+        if ('Mở' != $recruitment->status) {
+            Alert::toast('Tuyển dụng đang chạy. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('recruitments.index');
+        }
+
+        $recruitment->delete();
+        Alert::toast('Xóa tuyển dụng thành công!', 'success', 'top-rigth');
+        return redirect()->route('recruitments.index');
     }
 
     public function anyData()
