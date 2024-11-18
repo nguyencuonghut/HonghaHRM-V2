@@ -1,4 +1,4 @@
-<!-- Request Tab -->
+<!-- Plan Tab -->
 <div class="tab-pane fade" id="recruitment-2" role="tabpanel" aria-labelledby="recruitment-tab-2">
     <div class="card">
         <!-- /.card-header -->
