@@ -106,10 +106,6 @@
                     </tr>
                 </tbody>
             </table>
-            @else
-                <br>
-                <br>
-                <p>Chưa tạo kế hoạch</p>
             @endif
             </div>
         </div>
