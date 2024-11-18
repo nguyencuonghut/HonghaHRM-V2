@@ -42,7 +42,21 @@ class RecruitmentController extends Controller
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
             return redirect()->route('recruitments.index');
         }
-        $positions = Position::orderBy('name', 'asc')->get();
+        //Fetch Position by User's department
+        if ('Admin' == Auth::user()->role->name
+        || 'Ban lãnh đạo' == Auth::user()->role->name) {
+            // Fetch all Position
+            $positions = Position::orderBy('name', 'asc')->get();
+        } else {
+            // Only fetch the User's department
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)
+                                            ->pluck('department_id')
+                                            ->toArray();
+            $positions = Position::whereIn('department_id', $department_ids)
+                                ->orderBy('name', 'asc')
+                                ->get();
+        }
+
 
         return view('recruitment.create', ['positions' => $positions]);
     }
