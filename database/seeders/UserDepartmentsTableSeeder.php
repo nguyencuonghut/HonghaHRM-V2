@@ -45,7 +45,7 @@ class UserDepartmentsTableSeeder extends Seeder
                 array (
                     'id' => 4,
                     'user_id' => 3,
-                    'department_id' => 3,
+                    'department_id' => 9,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -53,7 +53,7 @@ class UserDepartmentsTableSeeder extends Seeder
                 array (
                     'id' => 5,
                     'user_id' => 4,
-                    'department_id' => 3,
+                    'department_id' => 9,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
