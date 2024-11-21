@@ -189,6 +189,16 @@
             </a>
           </li>
 
+          <!-- Calendar -->
+          <li class="nav-item">
+            <a href="{{route('calendars.index')}}" class="nav-link {{ Request::is('calendars*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Lịch
+              </p>
+            </a>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">

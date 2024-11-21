@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AppendixController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommuneController;
@@ -270,6 +271,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('disciplines/data', [DisciplineController::class, 'anyData'])->name('disciplines.data');
     Route::get('disciplines/employeeData/{employee_id}', [DisciplineController::class, 'employeeData'])->name('disciplines.employeeData');
     Route::resource('disciplines', DisciplineController::class, ['names' => 'disciplines']);
+
+    //Calendar
+    Route::get('calendars', [CalendarController::class, 'index'])->name('calendars.index');
 
     //DepartmentManager
     Route::get('department_managers/data', [DepartmentManagerController::class, 'anyData'])->name('department_managers.data');
