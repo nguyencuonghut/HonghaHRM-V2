@@ -1191,8 +1191,14 @@ class ContractController extends Controller
         }
         $w_sheet->setCellValue('D33', $temp_addr);
 
-        $w_sheet->setCellValue('A34', 'Email cá nhân:');
-        $w_sheet->setCellValue('D34', $employee->private_email);
+        $w_sheet->setCellValue('A34', 'Số điện thoại:');
+        $w_sheet->setCellValue('D34', $employee->phone);
+
+        $w_sheet->setCellValue('A35', 'Email cá nhân:');
+        $w_sheet->setCellValue('D35', $employee->private_email);
+
+        $w_sheet->setCellValue('A36', 'Giới tính:');
+        $w_sheet->setCellValue('D36', $employee->gender);
 
         $objRichText = new RichText();
         $objRichText->createText('(sau đây gọi là “');
@@ -1203,8 +1209,8 @@ class ContractController extends Controller
 
         $objRichText->createText('”)');
 
-        $w_sheet->getCell('A35')->setValue($objRichText);
-        $w_sheet->getStyle('A35')
+        $w_sheet->getCell('A37')->setValue($objRichText);
+        $w_sheet->getStyle('A37')
                 ->getFont()
                 ->setName('Times New Roman');
 
@@ -1218,23 +1224,23 @@ class ContractController extends Controller
 
         $objRichText->createText('”) và cam kết thực hiện đúng những điều khoản sau đây:');
 
-        $w_sheet->getCell('A37')->setValue($objRichText);
-        $w_sheet->getStyle('A37')
+        $w_sheet->getCell('A39')->setValue($objRichText);
+        $w_sheet->getStyle('A39')
                 ->getFont()
                 ->setName('Times New Roman');
 
-        $w_sheet->getRowDimension('37')->setRowHeight(30);
-        $w_sheet->mergeCells('A37:J37');
-        $w_sheet->getStyle("A37")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("A37")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $w_sheet->getRowDimension('39')->setRowHeight(30);
+        $w_sheet->mergeCells('A39:J39');
+        $w_sheet->getStyle("A39")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("A39")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('A38', 'Điều 1. Thời hạn và công việc Hợp đồng');
-        $w_sheet->getStyle('A38')
+        $w_sheet->setCellValue('A40', 'Điều 1. Thời hạn và công việc Hợp đồng');
+        $w_sheet->getStyle('A40')
                 ->getFont()
                 ->setBold(true);
 
-        $w_sheet->setCellValue('A39', '1.1.');
-        $w_sheet->getStyle('A39')
+        $w_sheet->setCellValue('A41', '1.1.');
+        $w_sheet->getStyle('A41')
                 ->getFont()
                 ->setBold('true');
 
@@ -1249,10 +1255,10 @@ class ContractController extends Controller
         $objBold->getFont()->setBold(true);
         $objBold->getFont()->setName("Times New Roman");
 
-        $w_sheet->getCell('B39')->setValue($objRichText);
+        $w_sheet->getCell('B41')->setValue($objRichText);
 
-        $w_sheet->setCellValue('A40', '1.2.');
-        $w_sheet->getStyle('A40')
+        $w_sheet->setCellValue('A42', '1.2.');
+        $w_sheet->getStyle('A42')
                 ->getFont()
                 ->setBold('true');
 
@@ -1267,22 +1273,22 @@ class ContractController extends Controller
         $objBold->getFont()->setBold(true);
         $objBold->getFont()->setName("Times New Roman");
 
-        $w_sheet->getCell('B40')->setValue($objRichText);
+        $w_sheet->getCell('B42')->setValue($objRichText);
 
-        $w_sheet->setCellValue('A41', '1.3.');
-        $w_sheet->getStyle('A41')
+        $w_sheet->setCellValue('A43', '1.3.');
+        $w_sheet->getStyle('A43')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->getStyle("A41")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->getStyle("A43")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B41', 'Địa điểm làm việc: Hà Nam, Việt Nam và các địa điểm khác khi có yêu cầu của Công ty vào từng thời điểm. Tuy nhiên, Người lao động sẽ làm việc tại và/hoặc đi công tác đến những nơi khác (bên trong hoặc bên ngoài Việt Nam) theo yêu cầu hợp lý của Công ty.');
-        $w_sheet->getRowDimension('41')->setRowHeight(52);
-        $w_sheet->mergeCells('B41:J41');
-        $w_sheet->getStyle("B41")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B41")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('B43', 'Địa điểm làm việc: Hà Nam, Việt Nam và các địa điểm khác khi có yêu cầu của Công ty vào từng thời điểm. Tuy nhiên, Người lao động sẽ làm việc tại và/hoặc đi công tác đến những nơi khác (bên trong hoặc bên ngoài Việt Nam) theo yêu cầu hợp lý của Công ty.');
+        $w_sheet->getRowDimension('43')->setRowHeight(52);
+        $w_sheet->mergeCells('B43:J43');
+        $w_sheet->getStyle("B43")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B43")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A42', '1.4.');
-        $w_sheet->getStyle('A42')
+        $w_sheet->setCellValue('A44', '1.4.');
+        $w_sheet->getStyle('A44')
                 ->getFont()
                 ->setBold(true);
 
@@ -1293,10 +1299,10 @@ class ContractController extends Controller
         $objBold->getFont()->setBold(true);
         $objBold->getFont()->setName("Times New Roman");
 
-        $w_sheet->getCell('B42')->setValue($objRichText);
+        $w_sheet->getCell('B44')->setValue($objRichText);
 
-        $w_sheet->setCellValue('A43', '1.5.');
-        $w_sheet->getStyle('A43')
+        $w_sheet->setCellValue('A45', '1.5.');
+        $w_sheet->getStyle('A45')
                 ->getFont()
                 ->setBold(true);
 
@@ -1307,13 +1313,13 @@ class ContractController extends Controller
         $objBold->getFont()->setBold(true);
         $objBold->getFont()->setName("Times New Roman");
 
-        $w_sheet->getCell('B43')->setValue($objRichText);
+        $w_sheet->getCell('B45')->setValue($objRichText);
 
-        $w_sheet->setCellValue('A44', '1.6.');
-        $w_sheet->getStyle('A44')
+        $w_sheet->setCellValue('A46', '1.6.');
+        $w_sheet->getStyle('A46')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->getStyle("A44")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->getStyle("A46")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
         $objRichText = new RichText();
         $objRichText->createText('Công việc phải làm: ');
@@ -1325,60 +1331,60 @@ class ContractController extends Controller
 
         $objRichText->createText('Chức danh chuyên môn và công việc phải làm được mô tả trong bản trách nhiệm công việc và/hoặc mục tiêu công việc theo từng thời điểm, được công bố trong cơ sở dữ liệu của Công ty.');
 
-        $w_sheet->getCell('B44')->setValue($objRichText);
-        $w_sheet->mergeCells('B44:J44');
-        $w_sheet->getRowDimension('44')->setRowHeight(65);
-        $w_sheet->getStyle("B44")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B44")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->getCell('B46')->setValue($objRichText);
+        $w_sheet->mergeCells('B46:J46');
+        $w_sheet->getRowDimension('46')->setRowHeight(65);
+        $w_sheet->getStyle("B46")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B46")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A46', 'Điều 2.');
-        $w_sheet->getStyle('A46')
-                ->getFont()
-                ->setBold(true);
-        $w_sheet->setCellValue('B46', 'Chế độ làm việc');
-        $w_sheet->getStyle('B46')
-                ->getFont()
-                ->setBold(true);
-
-        $w_sheet->setCellValue('A47', '2.1.');
-        $w_sheet->getStyle('A47')
-                ->getFont()
-                ->setBold(true);
-        $w_sheet->getStyle("A47")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('B47', 'Thời giờ làm việc: tổng giờ làm việc tiêu chuẩn 48 giờ/tuần. Thời điểm bắt đầu và kết thúc của ngày, tuần hoặc ca làm việc; số ngày làm việc trong tuần; thời điểm bắt đầu, thời điểm kết thúc nghỉ trong giờ làm việc sẽ tuân theo Nội quy lao động của Công ty.');
-        $w_sheet->mergeCells('B47:J47');
-        $w_sheet->getRowDimension('47')->setRowHeight(45);
-        $w_sheet->getStyle("B47")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B47")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('A48', '2.2.');
+        $w_sheet->setCellValue('A48', 'Điều 2.');
         $w_sheet->getStyle('A48')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->getStyle("A48")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('B48', 'Chế độ làm việc');
+        $w_sheet->getStyle('B48')
+                ->getFont()
+                ->setBold(true);
 
-        $w_sheet->setCellValue('B48', 'Người lao động đồng ý làm thêm giờ khi được yêu cầu vào từng thời điểm phụ thuộc vào nhu cầu công việc của Công ty.');
-        $w_sheet->mergeCells('B48:J48');
-        $w_sheet->getRowDimension('48')->setRowHeight(30);
-        $w_sheet->getStyle("B48")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B48")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('A49', '2.1.');
+        $w_sheet->getStyle('A49')
+                ->getFont()
+                ->setBold(true);
+        $w_sheet->getStyle("A49")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A50', 'Điều 3.');
+        $w_sheet->setCellValue('B49', 'Thời giờ làm việc: tổng giờ làm việc tiêu chuẩn 48 giờ/tuần. Thời điểm bắt đầu và kết thúc của ngày, tuần hoặc ca làm việc; số ngày làm việc trong tuần; thời điểm bắt đầu, thời điểm kết thúc nghỉ trong giờ làm việc sẽ tuân theo Nội quy lao động của Công ty.');
+        $w_sheet->mergeCells('B49:J49');
+        $w_sheet->getRowDimension('49')->setRowHeight(45);
+        $w_sheet->getStyle("B49")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B49")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('A50', '2.2.');
         $w_sheet->getStyle('A50')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->setCellValue('B50', 'Nghĩa vụ và quyền lợi của Người lao động');
-        $w_sheet->getStyle('B50')
+        $w_sheet->getStyle("A50")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('B50', 'Người lao động đồng ý làm thêm giờ khi được yêu cầu vào từng thời điểm phụ thuộc vào nhu cầu công việc của Công ty.');
+        $w_sheet->mergeCells('B50:J50');
+        $w_sheet->getRowDimension('50')->setRowHeight(30);
+        $w_sheet->getStyle("B50")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B50")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('A52', 'Điều 3.');
+        $w_sheet->getStyle('A52')
+                ->getFont()
+                ->setBold(true);
+        $w_sheet->setCellValue('B52', 'Nghĩa vụ và quyền lợi của Người lao động');
+        $w_sheet->getStyle('B52')
                 ->getFont()
                 ->setBold(true);
 
-        $w_sheet->setCellValue('A51', '3.1.');
-        $w_sheet->getStyle('A51')
+        $w_sheet->setCellValue('A53', '3.1.');
+        $w_sheet->getStyle('A53')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->setCellValue('B51', 'Quyền lợi');
-        $w_sheet->getStyle('B51')
+        $w_sheet->setCellValue('B53', 'Quyền lợi');
+        $w_sheet->getStyle('B53')
                 ->getFont()
                 ->setBold(true);
 
@@ -1393,332 +1399,332 @@ class ContractController extends Controller
         $objBold->getFont()->setBold(true);
         $objBold->getFont()->setName("Times New Roman");
         $objRichText->createText(' đồng/tháng.');
-        $w_sheet->getCell('B52')->setValue($objRichText);
+        $w_sheet->getCell('B54')->setValue($objRichText);
 
-        $w_sheet->setCellValue('B53', '- Hình thức trả lương: Tiền mặt hoặc chuyển khoản ngân hàng.');
+        $w_sheet->setCellValue('B55', '- Hình thức trả lương: Tiền mặt hoặc chuyển khoản ngân hàng.');
 
         if ('Phòng Kinh Doanh' == $contract->position->department->name) {
             $pay_date = 15;
         } else {
             $pay_date = 10;
         }
-        $w_sheet->setCellValue('B54', '- Thời hạn trả lương: Người lao động được trả một lần vào ngày '. $pay_date . ' hàng tháng.');
+        $w_sheet->setCellValue('B56', '- Thời hạn trả lương: Người lao động được trả một lần vào ngày '. $pay_date . ' hàng tháng.');
 
-        $w_sheet->setCellValue('B55', '- Phụ cấp trách nhiệm/ Chức vụ: Theo quy định của Công ty.');
+        $w_sheet->setCellValue('B57', '- Phụ cấp trách nhiệm/ Chức vụ: Theo quy định của Công ty.');
 
-        $w_sheet->setCellValue('B56', '- Phụ cấp nặng nhọc, độc hại, nguy hiểm: Theo quy định của Công ty.');
+        $w_sheet->setCellValue('B58', '- Phụ cấp nặng nhọc, độc hại, nguy hiểm: Theo quy định của Công ty.');
 
-        $w_sheet->setCellValue('B57', '- Các khoản thu nhập khác: Theo quy định của Công ty.');
+        $w_sheet->setCellValue('B59', '- Các khoản thu nhập khác: Theo quy định của Công ty.');
 
-        $w_sheet->setCellValue('B58', '- Phụ cấp đắt đỏ: Theo quy định của Công ty.');
+        $w_sheet->setCellValue('B60', '- Phụ cấp đắt đỏ: Theo quy định của Công ty.');
 
-        $w_sheet->setCellValue('B59', '- Chế độ nghỉ ngơi (nghỉ hàng tuần, phép năm, lễ tết…): Theo Nội quy lao động của Công ty và quy định của pháp luật Việt Nam.');
-        $w_sheet->mergeCells('B59:J59');
-        $w_sheet->getRowDimension('59')->setRowHeight(30);
-        $w_sheet->getStyle("B59")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B59")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $w_sheet->setCellValue('B61', '- Chế độ nghỉ ngơi (nghỉ hàng tuần, phép năm, lễ tết…): Theo Nội quy lao động của Công ty và quy định của pháp luật Việt Nam.');
+        $w_sheet->mergeCells('B61:J61');
+        $w_sheet->getRowDimension('61')->setRowHeight(30);
+        $w_sheet->getStyle("B61")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B61")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('B60', '- Bảo hiểm Xã hội, Bảo hiểm Y tế và Bảo hiểm Thất nghiệp: Theo quy định của pháp luật Việt Nam và quy định của Công ty.');
-        $w_sheet->mergeCells('B60:J60');
-        $w_sheet->getRowDimension('60')->setRowHeight(30);
-        $w_sheet->getStyle("B60")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B60")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $w_sheet->setCellValue('B62', '- Bảo hiểm Xã hội, Bảo hiểm Y tế và Bảo hiểm Thất nghiệp: Theo quy định của pháp luật Việt Nam và quy định của Công ty.');
+        $w_sheet->mergeCells('B62:J62');
+        $w_sheet->getRowDimension('62')->setRowHeight(30);
+        $w_sheet->getStyle("B62")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B62")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('B61', '- Trang bị bảo hộ lao động cho người lao động: Theo Nội quy, quy định của công ty.');
+        $w_sheet->setCellValue('B63', '- Trang bị bảo hộ lao động cho người lao động: Theo Nội quy, quy định của công ty.');
 
-        $w_sheet->setCellValue('A63', 'Những thỏa thuận khác:');
-        $w_sheet->getStyle('A63')
+        $w_sheet->setCellValue('A65', 'Những thỏa thuận khác:');
+        $w_sheet->getStyle('A65')
                 ->getFont()
                 ->setBold(true);
 
-        $w_sheet->setCellValue('A64', 'Chế độ nâng bậc, nâng lương: việc xem xét lương hàng năm sẽ tuân theo quy chế lương của công ty và kết quả đánh giá thực hiện công việc của cá nhân và công ty hàng năm. Lương sẽ được xem xét tùy vào quyết định của Chủ tịch Hội đồng quản trị. Quyết định nâng lương sẽ được xem là phụ lục Hợp đồng về việc điều chỉnh lương của Hợp đồng này.');
-        $w_sheet->mergeCells('A64:J64');
-        $w_sheet->getRowDimension('64')->setRowHeight(60);
-        $w_sheet->getStyle("A64")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("A64")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $w_sheet->setCellValue('A66', 'Chế độ nâng bậc, nâng lương: việc xem xét lương hàng năm sẽ tuân theo quy chế lương của công ty và kết quả đánh giá thực hiện công việc của cá nhân và công ty hàng năm. Lương sẽ được xem xét tùy vào quyết định của Chủ tịch Hội đồng quản trị. Quyết định nâng lương sẽ được xem là phụ lục Hợp đồng về việc điều chỉnh lương của Hợp đồng này.');
+        $w_sheet->mergeCells('A66:J66');
+        $w_sheet->getRowDimension('66')->setRowHeight(60);
+        $w_sheet->getStyle("A66")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("A66")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('A65', 'Tiền thưởng: tùy thuộc vào kết quả kinh doanh của công ty, quyết định của Chủ tịch Hội đồng quản trị và theo Quy chế Thưởng của Công ty theo từng thời kỳ. Tiền thưởng được thanh toán chỉ khi nhân viên làm việc tại Công Ty đến thời điểm trả thưởng.');
-        $w_sheet->mergeCells('A65:J65');
-        $w_sheet->getRowDimension('65')->setRowHeight(45);
-        $w_sheet->getStyle("A65")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("A65")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $w_sheet->setCellValue('A67', 'Tiền thưởng: tùy thuộc vào kết quả kinh doanh của công ty, quyết định của Chủ tịch Hội đồng quản trị và theo Quy chế Thưởng của Công ty theo từng thời kỳ. Tiền thưởng được thanh toán chỉ khi nhân viên làm việc tại Công Ty đến thời điểm trả thưởng.');
+        $w_sheet->mergeCells('A67:J67');
+        $w_sheet->getRowDimension('67')->setRowHeight(45);
+        $w_sheet->getStyle("A67")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("A67")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('B66', '- Tiền ăn giữa ca: Theo quy định Công ty.');
-        $w_sheet->getStyle('B66')
-                ->getFont()
-                ->setItalic(true);
-        $w_sheet->setCellValue('B67', '- Tiền điện thoại: Theo quy định Công ty.');
-        $w_sheet->getStyle('B67')
-                ->getFont()
-                ->setItalic(true);
-        $w_sheet->setCellValue('B68', '- Phương tiện đi lại: Theo quy định Công ty.');
+        $w_sheet->setCellValue('B68', '- Tiền ăn giữa ca: Theo quy định Công ty.');
         $w_sheet->getStyle('B68')
                 ->getFont()
                 ->setItalic(true);
-
-        $w_sheet->setCellValue('A69', '3.2.');
-        $w_sheet->getStyle('A69')
-                ->getFont()
-                ->setBold(true);
-
-        $w_sheet->setCellValue('B69', 'Nghĩa vụ');
+        $w_sheet->setCellValue('B69', '- Tiền điện thoại: Theo quy định Công ty.');
         $w_sheet->getStyle('B69')
                 ->getFont()
+                ->setItalic(true);
+        $w_sheet->setCellValue('B70', '- Phương tiện đi lại: Theo quy định Công ty.');
+        $w_sheet->getStyle('B70')
+                ->getFont()
+                ->setItalic(true);
+
+        $w_sheet->setCellValue('A71', '3.2.');
+        $w_sheet->getStyle('A71')
+                ->getFont()
                 ->setBold(true);
 
-        $w_sheet->setCellValue('A70', '3.2.1.');
-        $w_sheet->getStyle("A70")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("A70")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('B71', 'Nghĩa vụ');
+        $w_sheet->getStyle('B71')
+                ->getFont()
+                ->setBold(true);
 
-        $w_sheet->setCellValue('B70', 'Hoàn thành công việc và trách nhiệm theo như mô tả trong bản trách nhiệm công việc và trong bản thỏa thuận mục tiêu công việc phải hoàn thành hàng năm.');
-        $w_sheet->mergeCells('B70:J70');
-        $w_sheet->getRowDimension('70')->setRowHeight(30);
-        $w_sheet->getStyle("B70")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B70")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-
-        $w_sheet->setCellValue('A71', '3.2.2.');
-        $w_sheet->getStyle("A71")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("A71")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('B71', 'Chấp hành lệnh điều hành sản xuất kinh doanh, Nội quy lao động, an toàn lao động và quy định pháp luật.');
-        $w_sheet->mergeCells('B71:J71');
-        $w_sheet->getRowDimension('71')->setRowHeight(30);
-        $w_sheet->getStyle("B71")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B71")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-
-        $w_sheet->setCellValue('A72', '3.2.3.');
+        $w_sheet->setCellValue('A72', '3.2.1.');
         $w_sheet->getStyle("A72")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("A72")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B72', 'Giữ gìn, bảo quản tất cả thiết bị, công cụ và tư liệu làm việc được giao an toàn và luôn ở trong tình trạng tốt, không bị hư hỏng, tổn hại.');
+        $w_sheet->setCellValue('B72', 'Hoàn thành công việc và trách nhiệm theo như mô tả trong bản trách nhiệm công việc và trong bản thỏa thuận mục tiêu công việc phải hoàn thành hàng năm.');
         $w_sheet->mergeCells('B72:J72');
         $w_sheet->getRowDimension('72')->setRowHeight(30);
         $w_sheet->getStyle("B72")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("B72")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('A73', '3.2.4.');
-        $w_sheet->setCellValue('B73', 'Bồi thường vi phạm vật chất: theo Nội quy lao động của Công ty và quy định pháp luật.');
+        $w_sheet->setCellValue('A73', '3.2.2.');
+        $w_sheet->getStyle("A73")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("A73")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A74', '3.2.5.');
-        $w_sheet->getStyle("A74")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $w_sheet->setCellValue('B73', 'Chấp hành lệnh điều hành sản xuất kinh doanh, Nội quy lao động, an toàn lao động và quy định pháp luật.');
+        $w_sheet->mergeCells('B73:J73');
+        $w_sheet->getRowDimension('73')->setRowHeight(30);
+        $w_sheet->getStyle("B73")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B73")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('B74', 'Chịu trách nhiệm nộp thuế thu nhập cá nhân đối với thu nhập từ tiền lương, tiền công và thu nhập khác mà người lao động nhận được từ Công ty.');
+        $w_sheet->setCellValue('A74', '3.2.3.');
+        $w_sheet->getStyle("A74")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("A74")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('B74', 'Giữ gìn, bảo quản tất cả thiết bị, công cụ và tư liệu làm việc được giao an toàn và luôn ở trong tình trạng tốt, không bị hư hỏng, tổn hại.');
         $w_sheet->mergeCells('B74:J74');
         $w_sheet->getRowDimension('74')->setRowHeight(30);
         $w_sheet->getStyle("B74")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B74")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->getStyle("B74")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('A75', '3.2.6.');
-        $w_sheet->setCellValue('B75', 'Nghĩa vụ bảo mật thông tin');
+        $w_sheet->setCellValue('A75', '3.2.4.');
+        $w_sheet->setCellValue('B75', 'Bồi thường vi phạm vật chất: theo Nội quy lao động của Công ty và quy định pháp luật.');
 
-        $w_sheet->setCellValue('A76', 'a)');
-        $w_sheet->getStyle("A76")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('A76', '3.2.5.');
+        $w_sheet->getStyle("A76")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('B76', 'Bất kỳ thông tin nào liên quan đến công việc kinh doanh, nhà cung cấp hay khách hàng của Công ty sẽ được xem là bí mật. Tất cả các thông tin mà Người lao động có được trong thời gian làm việc phải được giữ bí mật trong suốt thời gian làm việc và sau khi kết thúc thời gian làm việc cho Công ty. Người lao động đồng ý rằng tại mọi thời điểm mình sẽ không tiết lộ hay sử dụng Thông tin mật (như định nghĩa dưới đây và Thỏa Thuận Bảo Mật) cho mục đích cá nhân, không công bố, tiết lộ hay phổ biến Thông tin mật bằng bất kỳ phương tiện nào tới bất kỳ người, công ty hay thực thể nào với bất kỳ lý do hay mục đích nào ngoại trừ trường hợp cần thiết cho công việc kinh doanh của Công ty, mà không có sự chấp thuận trước bằng văn bản của Công ty.');
+        $w_sheet->setCellValue('B76', 'Chịu trách nhiệm nộp thuế thu nhập cá nhân đối với thu nhập từ tiền lương, tiền công và thu nhập khác mà người lao động nhận được từ Công ty.');
         $w_sheet->mergeCells('B76:J76');
-        $w_sheet->getRowDimension('76')->setRowHeight(115);
+        $w_sheet->getRowDimension('76')->setRowHeight(30);
         $w_sheet->getStyle("B76")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("B76")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A77', 'b)');
-        $w_sheet->getStyle("A77")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('A77', '3.2.6.');
+        $w_sheet->setCellValue('B77', 'Nghĩa vụ bảo mật thông tin');
 
-        $w_sheet->setCellValue('B77', 'Cho mục đích của Hợp đồng này, “Thông tin mật” có nghĩa là bất kỳ hay tất cả các thông tin chưa được Công ty hay các công ty liên kết trực tiếp hay gián tiếp của Công ty công bố, các thông tin này Người lao động có được hay được tiết lộ cho Người lao động trong quá trình làm hoặc phát sinh từ quá trình làm việc của Người lao động với Công ty, bao gồm nhưng không giới hạn ở các thông tin sau:');
-        $w_sheet->mergeCells('B77:J77');
-        $w_sheet->getRowDimension('77')->setRowHeight(70);
-        $w_sheet->getStyle("B77")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B77")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('A78', 'a)');
+        $w_sheet->getStyle("A78")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B78', '+');
+        $w_sheet->setCellValue('B78', 'Bất kỳ thông tin nào liên quan đến công việc kinh doanh, nhà cung cấp hay khách hàng của Công ty sẽ được xem là bí mật. Tất cả các thông tin mà Người lao động có được trong thời gian làm việc phải được giữ bí mật trong suốt thời gian làm việc và sau khi kết thúc thời gian làm việc cho Công ty. Người lao động đồng ý rằng tại mọi thời điểm mình sẽ không tiết lộ hay sử dụng Thông tin mật (như định nghĩa dưới đây và Thỏa Thuận Bảo Mật) cho mục đích cá nhân, không công bố, tiết lộ hay phổ biến Thông tin mật bằng bất kỳ phương tiện nào tới bất kỳ người, công ty hay thực thể nào với bất kỳ lý do hay mục đích nào ngoại trừ trường hợp cần thiết cho công việc kinh doanh của Công ty, mà không có sự chấp thuận trước bằng văn bản của Công ty.');
+        $w_sheet->mergeCells('B78:J78');
+        $w_sheet->getRowDimension('78')->setRowHeight(115);
+        $w_sheet->getStyle("B78")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("B78")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('C78', 'Tất cả bí mật thương mại, công thức, định mức tạo thành sản phẩm; bất cứ thông tin kỹ thuật, kinh tế, tài chính, tiếp thị hay các thông tin khác như số liệu tài chính, thống kê kế toán, thông tin về khách hàng, sản phẩm mà các đối thủ cạnh tranh hay các công ty khác muốn có; các hoạt động, chiến lược kinh doanh; phát hiện khoa học, nghiên cứu phát triển hay phân tích khoa học, hợp đồng và giấy phép, hoạt động của Công ty trong quá khứ, hiện tại hoặc được đặt kế hoạch (tương lai) cùng các thông tin liên quan đến hồ sơ Công ty; các dữ liệu tồn kho, dữ liệu xuất – nhập; thông tin nguyên vật liệu và các loại thông tin khác thu thập hoặc có được từ quá trình hoạt động của Công ty; hệ thống kế toán, hệ thống kinh doanh.');
-        $w_sheet->mergeCells('C78:J78');
-        $w_sheet->getRowDimension('78')->setRowHeight(125);
-        $w_sheet->getStyle("C78")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("C78")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('A79', 'b)');
+        $w_sheet->getStyle("A79")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B79', '+');
+        $w_sheet->setCellValue('B79', 'Cho mục đích của Hợp đồng này, “Thông tin mật” có nghĩa là bất kỳ hay tất cả các thông tin chưa được Công ty hay các công ty liên kết trực tiếp hay gián tiếp của Công ty công bố, các thông tin này Người lao động có được hay được tiết lộ cho Người lao động trong quá trình làm hoặc phát sinh từ quá trình làm việc của Người lao động với Công ty, bao gồm nhưng không giới hạn ở các thông tin sau:');
+        $w_sheet->mergeCells('B79:J79');
+        $w_sheet->getRowDimension('79')->setRowHeight(70);
+        $w_sheet->getStyle("B79")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("B79")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('C79', 'Các thông tin liên quan đến việc kiện tụng và nguy cơ kiện tụng liên quan tới hoặc ảnh hưởng đến Công ty.' . PHP_EOL .'Các Thông tin mật này có thể tồn tại dưới bất kỳ hình thức nào, kể cả trên giấy tờ, bản in, thẻ, micro phim, hoặc microfiche, băng từ, đĩa mềm, thông tin trong các file máy tính.' . PHP_EOL . 'Người lao động đồng ý rằng các Thông tin mật nói trên là tài sản của Công ty. Khi kết thúc Hợp đồng, Người lao động đồng ý và có nghĩa vụ hoàn lại cho Công ty tất cả các tài liệu, hồ sơ hay các thông tin thuộc bất kỳ dạng nào về hoặc liên quan đến các Thông tin mật như định nghĩa trên đây và Thỏa Thuận Bảo Mật. Nếu Công ty có yêu cầu, Người lao động sẽ có trách nhiệm chuyển giao các Thông tin mật đó cho Công ty tại bất kỳ thời điểm nào trong thời hạn của Hợp đồng.');
-        $w_sheet->mergeCells('C79:J79');
-        $w_sheet->getRowDimension('79')->setRowHeight(150);
-        $w_sheet->getStyle("C79")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("C79")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('A80', 'c)');
-        $w_sheet->getStyle("A80")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('B80', 'Việc Người lao động vi phạm nghĩa vụ bảo mật theo quy định tại Hợp đồng này trong thời gian làm việc cho Công ty sẽ cấu thành sự vi phạm nghiêm trọng và là cơ sở cho việc xử lý kỷ luật Người lao động bằng hình thức sa thải theo quy định của pháp luật Việt Nam và Nội quy lao động của Công ty.');
-        $w_sheet->mergeCells('B80:J80');
-        $w_sheet->getRowDimension('80')->setRowHeight(60);
-        $w_sheet->getStyle("B80")->getAlignment()->setWrapText(true);
+        $w_sheet->setCellValue('B80', '+');
         $w_sheet->getStyle("B80")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A81', 'd)');
-        $w_sheet->getStyle("A81")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('C80', 'Tất cả bí mật thương mại, công thức, định mức tạo thành sản phẩm; bất cứ thông tin kỹ thuật, kinh tế, tài chính, tiếp thị hay các thông tin khác như số liệu tài chính, thống kê kế toán, thông tin về khách hàng, sản phẩm mà các đối thủ cạnh tranh hay các công ty khác muốn có; các hoạt động, chiến lược kinh doanh; phát hiện khoa học, nghiên cứu phát triển hay phân tích khoa học, hợp đồng và giấy phép, hoạt động của Công ty trong quá khứ, hiện tại hoặc được đặt kế hoạch (tương lai) cùng các thông tin liên quan đến hồ sơ Công ty; các dữ liệu tồn kho, dữ liệu xuất – nhập; thông tin nguyên vật liệu và các loại thông tin khác thu thập hoặc có được từ quá trình hoạt động của Công ty; hệ thống kế toán, hệ thống kinh doanh.');
+        $w_sheet->mergeCells('C80:J80');
+        $w_sheet->getRowDimension('80')->setRowHeight(125);
+        $w_sheet->getStyle("C80")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("C80")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B81', 'Ngoài các trách nhiệm bồi thường thiệt hại và trách nhiệm vật chất theo quy định của luật lao động Việt Nam và quy chế của Công ty, Người lao động, nếu tiết lộ các Thông tin mật theo quy định và Thỏa Thuận Bảo Mật, đồng ý và cam kết bảo đảm bồi thường cho Công ty bất kỳ thiệt hại nào bao gồm nhưng không giới hạn các chi phí pháp lý do Công ty gánh chịu phát sinh từ việc Người lao động vi phạm điều khoản về bảo mật quy định trong Hợp đồng này.');
-        $w_sheet->mergeCells('B81:J81');
-        $w_sheet->getRowDimension('81')->setRowHeight(90);
-        $w_sheet->getStyle("B81")->getAlignment()->setWrapText(true);
+        $w_sheet->setCellValue('B81', '+');
         $w_sheet->getStyle("B81")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A82', 'e)');
+        $w_sheet->setCellValue('C81', 'Các thông tin liên quan đến việc kiện tụng và nguy cơ kiện tụng liên quan tới hoặc ảnh hưởng đến Công ty.' . PHP_EOL .'Các Thông tin mật này có thể tồn tại dưới bất kỳ hình thức nào, kể cả trên giấy tờ, bản in, thẻ, micro phim, hoặc microfiche, băng từ, đĩa mềm, thông tin trong các file máy tính.' . PHP_EOL . 'Người lao động đồng ý rằng các Thông tin mật nói trên là tài sản của Công ty. Khi kết thúc Hợp đồng, Người lao động đồng ý và có nghĩa vụ hoàn lại cho Công ty tất cả các tài liệu, hồ sơ hay các thông tin thuộc bất kỳ dạng nào về hoặc liên quan đến các Thông tin mật như định nghĩa trên đây và Thỏa Thuận Bảo Mật. Nếu Công ty có yêu cầu, Người lao động sẽ có trách nhiệm chuyển giao các Thông tin mật đó cho Công ty tại bất kỳ thời điểm nào trong thời hạn của Hợp đồng.');
+        $w_sheet->mergeCells('C81:J81');
+        $w_sheet->getRowDimension('81')->setRowHeight(150);
+        $w_sheet->getStyle("C81")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("C81")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('A82', 'c)');
         $w_sheet->getStyle("A82")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B82', 'Trong mọi trường hợp, Thông tin mật không nhất thiết phải đóng dấu “mật” hay ‘Tuyệt mật” mới gọi là Thông tin mật.');
+        $w_sheet->setCellValue('B82', 'Việc Người lao động vi phạm nghĩa vụ bảo mật theo quy định tại Hợp đồng này trong thời gian làm việc cho Công ty sẽ cấu thành sự vi phạm nghiêm trọng và là cơ sở cho việc xử lý kỷ luật Người lao động bằng hình thức sa thải theo quy định của pháp luật Việt Nam và Nội quy lao động của Công ty.');
         $w_sheet->mergeCells('B82:J82');
-        $w_sheet->getRowDimension('82')->setRowHeight(30);
+        $w_sheet->getRowDimension('82')->setRowHeight(60);
         $w_sheet->getStyle("B82")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("B82")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A83', '3.2.7.');
+        $w_sheet->setCellValue('A83', 'd)');
         $w_sheet->getStyle("A83")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B83', 'Nghĩa vụ không làm việc cho đối thủ cạnh tranh của Công ty: Trong suốt thời gian làm việc tại Công ty, Người lao động sẽ không được làm việc cho công ty khác là đối thủ cạnh tranh trừ trường hợp có sự đồng ý bằng văn bản của Công ty.');
+        $w_sheet->setCellValue('B83', 'Ngoài các trách nhiệm bồi thường thiệt hại và trách nhiệm vật chất theo quy định của luật lao động Việt Nam và quy chế của Công ty, Người lao động, nếu tiết lộ các Thông tin mật theo quy định và Thỏa Thuận Bảo Mật, đồng ý và cam kết bảo đảm bồi thường cho Công ty bất kỳ thiệt hại nào bao gồm nhưng không giới hạn các chi phí pháp lý do Công ty gánh chịu phát sinh từ việc Người lao động vi phạm điều khoản về bảo mật quy định trong Hợp đồng này.');
         $w_sheet->mergeCells('B83:J83');
-        $w_sheet->getRowDimension('83')->setRowHeight(45);
+        $w_sheet->getRowDimension('83')->setRowHeight(90);
         $w_sheet->getStyle("B83")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("B83")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A85', 'Điều 4.');
-        $w_sheet->getStyle('A85')
+        $w_sheet->setCellValue('A84', 'e)');
+        $w_sheet->getStyle("A84")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('B84', 'Trong mọi trường hợp, Thông tin mật không nhất thiết phải đóng dấu “mật” hay ‘Tuyệt mật” mới gọi là Thông tin mật.');
+        $w_sheet->mergeCells('B84:J84');
+        $w_sheet->getRowDimension('84')->setRowHeight(30);
+        $w_sheet->getStyle("B84")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B84")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('A85', '3.2.7.');
+        $w_sheet->getStyle("A85")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('B85', 'Nghĩa vụ không làm việc cho đối thủ cạnh tranh của Công ty: Trong suốt thời gian làm việc tại Công ty, Người lao động sẽ không được làm việc cho công ty khác là đối thủ cạnh tranh trừ trường hợp có sự đồng ý bằng văn bản của Công ty.');
+        $w_sheet->mergeCells('B85:J85');
+        $w_sheet->getRowDimension('85')->setRowHeight(45);
+        $w_sheet->getStyle("B85")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B85")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('A87', 'Điều 4.');
+        $w_sheet->getStyle('A87')
                 ->getFont()
                 ->setBold(true);
 
-        $w_sheet->setCellValue('B85', 'Nghĩa vụ và quyền hạn của công ty');
-        $w_sheet->getStyle('B85')
+        $w_sheet->setCellValue('B87', 'Nghĩa vụ và quyền hạn của công ty');
+        $w_sheet->getStyle('B87')
                 ->getFont()
                 ->setBold(true);
 
-        $w_sheet->setCellValue('A86', '4.1.');
-        $w_sheet->getStyle('A86')
+        $w_sheet->setCellValue('A88', '4.1.');
+        $w_sheet->getStyle('A88')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->setCellValue('B86', 'Nghĩa vụ ');
-        $w_sheet->getStyle('B86')
-                ->getFont()
-                ->setBold(true);
-
-        $w_sheet->setCellValue('A87', '4.2.1.');
-        $w_sheet->getStyle("A87")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('B87', 'Điều hành Người lao động hoàn thành công việc theo Hợp đồng. Người sử dụng lao động có quyền bố trí, điều chuyển, bổ nhiệm, bãi nhiệm trong phạm vi công việc theo quy định tại Điều 1 Hợp đồng này; tạm ngừng công việc của Người lao động theo nhu cầu kinh doanh và tuân theo quy định của Bộ luật Lao động Việt Nam.');
-        $w_sheet->mergeCells('B87:J87');
-        $w_sheet->getRowDimension('87')->setRowHeight(60);
-        $w_sheet->getStyle("B87")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B87")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('A88', '4.2.2.');
-        $w_sheet->getStyle("A88")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('B88', 'Tạm hoãn, chấm dứt Hợp đồng, kỷ luật Người lao động theo quy định của pháp luật, thỏa ước lao động tập thể và Nội quy lao động của Công ty.');
-        $w_sheet->mergeCells('B88:J88');
-        $w_sheet->getRowDimension('88')->setRowHeight(30);
-        $w_sheet->getStyle("B88")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B88")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('A89', '4.2.');
-        $w_sheet->getStyle('A89')
-                ->getFont()
-                ->setBold(true);
-        $w_sheet->setCellValue('B89', 'Quyền hạn');
-        $w_sheet->getStyle('B89')
+        $w_sheet->setCellValue('B88', 'Nghĩa vụ ');
+        $w_sheet->getStyle('B88')
                 ->getFont()
                 ->setBold(true);
 
-        $w_sheet->setCellValue('A90', '4.2.1.');
+        $w_sheet->setCellValue('A89', '4.2.1.');
+        $w_sheet->getStyle("A89")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('B89', 'Điều hành Người lao động hoàn thành công việc theo Hợp đồng. Người sử dụng lao động có quyền bố trí, điều chuyển, bổ nhiệm, bãi nhiệm trong phạm vi công việc theo quy định tại Điều 1 Hợp đồng này; tạm ngừng công việc của Người lao động theo nhu cầu kinh doanh và tuân theo quy định của Bộ luật Lao động Việt Nam.');
+        $w_sheet->mergeCells('B89:J89');
+        $w_sheet->getRowDimension('89')->setRowHeight(60);
+        $w_sheet->getStyle("B89")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B89")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('A90', '4.2.2.');
         $w_sheet->getStyle("A90")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B90', 'Điều hành Người lao động hoàn thành công việc theo Hợp đồng. Người sử dụng lao động có quyền bố trí, điều chuyển, bổ nhiệm, bãi nhiệm trong phạm vi công việc theo quy định tại Điều 1 Hợp đồng này; tạm ngừng công việc của Người lao động theo nhu cầu kinh doanh và tuân theo quy định của Bộ luật Lao động Việt Nam.');
+        $w_sheet->setCellValue('B90', 'Tạm hoãn, chấm dứt Hợp đồng, kỷ luật Người lao động theo quy định của pháp luật, thỏa ước lao động tập thể và Nội quy lao động của Công ty.');
         $w_sheet->mergeCells('B90:J90');
-        $w_sheet->getRowDimension('90')->setRowHeight(60);
+        $w_sheet->getRowDimension('90')->setRowHeight(30);
         $w_sheet->getStyle("B90")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("B90")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A91', '4.2.2.');
-        $w_sheet->getStyle("A91")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('B91', 'Tạm hoãn, chấm dứt Hợp đồng, kỷ luật Người lao động theo quy định của pháp luật, thỏa ước lao động tập thể và Nội quy lao động của Công ty.');
-        $w_sheet->mergeCells('B91:J91');
-        $w_sheet->getRowDimension('91')->setRowHeight(30);
-        $w_sheet->getStyle("B91")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B91")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        $w_sheet->setCellValue('A93', 'Điều 5.');
-        $w_sheet->getStyle('A93')
+        $w_sheet->setCellValue('A91', '4.2.');
+        $w_sheet->getStyle('A91')
+                ->getFont()
+                ->setBold(true);
+        $w_sheet->setCellValue('B91', 'Quyền hạn');
+        $w_sheet->getStyle('B91')
                 ->getFont()
                 ->setBold(true);
 
-        $w_sheet->setCellValue('B93', 'Điều khoản thi hành');
-        $w_sheet->getStyle('B93')
-                ->getFont()
-                ->setBold(true);
+        $w_sheet->setCellValue('A92', '4.2.1.');
+        $w_sheet->getStyle("A92")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A94', '5.1.');
-        $w_sheet->getStyle('A94')
-                ->getFont()
-                ->setBold(true);
-        $w_sheet->getStyle("A94")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('B92', 'Điều hành Người lao động hoàn thành công việc theo Hợp đồng. Người sử dụng lao động có quyền bố trí, điều chuyển, bổ nhiệm, bãi nhiệm trong phạm vi công việc theo quy định tại Điều 1 Hợp đồng này; tạm ngừng công việc của Người lao động theo nhu cầu kinh doanh và tuân theo quy định của Bộ luật Lao động Việt Nam.');
+        $w_sheet->mergeCells('B92:J92');
+        $w_sheet->getRowDimension('92')->setRowHeight(60);
+        $w_sheet->getStyle("B92")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B92")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B94', 'Những vấn đề về lao động không ghi trong Hợp đồng này thì áp dụng quy định của Nội quy lao động, Thỏa ước lao động tập thể của Công ty và pháp luật lao động hiện hành.');
-        $w_sheet->mergeCells('B94:J94');
-        $w_sheet->getRowDimension('94')->setRowHeight(45);
-        $w_sheet->getStyle("B94")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B94")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('A93', '4.2.2.');
+        $w_sheet->getStyle("A93")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('A95', '5.2.');
+        $w_sheet->setCellValue('B93', 'Tạm hoãn, chấm dứt Hợp đồng, kỷ luật Người lao động theo quy định của pháp luật, thỏa ước lao động tập thể và Nội quy lao động của Công ty.');
+        $w_sheet->mergeCells('B93:J93');
+        $w_sheet->getRowDimension('93')->setRowHeight(30);
+        $w_sheet->getStyle("B93")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B93")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->setCellValue('A95', 'Điều 5.');
         $w_sheet->getStyle('A95')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->getStyle("A95")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B95', 'Hợp đồng này được lập thành hai (02) bản có giá trị pháp lý ngang nhau, mỗi bên giữ một (01) bản và Hợp đồng này thay thế cho các hợp đồng được ký kết trước đây, có hiệu lực từ ngày ký.');
-        $w_sheet->mergeCells('B95:J95');
-        $w_sheet->getRowDimension('95')->setRowHeight(45);
-        $w_sheet->getStyle("B95")->getAlignment()->setWrapText(true);
-        $w_sheet->getStyle("B95")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        $w_sheet->setCellValue('B95', 'Điều khoản thi hành');
+        $w_sheet->getStyle('B95')
+                ->getFont()
+                ->setBold(true);
 
-        $w_sheet->setCellValue('A96', '5.3.');
+        $w_sheet->setCellValue('A96', '5.1.');
         $w_sheet->getStyle('A96')
                 ->getFont()
                 ->setBold(true);
         $w_sheet->getStyle("A96")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->setCellValue('B96', 'Khi hai bên ký kết phụ lục Hợp đồng thì nội dung của phụ lục Hợp đồng cũng có giá trị như các nội dung của bản Hợp đồng này.');
+        $w_sheet->setCellValue('B96', 'Những vấn đề về lao động không ghi trong Hợp đồng này thì áp dụng quy định của Nội quy lao động, Thỏa ước lao động tập thể của Công ty và pháp luật lao động hiện hành.');
         $w_sheet->mergeCells('B96:J96');
-        $w_sheet->getRowDimension('96')->setRowHeight(30);
+        $w_sheet->getRowDimension('96')->setRowHeight(45);
         $w_sheet->getStyle("B96")->getAlignment()->setWrapText(true);
         $w_sheet->getStyle("B96")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->getStyle("A99")
+        $w_sheet->setCellValue('A97', '5.2.');
+        $w_sheet->getStyle('A97')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->mergeCells("A99:E99");
-        $w_sheet->setCellValue('A99', 'NGƯỜI LAO ĐỘNG');       $w_sheet->getStyle("A99")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $w_sheet->getStyle("A97")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->getStyle("F99")
-                ->getFont()
-                ->setBold(true);
-        $w_sheet->mergeCells("F99:J99");
-        $w_sheet->setCellValue('F99', 'ĐẠI DIỆN NGƯỜI SỬ DỤNG LAO ĐỘNG');
-        $w_sheet->getStyle("F99")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $w_sheet->setCellValue('B97', 'Hợp đồng này được lập thành hai (02) bản có giá trị pháp lý ngang nhau, mỗi bên giữ một (01) bản và Hợp đồng này thay thế cho các hợp đồng được ký kết trước đây, có hiệu lực từ ngày ký.');
+        $w_sheet->mergeCells('B97:J97');
+        $w_sheet->getRowDimension('97')->setRowHeight(45);
+        $w_sheet->getStyle("B97")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B97")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->getStyle("A104")
+        $w_sheet->setCellValue('A98', '5.3.');
+        $w_sheet->getStyle('A98')
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->mergeCells("A104:E104");
-        $w_sheet->setCellValue('A104', $employee->name);
-        $w_sheet->getStyle("A104")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $w_sheet->getStyle("A98")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
-        $w_sheet->getStyle("F104")
+        $w_sheet->setCellValue('B98', 'Khi hai bên ký kết phụ lục Hợp đồng thì nội dung của phụ lục Hợp đồng cũng có giá trị như các nội dung của bản Hợp đồng này.');
+        $w_sheet->mergeCells('B98:J98');
+        $w_sheet->getRowDimension('98')->setRowHeight(30);
+        $w_sheet->getStyle("B98")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("B98")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+        $w_sheet->getStyle("A101")
                 ->getFont()
                 ->setBold(true);
-        $w_sheet->mergeCells("F104:J104");
-        $w_sheet->setCellValue('F104', 'Tạ Văn Toại');
-        $w_sheet->getStyle("F104")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $w_sheet->mergeCells("A101:E101");
+        $w_sheet->setCellValue('A101', 'NGƯỜI LAO ĐỘNG');       $w_sheet->getStyle("A99")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $w_sheet->getStyle("F101")
+                ->getFont()
+                ->setBold(true);
+        $w_sheet->mergeCells("F101:J101");
+        $w_sheet->setCellValue('F101', 'ĐẠI DIỆN NGƯỜI SỬ DỤNG LAO ĐỘNG');
+        $w_sheet->getStyle("F101")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $w_sheet->getStyle("A106")
+                ->getFont()
+                ->setBold(true);
+        $w_sheet->mergeCells("A106:E106");
+        $w_sheet->setCellValue('A106', $employee->name);
+        $w_sheet->getStyle("A106")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $w_sheet->getStyle("F106")
+                ->getFont()
+                ->setBold(true);
+        $w_sheet->mergeCells("F106:J106");
+        $w_sheet->setCellValue('F106', 'Tạ Văn Toại');
+        $w_sheet->getStyle("F106")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
 
 
