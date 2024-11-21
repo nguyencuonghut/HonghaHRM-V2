@@ -29,7 +29,7 @@ class FirstInterviewInvitationPolicy
      */
     public function create(User $user): bool
     {
-        return 'Admin' == $user->role->name || 'Ban lãnh đạo' == $user->role->name || 'Trưởng đơn vị' == $user->role->name;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class FirstInterviewInvitationPolicy
      */
     public function update(User $user, FirstInterviewInvitation $firstInterviewInvitation): bool
     {
-        return 'Admin' == $user->role->name || 'Ban lãnh đạo' == $user->role->name || 'Trưởng đơn vị' == $user->role->name;
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class FirstInterviewInvitationPolicy
      */
     public function delete(User $user, FirstInterviewInvitation $firstInterviewInvitation): bool
     {
-        return 'Admin' == $user->role->name || 'Ban lãnh đạo' == $user->role->name || 'Trưởng đơn vị' == $user->role->name;
+        return true;
     }
 
     /**
