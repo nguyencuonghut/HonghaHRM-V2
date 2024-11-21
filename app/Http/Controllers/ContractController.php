@@ -1092,6 +1092,14 @@ class ContractController extends Controller
                 ->setItalic(true);
         $w_sheet->getStyle("A14")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
+        // Ngày ký
+        $w_sheet->setCellValue('A16', 'Hôm nay ngày ' . date('d', strtotime($contract->start_date)) . ' tháng ' . date('m', strtotime($contract->start_date)) . ' năm ' . date('Y', strtotime($contract->start_date)) . ' tại Công ty cổ phần dinh dưỡng Hồng Hà, các bên có thông tin dưới đây gồm:');
+        $w_sheet->mergeCells("A16:J16");
+        $w_sheet->getRowDimension('16')->setRowHeight(30);
+        $w_sheet->getStyle("A16")->getAlignment()->setWrapText(true);
+        $w_sheet->getStyle("A16")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+
         $w_sheet->setCellValue('A18', 'NGƯỜI SỬ DỤNG LAO ĐỘNG');
         $w_sheet->getStyle("A18")
                 ->getFont()
