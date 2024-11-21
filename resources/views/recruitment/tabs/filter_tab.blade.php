@@ -13,12 +13,13 @@
                   <th>Tên</th>
                   <th>Nơi làm việc</th>
                   <th>Mức lương</th>
-                  <th>Kết quả</th>
+                  <th>Kiểm tra</th>
+                  <th>Duyệt</th>
                   <th>Mời phỏng vấn</th>
                   <th>Đợt</th>
-                  @can('create', App\Models\Filter::class)
-                  <th style="width: 16%;">Thao tác</th>
-                  @endcan
+                  @if('Ban lãnh đạo' != Auth::user()->role->name)
+                  <th></th>
+                  @endif
                 </tr>
                 </thead>
 
@@ -33,29 +34,68 @@
                           $filter = App\Models\Filter::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
                           $action = '';
                           $first_interview_invitation = App\Models\FirstInterviewInvitation::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
-                          if ($filter) {
-                            if ('Đạt' == $filter->result) {
-                                if ($first_interview_invitation) {
-                                    $action = '<a href="#filter{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '"><i class="fas fa-filter"></i></a>
-                                    <a href="' . route("first_interview_invitations.add", $recruitment_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>
-                                    <a href="' . route("first_interview_invitations.feedback", $recruitment_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i></a>';
-                                } else {
-                                    $action = '<a href="#filter{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '"><i class="fas fa-filter"></i></a>
-                                    <a href="' . route("first_interview_invitations.add", $recruitment_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>
-                                    <form style="display:inline" action="'. route("filters.destroy", $filter->id) . '" method="POST">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
-                                }
+                          if ($filter) {// Có filter
+                            if ($first_interview_invitation) {
+                                $action = '<div class="dropdown">
+                                    <a class="btn dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                        Thao tác
+                                    </a>
+
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#filter{{' . $recruitment_candidate->id . '}}" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '">Lọc</a>
+                                        <a class="dropdown-item" href="#approve{{' . $recruitment_candidate->id . '}}" data-toggle="modal" data-target="#approve' . $recruitment_candidate->id. '">Duyệt</a>
+                                        <a class="dropdown-item" href="' . route("first_interview_invitations.add", $recruitment_candidate->id) . '">Mời</a>
+                                        <a class="dropdown-item" href="' . route("first_interview_invitations.feedback", $recruitment_candidate->id) . '">Phản hồi</a>
+                                        <form style="display:inline" action="'. route("filters.destroy", $filter->id) . '" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button class="dropdown-item" type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-sm">Xóa</button>
+                                        <input type="hidden" name="_token" value="' . csrf_token(). '"></form>
+                                    </div>
+                                    </div>';
                             } else {
-                                $action = '<a href="#filter{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '"><i class="fas fa-filter"></i></a>
+                                if ('Đạt' == $filter->approver_result) {
+                                    $action = '<div class="dropdown">
+                                        <a class="btn dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                            Thao tác
+                                        </a>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#filter{{' . $recruitment_candidate->id . '}}" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '">Lọc</a>
+                                            <a class="dropdown-item" href="#approve{{' . $recruitment_candidate->id . '}}" data-toggle="modal" data-target="#approve' . $recruitment_candidate->id. '">Duyệt</a>
+                                            <a class="dropdown-item" href="' . route("first_interview_invitations.add", $recruitment_candidate->id) . '">Mời</a>
                                             <form style="display:inline" action="'. route("filters.destroy", $filter->id) . '" method="POST">
                                             <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                            <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                                            <button class="dropdown-item" type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-sm">Xóa</button>
+                                            <input type="hidden" name="_token" value="' . csrf_token(). '"></form>
+                                        </div>
+                                        </div>';
+                                } else {
+                                    $action = '<div class="dropdown">
+                                        <a class="btn dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                            Thao tác
+                                        </a>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#filter{{' . $recruitment_candidate->id . '}}" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '">Lọc</a>
+                                            <a class="dropdown-item" href="#approve{{' . $recruitment_candidate->id . '}}" data-toggle="modal" data-target="#approve' . $recruitment_candidate->id. '">Duyệt</a>
+                                            <form style="display:inline" action="'. route("filters.destroy", $filter->id) . '" method="POST">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button class="dropdown-item" type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-sm">Xóa</button>
+                                            <input type="hidden" name="_token" value="' . csrf_token(). '"></form>
+                                        </div>
+                                        </div>';
+                                }
                             }
-                          } else {
-                            $action = '<a href="#filter{{' . $recruitment_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '"><i class="fas fa-filter"></i></a>';
+                          } else {//Chưa có filter
+                                $action = '<div class="dropdown">
+                                        <a class="btn dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                            Thao tác
+                                        </a>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#filter{{' . $recruitment_candidate->id . '}}" data-toggle="modal" data-target="#filter' . $recruitment_candidate->id. '">Lọc</a>
+                                        </div>
+                                        </div>';
                           }
                       @endphp
                       @if($filter)
@@ -64,10 +104,25 @@
                       </td>
                       <td>{{number_format($filter->salary, 0, '.', ',')}} <sup>đ</sup></td>
                       <td>
-                        @if($filter->result == 'Đạt')
-                            <span class="badge badge-success">{{$filter->result}}</span>
+                        @if($filter->reviewer_result == 'Đạt')
+                            <span class="badge badge-success">{{$filter->reviewer_result}}</span> - {{$filter->reviewer->name}}
+                            @if ($filter->reviewer_comment)
+                                <br><small>({{$filter->reviewer_comment}})</small>
+                            @endif
                         @else
-                            <span class="badge badge-danger">{{$filter->result}}</span>
+                            <span class="badge badge-danger">{{$filter->reviewer_result}}</span> - {{$filter->reviewer->name}}
+                            @if ($filter->reviewer_comment)
+                                <br><small>({{$filter->reviewer_comment}})</small>
+                            @endif
+                        @endif
+                      </td>
+                      <td>
+                        @if ($filter->approver_result )
+                            @if($filter->approver_result == 'Đạt')
+                                <span class="badge badge-success">{{$filter->approver_result}}</span> - {{$filter->approver->name}}
+                            @else
+                                <span class="badge badge-danger">{{$filter->approver_result}}</span> - {{$filter->approver->name}}
+                            @endif
                         @endif
                       </td>
                       <td>
@@ -91,11 +146,12 @@
                       <td></td>
                       <td></td>
                       <td></td>
+                      <td></td>
                       @endif
                       <td>{{$recruitment_candidate->batch}}</td>
-                      @can('create', App\Models\Filter::class)
+                      @if('Ban lãnh đạo' != Auth::user()->role->name)
                       <td>{!! $action !!}</td>
-                      @endcan
+                      @endif
                     </tr>
                     <!-- Modals for filter -->
                     @if ($filter)
@@ -138,7 +194,7 @@
                                                 <div class="control-group">
                                                     <label class="control-label">Ghi chú</label>
                                                     <div class="custom-file text-left">
-                                                        <input type="text" class="form-control" name="filter_note" id="filter_note" required="" @if ($filter) value="{{$filter->note}}" @endif>
+                                                        <input type="text" class="form-control" name="reviewer_comment" id="reviewer_comment" required="" @if ($filter) value="{{$filter->reviewer_comment}}" @endif>
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,10 +202,10 @@
                                                 <div class="control-group">
                                                     <label class="required-field" class="control-label">Kết quả</label>
                                                     <div class="controls">
-                                                        <select name="result" id="result" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                        <select name="reviewer_result" id="reviewer_result" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                             <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                            <option value="Đạt" @if ($filter && 'Đạt' == $filter->result) selected="selected" @endif>Đạt</option>
-                                                            <option value="Loại" @if ($filter && 'Loại' == $filter->result) selected="selected" @endif>Loại</option>
+                                                            <option value="Đạt" @if ($filter && 'Đạt' == $filter->reviewer_result) selected="selected" @endif>Đạt</option>
+                                                            <option value="Loại" @if ($filter && 'Loại' == $filter->reviewer_result) selected="selected" @endif>Loại</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -165,6 +221,56 @@
                             </div>
                         </div>
                     </form>
+                    <!-- /.modal -->
+
+
+                    <!-- Modals for approve -->
+                    @if ($filter)
+                    <form class="form-horizontal" method="post" action="{{ route('filters.approve', $filter->id) }}" name="approve_filter" id="approve_filter" novalidate="novalidate">
+                        {{ csrf_field() }}
+                        <div class="modal fade" tabindex="-1" id="approve{{$recruitment_candidate->id}}">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Lọc ứng viên</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Kết quả</label>
+                                                    <div class="controls">
+                                                        <select name="approver_result" id="approver_result" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                            <option value="Đạt" @if ($filter && 'Đạt' == $filter->approve_result) selected="selected" @endif>Đạt</option>
+                                                            <option value="Loại" @if ($filter && 'Loại' == $filter->approve_result) selected="selected" @endif>Loại</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="control-label">Ghi chú</label>
+                                                    <div class="custom-file text-left">
+                                                        <input type="text" class="form-control" name="approver_comment" id="approver_comment" required="" @if ($filter) value="{{$filter->approver_comment}}" @endif>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                        </div>
+                    </form>
+                    @endif
                     <!-- /.modal -->
                     @endforeach
                 </tbody>

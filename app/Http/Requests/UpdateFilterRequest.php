@@ -12,7 +12,7 @@ class UpdateFilterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return 'Admin' == Auth::user()->role->name || 'Nhân sự' == Auth::user()->role->name;
+        return true;
     }
 
     /**
@@ -26,7 +26,7 @@ class UpdateFilterRequest extends FormRequest
             'recruitment_candidate_id' => 'required',
             'work_location' => 'required',
             'salary' => 'required',
-            'result' => 'required',
+            'reviewer_result' => 'required',
         ];
     }
 
@@ -36,7 +36,7 @@ class UpdateFilterRequest extends FormRequest
             'recruitment_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
             'work_location.required' => 'Bạn phải nhập nơi làm việc.',
             'salary.required' => 'Bạn phải nhập mức lương.',
-            'result.required' => 'Bạn phải chọn kết quả.',
+            'reviewer_result.required' => 'Bạn phải chọn kết quả.',
         ];
     }
 }

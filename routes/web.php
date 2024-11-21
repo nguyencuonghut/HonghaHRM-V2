@@ -147,7 +147,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('/recruitment_candidates', RecruitmentCandidateController::class);
 
     //Candidate Filters
-    Route::resource('/filters', FilterController::class);
+    Route::post('filters/approve/{filter}', [FilterController::class, 'approve'])->name('filters.approve');
+    Route::resource('filters', FilterController::class);
 
     //FirstInterviewInvitations
     Route::get('first_interview_invitations/add/{recruitment_candidate_id}', [FirstInterviewInvitationController::class, 'add'])->name('first_interview_invitations.add');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApproveFilterRequest;
 use App\Http\Requests\StoreFilterRequest;
 use App\Http\Requests\UpdateFilterRequest;
 use App\Models\Filter;
@@ -41,8 +42,9 @@ class FilterController extends Controller
         $filter->recruitment_candidate_id = $request->recruitment_candidate_id;
         $filter->work_location = $request->work_location;
         $filter->salary = $request->salary;
-        $filter->result = $request->result;
-        $filter->note = $request->filter_note;
+        $filter->reviewer_id = Auth::user()->id;
+        $filter->reviewer_result = $request->reviewer_result;
+        $filter->reviewer_comment = $request->reviewer_comment;
         $filter->save();
 
         Alert::toast('Lọc ứng viên thành công!', 'success', 'top-right');
@@ -78,8 +80,9 @@ class FilterController extends Controller
         $filter->recruitment_candidate_id = $request->recruitment_candidate_id;
         $filter->work_location = $request->work_location;
         $filter->salary = $request->salary;
-        $filter->result = $request->result;
-        $filter->note = $request->filter_note;
+        $filter->reviewer_id = Auth::user()->id;
+        $filter->reviewer_result = $request->reviewer_result;
+        $filter->reviewer_comment = $request->reviewer_comment;
         $filter->save();
 
         Alert::toast('Lọc ứng viên thành công!', 'success', 'top-right');
@@ -96,9 +99,30 @@ class FilterController extends Controller
             return redirect()->back();
         }
 
+        if ($filter->approver_result) {
+            Alert::toast('Đã có kết quả duyệt. Bạn không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $filter->delete();
 
         Alert::toast('Xóa kết quả lọc thành công!', 'success', 'top-rigth');
+        return redirect()->back();
+    }
+
+    public function approve(ApproveFilterRequest $request, Filter $filter)
+    {
+        if (Auth::user()->cannot('approve', $filter)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
+        $filter->approver_id = Auth::user()->id;
+        $filter->approver_result = $request->approver_result;
+        $filter->approver_comment = $request->approver_comment;
+        $filter->save();
+
+        Alert::toast('Duyệt kết quả lọc thành công!', 'success', 'top-rigth');
         return redirect()->back();
     }
 }

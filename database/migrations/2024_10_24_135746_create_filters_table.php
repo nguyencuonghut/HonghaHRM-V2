@@ -16,8 +16,12 @@ return new class extends Migration
             $table->foreignId('recruitment_candidate_id')->constrained('recruitment_candidates')->onDelete('cascade');
             $table->string('work_location')->nullable();
             $table->bigInteger('salary');
-            $table->enum('result', ['Đạt', 'Loại']);
-            $table->text('note')->nullable();
+            $table->foreignId('reviewer_id')->constrained('users')->onDelete('cascade');
+            $table->enum('reviewer_result', ['Đạt', 'Loại']);
+            $table->text('reviewer_comment')->nullable();
+            $table->foreignId('approver_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->enum('approver_result', ['Đạt', 'Loại'])->nullable();
+            $table->text('approver_comment')->nullable();
             $table->timestamps();
         });
     }
