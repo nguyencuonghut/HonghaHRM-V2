@@ -134,10 +134,14 @@
                                 - <span class="badge badge-success">{{$first_interview_invitation->feedback}}</span>
                             @elseif ('Từ chối' == $first_interview_invitation->feedback)
                                 - <span class="badge badge-danger">{{$first_interview_invitation->feedback}}</span>
-                                <small>({{$first_interview_invitation->note}})</small>
+                                @if ($first_interview_invitation->note)
+                                  <small>({{$first_interview_invitation->note}})</small>
+                                @endif
                             @elseif ('Hẹn lại' == $first_interview_invitation->feedback)
                                 - <span class="badge badge-warning">{{$first_interview_invitation->feedback}}</span>
-                                <small>({{$first_interview_invitation->note}})</small>
+                                @if ($first_interview_invitation->note)
+                                  <small>({{$first_interview_invitation->note}})</small>
+                                @endif
                             @endif
                         @endif
                       </td>
