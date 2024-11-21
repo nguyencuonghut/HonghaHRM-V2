@@ -48,7 +48,7 @@ class RemindFirstInterviewInviation extends Notification implements ShouldQueue
                 ->line('Xin mời bạn tham gia phỏng vấn lần 1 các ứng viên cho vị trí: ' . $recruitment->position->name . '.')
                 ->line('Bộ phận: ' . $recruitment->position->division->name . '.')
                 ->line('Phòng ban: ' . $recruitment->position->department->name . '.')
-                ->line('Thời gian: ' . date('d/m/Y', strtotime($first_interview_invitation->interview_time)) . '.')
+                ->line('Thời gian: ' . date('d/m/Y H:i', strtotime($first_interview_invitation->interview_time)) . '.')
                 ->line('Xin cảm ơn!');
     }
 
