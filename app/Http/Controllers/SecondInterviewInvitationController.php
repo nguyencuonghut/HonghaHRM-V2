@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateSecondInterviewInvitationRequest;
 use App\Models\Candidate;
 use App\Models\RecruitmentCandidate;
 use App\Models\SecondInterviewInvitation;
+use App\Models\User;
+use App\Notifications\RemindSecondInterviewInviation;
 use App\Notifications\SecondInterviewInvitationCreated;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -103,6 +105,16 @@ class SecondInterviewInvitationController extends Controller
         $secondInterviewInvitation->save();
 
         $recruitment_candidate = RecruitmentCandidate::findOrFail($request->recruitment_candidate_id);
+        // Send email reminder to Trưởng Đơn Vị
+        if ('Đồng ý' == $secondInterviewInvitation->feedback) {
+            $interview_time = Carbon::parse($secondInterviewInvitation->interview_time);
+            $delay = $interview_time->addMinutes(-60);
+
+            $receivers = User::whereIn('role_id', [2, 4])->get();//2: Ban lãnh đạo, 4: Nhân sự
+            foreach ($receivers as $receiver) {
+                Notification::route('mail' , $receiver->email)->notify((new RemindSecondInterviewInviation($recruitment_candidate->id))->delay($delay));
+            }
+        }
         Alert::toast('Cập nhật phản hồi thành công!', 'success', 'top-right');
         return redirect()->route('recruitments.show', $recruitment_candidate->recruitment_id);
     }
