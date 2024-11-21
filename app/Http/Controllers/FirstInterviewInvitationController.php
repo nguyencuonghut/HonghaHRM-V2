@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFirstInterviewInvitationRequest;
 use App\Http\Requests\UpdateFirstInterviewInvitationRequest;
 use App\Models\Candidate;
+use App\Models\Filter;
 use App\Models\FirstInterviewInvitation;
 use App\Models\RecruitmentCandidate;
 use App\Notifications\FirstInterviewInvitationCreated;
+use App\Notifications\RemindFirstInterviewInviation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -103,6 +105,11 @@ class FirstInterviewInvitationController extends Controller
         $firstInterviewInvitation->save();
 
         $recruitment_candidate = RecruitmentCandidate::findOrFail($request->recruitment_candidate_id);
+        // Send email reminder to Trưởng Đơn Vị
+        if ('Đồng ý' == $firstInterviewInvitation->feedback) {
+            $filter = Filter::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
+            Notification::route('mail' , $filter->approver->email)->notify(new RemindFirstInterviewInviation($recruitment_candidate->id));
+        }
         Alert::toast('Cập nhật phản hồi thành công!', 'success', 'top-right');
         return redirect()->route('recruitments.show', $recruitment_candidate->recruitment_id);
     }

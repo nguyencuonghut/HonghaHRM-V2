@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use App\Models\Candidate;
 use App\Models\FirstInterviewInvitation;
 use App\Models\Recruitment;
 use App\Models\RecruitmentCandidate;
@@ -11,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class FirstInterviewInvitationCreated extends Notification implements ShouldQueue
+class RemindFirstInterviewInviation extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -45,13 +44,11 @@ class FirstInterviewInvitationCreated extends Notification implements ShouldQueu
         $first_interview_invitation = FirstInterviewInvitation::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
 
         return (new MailMessage)
-                ->subject('Mời phỏng vấn lần 1 cho vị trí ' . $recruitment->position->name)
-                ->line('Xin mời bạn tham gia phỏng vấn lần 1 cho vị trí: ' . $recruitment->position->name . '.')
+                ->subject('Mời phỏng vấn lần 1 các ứng viên cho vị trí ' . $recruitment->position->name)
+                ->line('Xin mời bạn tham gia phỏng vấn lần 1 các ứng viên cho vị trí: ' . $recruitment->position->name . '.')
                 ->line('Bộ phận: ' . $recruitment->position->division->name . '.')
                 ->line('Phòng ban: ' . $recruitment->position->department->name . '.')
                 ->line('Thời gian: ' . date('d/m/Y', strtotime($first_interview_invitation->interview_time)) . '.')
-                ->line('Địa điểm: ' . $first_interview_invitation->interview_location . '.')
-                ->line('Người liên hệ: ' . $first_interview_invitation->contact . '.')
                 ->line('Xin cảm ơn!');
     }
 
