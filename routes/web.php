@@ -51,6 +51,7 @@ use App\Http\Controllers\SecondInterviewResultController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WelfareController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\WorkRotationReportController;
 use App\Http\Controllers\YearReviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -287,4 +288,10 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('department_vices/data', [DepartmentViceController::class, 'anyData'])->name('department_vices.data');
     Route::resource('department_vices', DepartmentViceController::class);
 
+    //WorkRotationReport
+    Route::get('work_rotation_reports/data', [WorkRotationReportController::class, 'anyData'])->name('work_rotation_reports.data');
+    Route::post('work_rotation_reports/by_month', [WorkRotationReportController::class, 'byMonth'])->name('work_rotation_reports.by_month');
+    Route::get('work_rotation_reports/{month}/{year}', [WorkRotationReportController::class, 'byMonthData'])->name('work_rotation_reports.byMonthData');
+    Route::get('work_rotation_reports/show', [WorkRotationReportController::class, 'show'])->name('work_rotation_reports.show');
+    Route::get('work_rotation_reports', [WorkRotationReportController::class, 'index'])->name('work_rotation_reports.index');
 });

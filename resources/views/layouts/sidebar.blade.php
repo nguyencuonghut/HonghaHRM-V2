@@ -199,6 +199,42 @@
             </a>
           </li>
 
+          <!-- Reports -->
+          <li class="nav-item {{ Request::is('work_rotation_reports*') ? 'menu-open' : '' }}">
+            <a href="{{route('work_rotation_reports.index')}}" class="nav-link {{ Request::is('work_rotation_reports*') ? 'active' : '' }}">
+              <i class="nav-icon far fa-chart-bar"></i>
+              <p>
+                Báo cáo
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ Request::is('work_rotation_reports*') ? 'menu-open' : '' }}">
+                <a href="{{route('work_rotation_reports.index')}}" class="nav-link {{ Request::is('work_rotation_reports*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Luân chuyển
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{route('work_rotation_reports.index')}}" class="nav-link {{ Request::is('work_rotation_reports') ? 'active' : '' }}">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Tất cả</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{route('work_rotation_reports.show')}}" class="nav-link {{ Request::is('work_rotation_reports/show') || Request::is('work_rotation_reports/by_month') ? 'active' : '' }}">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Chi tiết</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
           <li class="nav-header">HỆ THỐNG</li>
           <!-- Người dùng -->
           <li class="nav-item">

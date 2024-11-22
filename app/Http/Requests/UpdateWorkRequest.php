@@ -12,7 +12,7 @@ class UpdateWorkRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return 'Admin' == Auth::user()->role->name || 'Ban lãnh đạo' == Auth::user()->role->name;
+        return 'Admin' == Auth::user()->role->name || 'Nhân sự' == Auth::user()->role->name;
     }
 
     /**
