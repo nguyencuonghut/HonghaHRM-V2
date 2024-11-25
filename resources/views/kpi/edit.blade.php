@@ -34,13 +34,13 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-6">
                                   <div class="control-group">
                                       <label class="required-field" class="control-label">Năm</label>
                                       <input class="form-control" type="number" name="year" id="year" value="{{$kpi->year}}">
                                   </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div class="control-group">
                                           <label class="required-field" class="control-label">Tháng</label>
                                           <div class="controls">
@@ -62,7 +62,20 @@
                                           </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="required-field control-label">Vị trí</label>
+                                    <div class="controls">
+                                        <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
+                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                            @foreach($my_positions as $position)
+                                                <option value="{{$position->id}}" @if($position->name == $kpi->position->name) selected="selected" @endif>{{$position->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
                                   <div class="control-group">
                                       <label class="required-field" class="control-label">Điểm</label>
                                       <input class="form-control" type="number" name="score" id="score" value="{{$kpi->score}}">

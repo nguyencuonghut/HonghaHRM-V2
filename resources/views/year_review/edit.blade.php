@@ -34,19 +34,32 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-6">
                                   <div class="control-group">
                                       <label class="required-field" class="control-label">Năm</label>
                                       <input class="form-control" type="number" name="year" id="year" value="{{$year_review->year}}">
                                   </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">KPI trung bình</label>
                                         <input class="form-control" type="number" name="kpi_average" id="kpi_average" step="any" value="{{$year_review->kpi_average}}">
                                     </div>
                                 </div>
-                                <div class="col-4">
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="required-field control-label">Vị trí</label>
+                                    <div class="controls">
+                                        <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
+                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                            @foreach($my_positions as $position)
+                                                <option value="{{$position->id}}" @if($position->name == $year_review->position->name) selected="selected" @endif>{{$position->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
                                   <div class="control-group">
                                         <label class="required-field" class="control-label">Kết quả</label>
                                         <div class="controls">

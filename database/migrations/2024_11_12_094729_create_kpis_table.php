@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('kpis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained('employees');
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
+            $table->foreignId('position_id')->constrained('positions')->onDelete('cascade');
             $table->integer('year');
             $table->enum('month',
                         ['Tháng 1',

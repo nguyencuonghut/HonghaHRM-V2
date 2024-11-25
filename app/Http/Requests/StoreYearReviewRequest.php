@@ -24,6 +24,7 @@ class StoreYearReviewRequest extends FormRequest
     {
         return [
             'employee_id' => 'required',
+            'position_id' => 'required',
             'year' => 'required',
             'kpi_average' => 'required',
             'result' => 'required',
@@ -34,6 +35,7 @@ class StoreYearReviewRequest extends FormRequest
     {
         return [
             'employee_id.required' => 'Số id nhân sự không đúng.',
+            'position_id.required' => 'Bạn cần nhập Vị Trí.',
             'year.required' => 'Bạn cần nhập năm.',
             'kpi_average.required' => 'Bạn cần nhập tháng.',
             'result.required' => 'Bạn cần nhập kết quả.',

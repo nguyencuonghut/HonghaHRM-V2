@@ -39,6 +39,7 @@
                     <th>STT</th>
                     <th>Mã</th>
                     <th>Nhân viên</th>
+                    <th>Vị trí</th>
                     <th>Phòng/ban</th>
                     <th>Năm</th>
                     <th>Tháng</th>
@@ -75,14 +76,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
 
             },
@@ -90,28 +91,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             }
         ],
@@ -119,9 +120,10 @@
         ajax: ' {!! route('kpis.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'department', name: 'department'},
             {data: 'employee_code', name: 'employee_code'},
             {data: 'employee', name: 'employee'},
+            {data: 'position', name: 'position'},
+            {data: 'department', name: 'department'},
             {data: 'year', name: 'month'},
             {data: 'month', name: 'month'},
             {data: 'score', name: 'score'},

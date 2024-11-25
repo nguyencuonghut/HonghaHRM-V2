@@ -10,10 +10,15 @@ class Kpi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'year', 'month', 'score'];
+    protected $fillable = ['employee_id', 'position_id', 'year', 'month', 'score'];
 
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function position(): BelongsTo
+    {
+        return $this->belongsTo(Position::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreYearReviewRequest;
 use App\Http\Requests\UpdateYearReviewRequest;
+use App\Models\Position;
 use App\Models\Work;
 use App\Models\YearReview;
 use Illuminate\Http\Request;
@@ -42,6 +43,7 @@ class YearReviewController extends Controller
 
         $year_review = new YearReview();
         $year_review->employee_id = $request->employee_id;
+        $year_review->position_id = $request->position_id;
         $year_review->year = $request->year;
         $year_review->kpi_average = $request->kpi_average;
         $year_review->result = $request->result;
@@ -72,7 +74,13 @@ class YearReviewController extends Controller
             return redirect()->back();
         }
 
-        return view('year_review.edit', ['year_review' => $yearReview]);
+        $my_position_ids = Work::where('employee_id', $yearReview->employee_id)->where('status', 'On')->pluck('position_id')->toArray();
+        $my_positions = Position::whereIn('id', $my_position_ids)->get();
+
+        return view('year_review.edit', [
+            'year_review' => $yearReview,
+            'my_positions' => $my_positions,
+        ]);
     }
 
     /**
@@ -80,6 +88,7 @@ class YearReviewController extends Controller
      */
     public function update(UpdateYearReviewRequest $request, YearReview $yearReview)
     {
+        $yearReview->position_id = $request->position_id;
         $yearReview->year = $request->year;
         $yearReview->kpi_average = $request->kpi_average;
         $yearReview->result = $request->result;
@@ -116,6 +125,9 @@ class YearReviewController extends Controller
             ->addIndexColumn()
             ->editColumn('year', function ($data) {
                 return $data->year;
+            })
+            ->editColumn('position', function ($data) {
+                return $data->position->name;
             })
             ->editColumn('kpi_average', function ($data) {
                 return $data->kpi_average;
@@ -157,29 +169,16 @@ class YearReviewController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('department', function ($data) {
-                $employee_works = Work::where('employee_id', $data->employee_id)->where('status', 'On')->get();
-                $employee_department_str = '';
-                $i = 0;
-                $length = count($employee_works);
-                if ($length) {
-                    foreach ($employee_works as $employee_work) {
-                        if(++$i === $length) {
-                            $employee_department_str .= $employee_work->position->department->name;
-                        } else {
-                            $employee_department_str .= $employee_work->position->department->name;
-                            $employee_department_str .= ' | ';
-                        }
-                    }
-                } else {
-                    $employee_department_str .= '!! Chưa gán vị trí công việc !!';
-                }
-                return $employee_department_str;
+                return $data->position->department->name;
             })
             ->editColumn('employee_code', function ($data) {
                 return $data->employees_code;
             })
             ->editColumn('employee', function ($data) {
                 return '<a href="' . route("employees.show", $data->employee_id) . '">' . $data->employee->name . '</a>';
+            })
+            ->editColumn('position', function ($data) {
+                return $data->position->name;
             })
             ->editColumn('year', function ($data) {
                 return $data->year;

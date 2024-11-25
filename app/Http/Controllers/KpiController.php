@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreKpiRequest;
 use App\Http\Requests\UpdateKpiRequest;
 use App\Models\Kpi;
+use App\Models\Position;
 use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,7 @@ class KpiController extends Controller
 
         $kpi = new Kpi();
         $kpi->employee_id = $request->employee_id;
+        $kpi->position_id = $request->position_id;
         $kpi->year = $request->year;
         $kpi->month = $request->month;
         $kpi->score = $request->score;
@@ -68,7 +70,13 @@ class KpiController extends Controller
             return redirect()->back();
         }
 
-        return view('kpi.edit', ['kpi' => $kpi]);
+        $my_position_ids = Work::where('employee_id', $kpi->employee_id)->where('status', 'On')->pluck('position_id')->toArray();
+        $my_positions = Position::whereIn('id', $my_position_ids)->get();
+
+        return view('kpi.edit', [
+            'kpi' => $kpi,
+            'my_positions' => $my_positions,
+        ]);
     }
 
     /**
@@ -76,6 +84,7 @@ class KpiController extends Controller
      */
     public function update(UpdateKpiRequest $request, Kpi $kpi)
     {
+        $kpi->position_id = $request->position_id;
         $kpi->year = $request->year;
         $kpi->month = $request->month;
         $kpi->score = $request->score;
@@ -114,24 +123,11 @@ class KpiController extends Controller
             ->editColumn('employee', function ($data) {
                 return '<a href="' . route("employees.show", $data->employee_id) . '">' . $data->employee->name . '</a>';
             })
+            ->editColumn('position', function ($data) {
+                return $data->position->name;
+            })
             ->editColumn('department', function ($data) {
-                $employee_works = Work::where('employee_id', $data->employee_id)->where('status', 'On')->get();
-                $employee_department_str = '';
-                $i = 0;
-                $length = count($employee_works);
-                if ($length) {
-                    foreach ($employee_works as $employee_work) {
-                        if(++$i === $length) {
-                            $employee_department_str .= $employee_work->position->department->name;
-                        } else {
-                            $employee_department_str .= $employee_work->position->department->name;
-                            $employee_department_str .= ' | ';
-                        }
-                    }
-                } else {
-                    $employee_department_str .= '!! Chưa gán vị trí công việc !!';
-                }
-                return $employee_department_str;
+                return $data->position->department->name;
             })
             ->editColumn('year', function ($data) {
                 return $data->year;
@@ -164,6 +160,9 @@ class KpiController extends Controller
             })
             ->editColumn('month', function ($data) {
                 return $data->month;
+            })
+            ->editColumn('position', function ($data) {
+                return $data->position->name;
             })
             ->editColumn('score', function ($data) {
                 return $data->score;

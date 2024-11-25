@@ -23,6 +23,7 @@ class UpdateKpiRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'position_id' => 'required',
             'year' => 'required',
             'month' => 'required',
             'score' => 'required',
@@ -32,6 +33,7 @@ class UpdateKpiRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'position_id.required' => 'Bạn cần chọn Vị Trí.',
             'year.required' => 'Bạn cần nhập năm.',
             'month.required' => 'Bạn cần nhập tháng.',
             'score.required' => 'Bạn cần nhập điểm.',

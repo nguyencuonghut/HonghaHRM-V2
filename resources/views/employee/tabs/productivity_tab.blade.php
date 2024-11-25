@@ -18,6 +18,7 @@
                         <th>STT</th>
                         <th>Năm</th>
                         <th>Tháng</th>
+                        <th>Vị trí</th>
                         <th>Điểm</th>
                         @can('create', App\Models\Kpi::class)
                         <th>Thao tác</th>
@@ -41,13 +42,13 @@
                             <div class="modal-body">
                                 <input type="hidden" name="employee_id" id="employee_id" value="{{$employee->id}}">
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-6">
                                       <div class="control-group">
                                           <label class="required-field" class="control-label">Năm</label>
                                           <input class="form-control" type="number" name="year" id="year" value="{{Carbon\Carbon::now()->year}}">
                                       </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="control-group">
                                               <label class="required-field" class="control-label">Tháng</label>
                                               <div class="controls">
@@ -69,7 +70,20 @@
                                               </div>
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="required-field control-label">Vị trí</label>
+                                        <div class="controls">
+                                            <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
+                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                @foreach($my_positions as $position)
+                                                    <option value="{{$position->id}}">{{$position->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
                                       <div class="control-group">
                                           <label class="required-field" class="control-label">Điểm</label>
                                           <input class="form-control" type="number" name="score" id="score">
@@ -105,6 +119,7 @@
                     <tr>
                         <th>STT</th>
                         <th>Năm</th>
+                        <th>Vị trí</th>
                         <th>KPI trung bình</th>
                         <th>Kết quả</th>
                         <th>Chi tiết</th>
@@ -130,19 +145,32 @@
                             <div class="modal-body">
                                 <input type="hidden" name="employee_id" id="employee_id" value="{{$employee->id}}">
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-6">
                                       <div class="control-group">
                                           <label class="required-field" class="control-label">Năm</label>
                                           <input class="form-control" type="number" name="year" id="year" value="{{Carbon\Carbon::now()->year}}">
                                       </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">KPI trung bình</label>
                                             <input class="form-control" type="number" name="kpi_average" id="kpi_average" step="any">
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="required-field control-label">Vị trí</label>
+                                        <div class="controls">
+                                            <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
+                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                @foreach($my_positions as $position)
+                                                    <option value="{{$position->id}}">{{$position->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
                                       <div class="control-group">
                                             <label class="required-field" class="control-label">Kết quả</label>
                                             <div class="controls">
@@ -202,14 +230,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
 
             },
@@ -217,28 +245,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             }
         ],
@@ -248,6 +276,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'year', name: 'year'},
             {data: 'month', name: 'month'},
+            {data: 'position', name: 'position'},
             {data: 'score', name: 'score'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
@@ -260,14 +289,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
 
             },
@@ -275,28 +304,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             }
         ],
@@ -305,6 +334,7 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'year', name: 'year'},
+            {data: 'position', name: 'position'},
             {data: 'kpi_average', name: 'kpi_average'},
             {data: 'result', name: 'result'},
             {data: 'detail', name: 'detail'},

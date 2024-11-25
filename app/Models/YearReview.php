@@ -10,10 +10,15 @@ class YearReview extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'year', 'kpi_average', 'result', 'detail'];
+    protected $fillable = ['employee_id', 'position_id', 'year', 'kpi_average', 'result', 'detail'];
 
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function position(): BelongsTo
+    {
+        return $this->belongsTo(Position::class);
     }
 }

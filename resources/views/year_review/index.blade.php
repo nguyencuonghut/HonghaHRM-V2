@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Tất cả KPI' }}
+{{ 'Tất cả đánh giá năm' }}
 @endsection
 
 @extends('layouts.base')
@@ -40,6 +40,7 @@
                     <th>Phòng/ban</th>
                     <th>Mã</th>
                     <th>Nhân viên</th>
+                    <th>Vị trí</th>
                     <th>KPi trung bình</th>
                     <th>Kết quả</th>
                     <th>Chi tiết</th>
@@ -76,14 +77,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
 
             },
@@ -91,28 +92,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             }
         ],
@@ -123,6 +124,7 @@
             {data: 'department', name: 'department'},
             {data: 'employee_code', name: 'employee_code'},
             {data: 'employee', name: 'employee'},
+            {data: 'position', name: 'position'},
             {data: 'year', name: 'month'},
             {data: 'kpi_average', name: 'kpi_average'},
             {data: 'result', name: 'result'},
