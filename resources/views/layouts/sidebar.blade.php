@@ -304,7 +304,7 @@
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{route('reward_reports.show')}}" class="nav-link {{ Request::is('reward_reports/show') ? 'active' : '' }}">
+                        <a href="{{route('reward_reports.show')}}" class="nav-link {{ Request::is('reward_reports/show') || Request::is('reward_reports/by_year') ? 'active' : '' }}">
                           <i class="far fa-dot-circle nav-icon"></i>
                           <p>Chi tiết</p>
                         </a>
