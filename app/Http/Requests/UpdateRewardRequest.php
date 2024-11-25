@@ -26,6 +26,7 @@ class UpdateRewardRequest extends FormRequest
             'code' => 'required|unique:rewards,code,'.$this->reward->id,
             'sign_date' => 'required',
             'content' => 'required',
+            'position_id' => 'required',
         ];
     }
 
@@ -36,6 +37,7 @@ class UpdateRewardRequest extends FormRequest
             'code.unique' => 'Số khen thưởng đã tồn tại.',
             'sign_date.required' => 'Bạn phải nhập ngày ký.',
             'content.required' => 'Bạn phải nhập nội dung.',
+            'position_id.required' => 'Bạn phải chọn Vị Trí.'
         ];
     }
 }

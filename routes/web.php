@@ -43,6 +43,7 @@ use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\RegimeController;
 use App\Http\Controllers\RewardController;
+use App\Http\Controllers\RewardReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SchoolController;
@@ -260,7 +261,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('kpis', KpiController::class, ['names' => 'kpis']);
 
     //YearReview
-    Route::get('hyear_reviews/data', [YearReviewController::class, 'anyData'])->name('year_reviews.data');
+    Route::get('year_reviews/data', [YearReviewController::class, 'anyData'])->name('year_reviews.data');
     Route::get('year_reviews/employeeData/{employee_id}', [YearReviewController::class, 'employeeData'])->name('year_reviews.employeeData');
     Route::resource('year_reviews', YearReviewController::class, ['names' => 'year_reviews']);
 
@@ -302,4 +303,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('off_work_reports/{month}/{year}', [OffWorkReportController::class, 'byMonthData'])->name('off_work_reports.byMonthData');
     Route::get('off_work_reports/show', [OffWorkReportController::class, 'show'])->name('off_work_reports.show');
     Route::get('off_work_reports', [OffWorkReportController::class, 'index'])->name('off_work_reports.index');
+
+    //RewardReport
+    Route::get('reward_reports/show', [RewardReportController::class, 'show'])->name('reward_reports.show');
+    Route::get('reward_reports/data', [RewardReportController::class, 'anyData'])->name('reward_reports.data');
+    Route::post('reward_reports/by_year', [RewardReportController::class, 'byYear'])->name('reward_reports.by_year');
+    Route::get('reward_reports/{year}', [RewardReportController::class, 'byYearData'])->name('reward_reports.byYearData');
+    Route::get('reward_reports', [RewardReportController::class, 'index'])->name('reward_reports.index');
 });

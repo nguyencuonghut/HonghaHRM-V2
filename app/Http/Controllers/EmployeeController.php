@@ -167,6 +167,8 @@ class EmployeeController extends Controller
         $insurance_types = InsuranceType::all();
         $regime_types = RegimeType::all();
         $welfare_types = WelfareType::all();
+        $my_position_ids = Work::where('employee_id', $employee->id)->where('status', 'On')->pluck('position_id')->toArray();
+        $my_positions = Position::whereIn('id', $my_position_ids)->get();
 
         $this_year_total_kpi = 0;
         $this_year_my_kpis = Kpi::where('employee_id', $employee->id)->where('year', Carbon::now()->year)->get();
@@ -199,6 +201,7 @@ class EmployeeController extends Controller
             'welfare_types' => $welfare_types,
             'kpis' => $kpis,
             'this_year_kpi_average' => $this_year_kpi_average,
+            'my_positions' => $my_positions,
         ]);
     }
 

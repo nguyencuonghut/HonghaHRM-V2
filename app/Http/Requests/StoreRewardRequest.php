@@ -24,6 +24,7 @@ class StoreRewardRequest extends FormRequest
     {
         return [
             'employee_id' => 'required',
+            'position_id' => 'required',
             'code' => 'required|unique:rewards',
             'sign_date' => 'required',
             'content' => 'required',
@@ -34,6 +35,7 @@ class StoreRewardRequest extends FormRequest
     {
         return [
             'employee_id.required' => 'Số id nhân viên không hợp lệ.',
+            'position_id.required' => ' Bạn phải chọn Vị Trí.',
             'code.required' => 'Bạn phải nhập số khen thưởng.',
             'code.unique' => 'Số khen thưởng đã tồn tại.',
             'sign_date.required' => 'Bạn phải nhập ngày ký.',
