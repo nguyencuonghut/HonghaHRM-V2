@@ -33,6 +33,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MethodController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\OffWorkReportController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProbationController;
@@ -294,4 +295,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('work_rotation_reports/{month}/{year}', [WorkRotationReportController::class, 'byMonthData'])->name('work_rotation_reports.byMonthData');
     Route::get('work_rotation_reports/show', [WorkRotationReportController::class, 'show'])->name('work_rotation_reports.show');
     Route::get('work_rotation_reports', [WorkRotationReportController::class, 'index'])->name('work_rotation_reports.index');
+
+    //OffWorkReport
+    Route::get('off_work_reports/data', [OffWorkReportController::class, 'anyData'])->name('off_work_reports.data');
+    Route::post('off_work_reports/by_month', [OffWorkReportController::class, 'byMonth'])->name('off_work_reports.by_month');
+    Route::get('off_work_reports/{month}/{year}', [OffWorkReportController::class, 'byMonthData'])->name('off_work_reports.byMonthData');
+    Route::get('off_work_reports/show', [OffWorkReportController::class, 'show'])->name('off_work_reports.show');
+    Route::get('off_work_reports', [OffWorkReportController::class, 'index'])->name('off_work_reports.index');
 });
