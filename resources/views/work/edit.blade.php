@@ -75,7 +75,7 @@
                               <div class="col-6">
                                   <label class="required-field">Thời gian bắt đầu</label>
                                   <div class="input-group date" id="s_date" data-target-input="nearest">
-                                      <input type="text" name="s_date" class="form-control datetimepicker-input" value="{{date('d/m/Y', strtotime($contract->start_date))}}" data-target="#s_date"/>
+                                      <input type="text" name="s_date" class="form-control datetimepicker-input" value="{{date('d/m/Y', strtotime($work->start_date))}}" data-target="#s_date"/>
                                       <div class="input-group-append" data-target="#s_date" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
@@ -89,7 +89,7 @@
                                             <select name="on_type_id" id="on_type_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                 <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                 @foreach ($on_types as $on_type)
-                                                    <option value="{{$on_type->id}}" @if($on_type->id == $contract->on_type_id) selected="selected" @endif>{{$on_type->name}}</option>
+                                                    <option value="{{$on_type->id}}" @if($on_type->id == $work->on_type_id) selected="selected" @endif>{{$on_type->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
