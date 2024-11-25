@@ -205,6 +205,7 @@
            Request::is('work_rotation_reports*')
            || Request::is('off_work_reports*')
            || Request::is('reward_reports*')
+           || Request::is('discipline_reports*')
            ?
            'menu-open'
            :
@@ -217,6 +218,7 @@
                     Request::is('work_rotation_reports*')
                     || Request::is('off_work_reports*')
                     || Request::is('reward_reports*')
+                    || Request::is('discipline_reports*')
                     ?
                     'active'
                     :
@@ -310,6 +312,33 @@
                     </ul>
                   </li>
                 </ul>
+
+                <!-- Kỷ luật -->
+                <ul class="nav nav-treeview">
+                    <li class="nav-item {{ Request::is('discipline_reports*') ? 'menu-open' : '' }}">
+                      <a href="{{route('discipline_reports.index')}}" class="nav-link {{ Request::is('discipline_reports*') ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Kỷ luật
+                          <i class="fas fa-angle-left right"></i>
+                        </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{route('discipline_reports.index')}}" class="nav-link {{ Request::is('discipline_reports') ? 'active' : '' }}">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>Tất cả</p>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{{route('discipline_reports.show')}}" class="nav-link {{ Request::is('discipline_reports/show') || Request::is('discipline_reports/by_year') ? 'active' : '' }}">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>Chi tiết</p>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
           </li>
 
           <li class="nav-header">HỆ THỐNG</li>

@@ -24,6 +24,7 @@ class UpdateDisciplineRequest extends FormRequest
     {
         return [
             'code' => 'required|unique:disciplines,code,'.$this->discipline->id,
+            'position_id' => 'required',
             'sign_date' => 'required',
             'content' => 'required',
         ];
@@ -32,6 +33,7 @@ class UpdateDisciplineRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'position_id.required' => 'Bạn phải chọn Vị Trí.',
             'code.required' => 'Bạn phải nhập số kỷ luật.',
             'code.unique' => 'Số kỷ luật đã tồn tại.',
             'sign_date.required' => 'Bạn phải nhập ngày ký.',

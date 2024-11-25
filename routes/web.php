@@ -13,6 +13,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentManagerController;
 use App\Http\Controllers\DepartmentViceController;
 use App\Http\Controllers\DisciplineController;
+use App\Http\Controllers\DisciplineReportController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\DivisionManagerController;
@@ -310,4 +311,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('reward_reports/by_year', [RewardReportController::class, 'byYear'])->name('reward_reports.by_year');
     Route::get('reward_reports/{year}', [RewardReportController::class, 'byYearData'])->name('reward_reports.byYearData');
     Route::get('reward_reports', [RewardReportController::class, 'index'])->name('reward_reports.index');
+
+    //DisciplineReport
+    Route::get('discipline_reports/show', [DisciplineReportController::class, 'show'])->name('discipline_reports.show');
+    Route::get('discipline_reports/data', [DisciplineReportController::class, 'anyData'])->name('discipline_reports.data');
+    Route::post('discipline_reports/by_year', [DisciplineReportController::class, 'byYear'])->name('discipline_reports.by_year');
+    Route::get('discipline_reports/{year}', [DisciplineReportController::class, 'byYearData'])->name('discipline_reports.byYearData');
+    Route::get('discipline_reports', [DisciplineReportController::class, 'index'])->name('discipline_reports.index');
 });

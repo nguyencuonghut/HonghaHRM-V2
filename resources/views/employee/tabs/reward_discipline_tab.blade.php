@@ -113,6 +113,7 @@
                 <thead>
                     <tr>
                         <th>STT</th>
+                        <th>Vị trí</th>
                         <th>Số</th>
                         <th>Ngày</th>
                         <th>Nội dung</th>
@@ -152,6 +153,19 @@
                                             <div class="input-group-append" data-target="#dis_sign_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="required-field control-label">Vị trí</label>
+                                        <div class="controls">
+                                            <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
+                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                @foreach($my_positions as $position)
+                                                    <option value="{{$position->id}}">{{$position->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -271,14 +285,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
 
             },
@@ -286,28 +300,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             }
         ],
@@ -315,6 +329,7 @@
         ajax: ' {!! route('disciplines.employeeData', $employee->id) !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'position', name: 'position'},
             {data: 'code', name: 'code'},
             {data: 'sign_date', name: 'sign_date'},
             {data: 'content', name: 'content'},

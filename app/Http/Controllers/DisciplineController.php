@@ -42,6 +42,7 @@ class DisciplineController extends Controller
 
         $discipline = new Discipline();
         $discipline->employee_id = $request->employee_id;
+        $discipline->position_id = $request->position_id;
         $discipline->code = $request->code;
         $discipline->sign_date = Carbon::createFromFormat('d/m/Y', $request->dis_sign_date);
         $discipline->content = $request->dis_content;
@@ -80,6 +81,7 @@ class DisciplineController extends Controller
      */
     public function update(UpdateDisciplineRequest $request, Discipline $discipline)
     {
+        $discipline->position_id = $request->position_id;
         $discipline->code = $request->code;
         $discipline->sign_date = Carbon::createFromFormat('d/m/Y', $request->sign_date);
         $discipline->content = $request->content;
@@ -113,6 +115,9 @@ class DisciplineController extends Controller
         $data = Discipline::where('employee_id', $employee_id)->orderBy('id', 'desc')->get();
         return DataTables::of($data)
             ->addIndexColumn()
+            ->editColumn('position', function ($data) {
+                return $data->position->name;
+            })
             ->editColumn('code', function ($data) {
                 return $data->code;
             })
@@ -146,26 +151,13 @@ class DisciplineController extends Controller
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('department', function ($data) {
-                $employee_works = Work::where('employee_id', $data->employee_id)->where('status', 'On')->get();
-                $employee_department_str = '';
-                $i = 0;
-                $length = count($employee_works);
-                if ($length) {
-                    foreach ($employee_works as $employee_work) {
-                        if(++$i === $length) {
-                            $employee_department_str .= $employee_work->position->department->name;
-                        } else {
-                            $employee_department_str .= $employee_work->position->department->name;
-                            $employee_department_str .= ' | ';
-                        }
-                    }
-                } else {
-                    $employee_department_str .= '!! Chưa gán vị trí công việc !!';
-                }
-                return $employee_department_str;
+                return $data->position->department->name;
             })
             ->editColumn('employee', function ($data) {
                 return '<a href="' . route("employees.show", $data->employee_id) . '">' . $data->employee->name . '</a>';
+            })
+            ->editColumn('position', function ($data) {
+                return $data->position->name;
             })
             ->editColumn('code', function ($data) {
                 return $data->code;

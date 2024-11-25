@@ -24,6 +24,7 @@ class StoreDisciplineRequest extends FormRequest
     {
         return [
             'employee_id' => 'required',
+            'position_id' => 'required',
             'code' => 'required|unique:disciplines',
             'dis_sign_date' => 'required',
             'dis_content' => 'required',
@@ -34,6 +35,7 @@ class StoreDisciplineRequest extends FormRequest
     {
         return [
             'employee_id.required' => 'Số id nhân viên không hợp lệ.',
+            'position_id.required' => 'Bạn phải chọn Vị Trí.',
             'code.required' => 'Bạn phải nhập số kỷ luật.',
             'code.unique' => 'Số kỷ luật đã tồn tại.',
             'sigdis_sign_daten_date.required' => 'Bạn phải nhập ngày ký.',

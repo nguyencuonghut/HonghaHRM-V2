@@ -52,6 +52,19 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
+                                    <label class="required-field control-label">Vị trí</label>
+                                    <div class="controls">
+                                        <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
+                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                            @foreach($my_positions as $position)
+                                                <option value="{{$position->id}}" @if($position->id == $reward->position_id) ? selected="selected" @endif>{{$position->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
                                     <label class="required-field control-label">Nội dung</label>
                                     <textarea id="content" name="content">
                                         {!! $discipline->content!!}

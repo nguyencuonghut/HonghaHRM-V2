@@ -10,10 +10,15 @@ class Discipline extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'code', 'sign_date', 'content', 'note'];
+    protected $fillable = ['employee_id', 'position_id', 'code', 'sign_date', 'content', 'note'];
 
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function position(): BelongsTo
+    {
+        return $this->belongsTo(Position::class);
     }
 }
