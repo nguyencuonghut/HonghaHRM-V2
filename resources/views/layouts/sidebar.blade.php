@@ -207,6 +207,7 @@
            || Request::is('reward_reports*')
            || Request::is('discipline_reports*')
            || Request::is('kpi_reports*')
+           || Request::is('birthday_reports*')
            ?
            'menu-open'
            :
@@ -221,6 +222,7 @@
                     || Request::is('reward_reports*')
                     || Request::is('discipline_reports*')
                     || Request::is('kpi_reports*')
+                    || Request::is('birthday_reports*')
                     ?
                     'active'
                     :
@@ -362,6 +364,27 @@
                       </ul>
                     </li>
                   </ul>
+
+                <!-- Birthday -->
+                <ul class="nav nav-treeview">
+                    <li class="nav-item {{ Request::is('birthday_reports*') ? 'menu-open' : '' }}">
+                    <a href="{{route('birthday_reports.show')}}" class="nav-link {{ Request::is('birthday_reports*') ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                        Sinh nhật
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                        <a href="{{route('birthday_reports.show')}}" class="nav-link {{ Request::is('birthday_reports*') ? 'active' : '' }}">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>Tất cả</p>
+                        </a>
+                        </li>
+                    </ul>
+                    </li>
+                </ul>
           </li>
 
           <li class="nav-header">HỆ THỐNG</li>

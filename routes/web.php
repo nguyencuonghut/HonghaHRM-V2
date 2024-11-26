@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AppendixController;
+use App\Http\Controllers\BirthdayReportController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ChannelController;
@@ -324,4 +325,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('kpi_reports/show', [KpiReportController::class, 'show'])->name('kpi_reports.show');
     Route::post('kpi_reports/by_year', [KpiReportController::class, 'byYear'])->name('kpi_reports.by_year');
     Route::get('kpi_reports/{year}', [KpiReportController::class, 'byYearData'])->name('kpi_reports.byYearData');
+
+    //BirthdayReport
+    Route::get('birthday_reports/show', [BirthdayReportController::class, 'show'])->name('birthday_reports.show');
+    Route::post('birthday_reports/by_month', [BirthdayReportController::class, 'byMonth'])->name('birthday_reports.by_month');
+    Route::get('birthday_reports/{month}', [BirthdayReportController::class, 'byMonthData'])->name('birthday_reports.byMonthData');
 });
