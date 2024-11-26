@@ -30,8 +30,10 @@ class BirthdayReportController extends Controller
 
     public function byMonthData($month)
     {
-
-        $data = Employee::whereMonth('date_of_birth', $month)
+        //Tìm các nhân sự chưa nghỉ
+        $employee_ids = Contract::where('status', 'On')->pluck('employee_id')->toArray();
+        $data = Employee::whereIn('id', $employee_ids)
+                        ->whereMonth('date_of_birth', $month)
                         ->orderBy('code', 'desc')
                         ->get();
         return DataTables::of($data)
