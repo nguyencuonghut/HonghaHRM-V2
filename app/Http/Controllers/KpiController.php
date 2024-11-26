@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreKpiRequest;
 use App\Http\Requests\UpdateKpiRequest;
 use App\Models\Kpi;
+use App\Models\KpiReport;
 use App\Models\Position;
 use App\Models\Work;
 use Illuminate\Http\Request;
@@ -40,6 +41,16 @@ class KpiController extends Controller
             return redirect()->back();
         }
 
+        $this_month_kpi = Kpi::where('employee_id', $request->employee_id)
+                            ->where('position_id', $request->position_id)
+                            ->where('year', $request->year)
+                            ->where('month', $request->month)
+                            ->first();
+        if ($this_month_kpi) {
+            Alert::toast('KPI cho tháng đã có. Bạn không thể tạo thêm!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $kpi = new Kpi();
         $kpi->employee_id = $request->employee_id;
         $kpi->position_id = $request->position_id;
@@ -47,6 +58,19 @@ class KpiController extends Controller
         $kpi->month = $request->month;
         $kpi->score = $request->score;
         $kpi->save();
+
+        //Add KPI to report
+        $kpi_reports = KpiReport::where('employee_id', $request->employee_id)
+                                ->where('position_id', $request->position_id)
+                                ->where('year', $request->year)
+                                ->get();
+        if ($kpi_reports->count()) {
+            //Đã tồn tại KPI của năm, chỉ cần cập nhật tháng
+            $this->updateKpiReport($kpi, false);
+        } else {
+            //Chưa có KPI của năm, tạo mới
+            $this->createKpiReport($request->employee_id, $request->position_id, $request->year, $request->month, $request->score);
+        }
 
         Alert::toast('Nhập KPI mới thành công!', 'success', 'top-right');
         return redirect()->back();
@@ -84,11 +108,25 @@ class KpiController extends Controller
      */
     public function update(UpdateKpiRequest $request, Kpi $kpi)
     {
+        $req_month_kpi = Kpi::where('employee_id', $kpi->employee_id)
+                            ->where('position_id', $kpi->position_id)
+                            ->where('year', $request->year)
+                            ->where('month', $request->month)
+                            ->first();
+        if ($req_month_kpi
+            && $kpi->month != $req_month_kpi->month) {
+            Alert::toast('KPI cho tháng đã có. Bạn không thể tạo thêm!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $kpi->position_id = $request->position_id;
         $kpi->year = $request->year;
         $kpi->month = $request->month;
         $kpi->score = $request->score;
         $kpi->save();
+
+        //Update the KpiReport
+        $this->updateKpiReport($kpi, false);
 
         Alert::toast('Lưu KPI thành công!', 'success', 'top-right');
         return redirect()->route('employees.show', $kpi->employee_id);
@@ -103,7 +141,13 @@ class KpiController extends Controller
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
             return redirect()->back();
         }
+        $temp_kpi = $kpi;
+
+        //Delete the record
         $kpi->delete();
+
+        //Update the KpiReport
+        $this->updateKpiReport($kpi, true);
 
         Alert::toast('Xóa KPI mới thành công!', 'success', 'top-right');
         return redirect()->back();
@@ -179,4 +223,190 @@ class KpiController extends Controller
             ->make(true);
     }
 
+    private function createKpiReport($employee_id, $position_id, $year, $month, $score)
+    {
+        $kpi_report = new KpiReport();
+        $kpi_report->employee_id = $employee_id;
+        $kpi_report->position_id = $position_id;
+        $kpi_report->year = $year;
+        switch ($month) {
+            case 'Tháng 1':
+                $kpi_report->jan = $score;
+                break;
+            case 'Tháng 2':
+                $kpi_report->feb = $score;
+                break;
+            case 'Tháng 3':
+                $kpi_report->mar = $score;
+                break;
+            case 'Tháng 4':
+                $kpi_report->apr = $score;
+                break;
+            case 'Tháng 5':
+                $kpi_report->may = $score;
+                break;
+            case 'Tháng 6':
+                $kpi_report->jun = $score;
+                break;
+            case 'Tháng 7':
+                $kpi_report->jul = $score;
+                break;
+            case 'Tháng 8':
+                $kpi_report->aug = $score;
+                break;
+            case 'Tháng 9':
+                $kpi_report->sep = $score;
+                break;
+            case 'Tháng 10':
+                $kpi_report->oct = $score;
+                break;
+            case 'Tháng 11':
+                $kpi_report->nov = $score;
+                break;
+            case 'Tháng 12':
+                $kpi_report->dec = $score;
+                break;
+        }
+
+        $kpi_report->year_avarage = $score;
+        $kpi_report->save();
+    }
+
+
+    private function updateKpiReport(Kpi $kpi, bool $is_destroy)
+    {
+        //Find the KPI report
+        $kpi_report = KpiReport::where('employee_id', $kpi->employee_id)
+                                ->where('position_id', $kpi->position_id)
+                                ->where('year', $kpi->year)
+                                ->first();
+        $total_score = $kpi_report->jan + $kpi_report->feb + $kpi_report->mar + $kpi_report->apr + $kpi_report->may + $kpi_report->jun
+                        + $kpi_report->jul + $kpi_report->aug + $kpi_report->sep + $kpi_report->oct + $kpi_report->nov + $kpi_report->dec;
+
+        switch ($kpi->month) {
+            case 'Tháng 1':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->jan = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->jan;
+                    $kpi_report->jan = $kpi->score;
+                }
+                break;
+            case 'Tháng 2':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->feb = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->feb;
+                    $kpi_report->feb = $kpi->score;
+                }
+                break;
+            case 'Tháng 3':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->mar = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->mar;
+                    $kpi_report->mar = $kpi->score;
+                }
+                break;
+            case 'Tháng 4':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->apr = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->apr;
+                    $kpi_report->apr = $kpi->score;
+                }
+                break;
+            case 'Tháng 5':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->may = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->may;
+                    $kpi_report->may = $kpi->score;
+                }
+                break;
+            case 'Tháng 6':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->jun = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->jun;
+                    $kpi_report->jun = $kpi->score;
+                }
+                break;
+            case 'Tháng 7':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->jul = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->jul;
+                    $kpi_report->jul = $kpi->score;
+                }
+                break;
+            case 'Tháng 8':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->aug = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->aug;
+                    $kpi_report->aug = $kpi->score;
+                }
+                break;
+            case 'Tháng 9':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->sep = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->sep;
+                    $kpi_report->sep = $kpi->score;
+                }
+                break;
+            case 'Tháng 10':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->oct = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->oct;
+                    $kpi_report->oct = $kpi->score;
+                }
+                break;
+            case 'Tháng 11':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->nov = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->nov;
+                    $kpi_report->nov = $kpi->score;
+                }
+                break;
+            case 'Tháng 12':
+                if ($is_destroy) {
+                    $total_score = $total_score - $kpi->score;
+                    $kpi_report->dec = null;
+                } else {
+                    $total_score = $total_score + $kpi->score - $kpi_report->dec;
+                    $kpi_report->dec = $kpi->score;
+                }
+                break;
+        }
+
+        $year_total_kpi = 0;
+        $year_kpis = Kpi::where('employee_id', $kpi->employee->id)
+                        ->where('position_id', $kpi->position_id)
+                        ->where('year', $kpi->year)
+                        ->get();
+        foreach ($year_kpis as $this_year_kpi) {
+            $year_total_kpi += $this_year_kpi->score;
+        }
+        if ($year_kpis->count()) {
+            $kpi_report->year_avarage = round(ceil($year_total_kpi/$year_kpis->count()*100)/100,2);
+        } else {
+            $kpi_report->year_avarage = 0;
+        }
+        $kpi_report->save();
+    }
 }

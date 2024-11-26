@@ -30,6 +30,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InitialInterviewController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\KpiController;
+use App\Http\Controllers\KpiReportController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MethodController;
@@ -318,4 +319,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('discipline_reports/by_year', [DisciplineReportController::class, 'byYear'])->name('discipline_reports.by_year');
     Route::get('discipline_reports/{year}', [DisciplineReportController::class, 'byYearData'])->name('discipline_reports.byYearData');
     Route::get('discipline_reports', [DisciplineReportController::class, 'index'])->name('discipline_reports.index');
+
+    //KpiReport
+    Route::get('kpi_reports/show', [KpiReportController::class, 'show'])->name('kpi_reports.show');
+    Route::post('kpi_reports/by_year', [KpiReportController::class, 'byYear'])->name('kpi_reports.by_year');
+    Route::get('kpi_reports/{year}', [KpiReportController::class, 'byYearData'])->name('kpi_reports.byYearData');
 });

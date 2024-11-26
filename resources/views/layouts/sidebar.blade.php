@@ -206,6 +206,7 @@
            || Request::is('off_work_reports*')
            || Request::is('reward_reports*')
            || Request::is('discipline_reports*')
+           || Request::is('kpi_reports*')
            ?
            'menu-open'
            :
@@ -219,6 +220,7 @@
                     || Request::is('off_work_reports*')
                     || Request::is('reward_reports*')
                     || Request::is('discipline_reports*')
+                    || Request::is('kpi_reports*')
                     ?
                     'active'
                     :
@@ -334,6 +336,27 @@
                           <a href="{{route('discipline_reports.show')}}" class="nav-link {{ Request::is('discipline_reports/show') || Request::is('discipline_reports/by_year') ? 'active' : '' }}">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>Chi tiết</p>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                <!-- KPI -->
+                <ul class="nav nav-treeview">
+                    <li class="nav-item {{ Request::is('kpi_reports*') ? 'menu-open' : '' }}">
+                      <a href="{{route('kpi_reports.show')}}" class="nav-link {{ Request::is('kpi_reports*') ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          KPI
+                          <i class="fas fa-angle-left right"></i>
+                        </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{route('kpi_reports.show')}}" class="nav-link {{ Request::is('kpi_reports*') ? 'active' : '' }}">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>Tất cả</p>
                           </a>
                         </li>
                       </ul>
