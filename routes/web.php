@@ -44,6 +44,7 @@ use App\Http\Controllers\ProbationPlanController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RecruitmentCandidateController;
 use App\Http\Controllers\RecruitmentController;
+use App\Http\Controllers\RecruitmentReportController;
 use App\Http\Controllers\RegimeController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\RewardReportController;
@@ -330,4 +331,12 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('birthday_reports/show', [BirthdayReportController::class, 'show'])->name('birthday_reports.show');
     Route::post('birthday_reports/by_month', [BirthdayReportController::class, 'byMonth'])->name('birthday_reports.by_month');
     Route::get('birthday_reports/{month}', [BirthdayReportController::class, 'byMonthData'])->name('birthday_reports.byMonthData');
+
+    //RecruitmentReport
+    Route::get('recruitment_reports/data', [RecruitmentReportController::class, 'anyData'])->name('recruitment_reports.data');
+    Route::post('recruitment_reports/by_month', [RecruitmentReportController::class, 'byMonth'])->name('recruitment_reports.by_month');
+    Route::get('recruitment_reports/{month}/{year}', [RecruitmentReportController::class, 'byMonthData'])->name('recruitment_reports.byMonthData');
+    Route::get('recruitment_reports/show', [RecruitmentReportController::class, 'show'])->name('recruitment_reports.show');
+    Route::get('recruitment_reports', [RecruitmentReportController::class, 'index'])->name('recruitment_reports.index');
+
 });

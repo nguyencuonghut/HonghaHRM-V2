@@ -32,7 +32,7 @@
           </li>
 
           <li class="nav-item {{ Request::is('recruitments*') ? 'menu-open' : '' }}">
-            <a href="{{route('recruitments.index')}}" class="nav-link {{ Request::is('recruitment*') ? 'active' : '' }}">
+            <a href="{{route('recruitments.index')}}" class="nav-link {{ Request::is('recruitments*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-search-location"></i>
               <p>
                 Tuyển dụng
@@ -208,6 +208,7 @@
            || Request::is('discipline_reports*')
            || Request::is('kpi_reports*')
            || Request::is('birthday_reports*')
+           || Request::is('recruitment_reports*')
            ?
            'menu-open'
            :
@@ -223,6 +224,7 @@
                     || Request::is('discipline_reports*')
                     || Request::is('kpi_reports*')
                     || Request::is('birthday_reports*')
+                    || Request::is('recruitment_reports*')
                     ?
                     'active'
                     :
@@ -289,6 +291,33 @@
                   </ul>
                 </li>
               </ul>
+
+              <!-- Tuyển dụng -->
+              <ul class="nav nav-treeview">
+                  <li class="nav-item {{ Request::is('recruitment_reports*') ? 'menu-open' : '' }}">
+                    <a href="{{route('recruitment_reports.index')}}" class="nav-link {{ Request::is('recruitment_reports*') ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>
+                        Tuyển dụng
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="{{route('recruitment_reports.index')}}" class="nav-link {{ Request::is('recruitment_reports') ? 'active' : '' }}">
+                          <i class="far fa-dot-circle nav-icon"></i>
+                          <p>Tất cả</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{route('recruitment_reports.show')}}" class="nav-link {{ Request::is('recruitment_reports/show') || Request::is('recruitment_reports/by_month') ? 'active' : '' }}">
+                          <i class="far fa-dot-circle nav-icon"></i>
+                          <p>Chi tiết</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
 
               <!-- Khen thưởng -->
               <ul class="nav nav-treeview">
