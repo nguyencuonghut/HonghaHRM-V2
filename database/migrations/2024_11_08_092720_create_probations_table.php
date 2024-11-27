@@ -22,12 +22,12 @@ return new class extends Migration
             $table->enum('result_of_attitude', ['Tốt', 'Khá', 'Trung bình', 'Kém'])->nullable();
             $table->enum('result_manager_status', ['Đạt', 'Không đạt'])->nullable();
             $table->enum('result_reviewer_status', ['Đồng ý', 'Từ chối'])->nullable();
-            $table->time('result_review_time')->nullable();
+            $table->dateTime('result_review_time')->nullable();
             $table->foreignId('result_reviewer_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('approver_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->enum('approver_result', ['Đồng ý', 'Từ chối'])->nullable();
             $table->string('approver_comment')->nullable();
-            $table->time('approver_time')->nullable();
+            $table->dateTime('approver_time')->nullable();
             $table->timestamps();
         });
     }

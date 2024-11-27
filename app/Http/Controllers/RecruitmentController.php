@@ -84,7 +84,9 @@ class RecruitmentController extends Controller
         if ('Ban lãnh đạo' == Auth::user()->role->name) {
             $recruitment->reviewer_id      = Auth::user()->id;
             $recruitment->reviewer_result  = 'Đồng ý';
+            $recruitment->reviewed_time  = Carbon::now();
             $recruitment->approver_id      = Auth::user()->id;
+            $recruitment->approved_time  = Carbon::now();
             $recruitment->approver_result  = 'Đồng ý';
             $recruitment->status = 'Đã duyệt';
 

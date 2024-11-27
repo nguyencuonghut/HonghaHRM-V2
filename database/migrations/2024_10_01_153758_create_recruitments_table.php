@@ -24,13 +24,13 @@ return new class extends Migration
             $table->foreignId('creator_id')->constrained('users');
             $table->foreignId('reviewer_id')->nullable()->contrainded('users');
             $table->enum('reviewer_result', ['Đồng ý', 'Từ chối'])->nullable();
-            $table->time('reviewed_time')->nullable();
+            $table->dateTime('reviewed_time')->nullable();
             $table->longText('reviewer_comment')->nullable();
             $table->foreignId('approver_id')->nullable()->contrained('users');
             $table->enum('approver_result', ['Đồng ý', 'Từ chối'])->nullable();
             $table->longText('approver_comment')->nullable();
-            $table->time('approved_time')->nullable();
-            $table->time('completed_time')->nullable();
+            $table->dateTime('approved_time')->nullable();
+            $table->dateTime('completed_time')->nullable();
             $table->timestamps();
         });
     }
