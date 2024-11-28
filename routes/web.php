@@ -30,6 +30,7 @@ use App\Http\Controllers\FirstInterviewResultController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InitialInterviewController;
 use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\KidPolicyReportController;
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\KpiReportController;
 use App\Http\Controllers\LoginController;
@@ -343,4 +344,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     //SituationReport
     Route::get('situation_reports', [SituationReportController::class, 'index'])->name('situation_reports.index');
     Route::get('situation_reports/data', [SituationReportController::class, 'anyData'])->name('situation_reports.data');
+
+    //KidPolicyReport
+    Route::get('kid_policy_reports', [KidPolicyReportController::class, 'index'])->name('kid_policy_reports.index');
+    Route::get('kid_policy_reports/data', [KidPolicyReportController::class, 'anyData'])->name('kid_policy_reports.data');
 });

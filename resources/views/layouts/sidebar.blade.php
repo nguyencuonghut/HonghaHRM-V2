@@ -210,6 +210,7 @@
            || Request::is('birthday_reports*')
            || Request::is('recruitment_reports*')
            || Request::is('situation_reports*')
+           || Request::is('kid_policy_reports*')
            ?
            'menu-open'
            :
@@ -227,6 +228,7 @@
                     || Request::is('birthday_reports*')
                     || Request::is('recruitment_reports*')
                     || Request::is('situation_reports*')
+                    || Request::is('kid_policy_reports*')
                     ?
                     'active'
                     :
@@ -395,6 +397,14 @@
                         <a href="{{route('situation_reports.index')}}" class="nav-link {{ Request::is('situation_reports*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                         <p>Hoàn cảnh</p>
+                      </a>
+                    </li>
+
+                    <!-- Kid Policy -->
+                    <li class="nav-item">
+                        <a href="{{route('kid_policy_reports.index')}}" class="nav-link {{ Request::is('kid_policy_reports*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                        <p>Chế độ 1/6</p>
                       </a>
                     </li>
                 </ul>
