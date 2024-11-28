@@ -43,13 +43,22 @@ class RemindSecondInterviewInviation extends Notification implements ShouldQueue
         $recruitment = Recruitment::findOrFail($recruitment_candidate->recruitment_id);
         $first_interview_invitation = FirstInterviewInvitation::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
 
-        return (new MailMessage)
-                ->subject('Mời phỏng vấn lần 2 các ứng viên cho vị trí ' . $recruitment->position->name)
-                ->line('Xin mời bạn tham gia phỏng vấn lần 2 các ứng viên cho vị trí: ' . $recruitment->position->name . '.')
-                ->line('Bộ phận: ' . $recruitment->position->division->name . '.')
-                ->line('Phòng ban: ' . $recruitment->position->department->name . '.')
-                ->line('Thời gian: ' . date('d/m/Y H:i', strtotime($first_interview_invitation->interview_time)) . '.')
-                ->line('Xin cảm ơn!');
+        if ($recruitment->position->division_id) {
+            return (new MailMessage)
+                    ->subject('Mời phỏng vấn lần 2 các ứng viên cho vị trí ' . $recruitment->position->name)
+                    ->line('Xin mời bạn tham gia phỏng vấn lần 2 các ứng viên cho vị trí: ' . $recruitment->position->name . '.')
+                    ->line('Bộ phận: ' . $recruitment->position->division->name . '.')
+                    ->line('Phòng ban: ' . $recruitment->position->department->name . '.')
+                    ->line('Thời gian: ' . date('d/m/Y H:i', strtotime($first_interview_invitation->interview_time)) . '.')
+                    ->line('Xin cảm ơn!');
+        } else {
+            return (new MailMessage)
+                    ->subject('Mời phỏng vấn lần 2 các ứng viên cho vị trí ' . $recruitment->position->name)
+                    ->line('Xin mời bạn tham gia phỏng vấn lần 2 các ứng viên cho vị trí: ' . $recruitment->position->name . '.')
+                    ->line('Phòng ban: ' . $recruitment->position->department->name . '.')
+                    ->line('Thời gian: ' . date('d/m/Y H:i', strtotime($first_interview_invitation->interview_time)) . '.')
+                    ->line('Xin cảm ơn!');
+        }
     }
 
     /**

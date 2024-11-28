@@ -44,15 +44,26 @@ class FirstInterviewInvitationCreated extends Notification implements ShouldQueu
         $recruitment = Recruitment::findOrFail($recruitment_candidate->recruitment_id);
         $first_interview_invitation = FirstInterviewInvitation::where('recruitment_candidate_id', $recruitment_candidate->id)->first();
 
-        return (new MailMessage)
-                ->subject('Mời phỏng vấn lần 1 cho vị trí ' . $recruitment->position->name)
-                ->line('Xin mời bạn tham gia phỏng vấn lần 1 cho vị trí: ' . $recruitment->position->name . '.')
-                ->line('Bộ phận: ' . $recruitment->position->division->name . '.')
-                ->line('Phòng ban: ' . $recruitment->position->department->name . '.')
-                ->line('Thời gian: ' . date('d/m/Y', strtotime($first_interview_invitation->interview_time)) . '.')
-                ->line('Địa điểm: ' . $first_interview_invitation->interview_location . '.')
-                ->line('Người liên hệ: ' . $first_interview_invitation->contact . '.')
-                ->line('Xin cảm ơn!');
+        if ($recruitment->position->division_id) {
+            return (new MailMessage)
+                    ->subject('Mời phỏng vấn lần 1 cho vị trí ' . $recruitment->position->name)
+                    ->line('Xin mời bạn tham gia phỏng vấn lần 1 cho vị trí: ' . $recruitment->position->name . '.')
+                    ->line('Bộ phận: ' . $recruitment->position->division->name . '.')
+                    ->line('Phòng ban: ' . $recruitment->position->department->name . '.')
+                    ->line('Thời gian: ' . date('d/m/Y', strtotime($first_interview_invitation->interview_time)) . '.')
+                    ->line('Địa điểm: ' . $first_interview_invitation->interview_location . '.')
+                    ->line('Người liên hệ: ' . $first_interview_invitation->contact . '.')
+                    ->line('Xin cảm ơn!');
+        } else {
+            return (new MailMessage)
+            ->subject('Mời phỏng vấn lần 1 cho vị trí ' . $recruitment->position->name)
+            ->line('Xin mời bạn tham gia phỏng vấn lần 1 cho vị trí: ' . $recruitment->position->name . '.')
+            ->line('Phòng ban: ' . $recruitment->position->department->name . '.')
+            ->line('Thời gian: ' . date('d/m/Y', strtotime($first_interview_invitation->interview_time)) . '.')
+            ->line('Địa điểm: ' . $first_interview_invitation->interview_location . '.')
+            ->line('Người liên hệ: ' . $first_interview_invitation->contact . '.')
+            ->line('Xin cảm ơn!');
+        }
     }
 
     /**
