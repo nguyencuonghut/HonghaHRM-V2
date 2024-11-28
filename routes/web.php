@@ -54,6 +54,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SecondInterviewDetailController;
 use App\Http\Controllers\SecondInterviewInvitationController;
 use App\Http\Controllers\SecondInterviewResultController;
+use App\Http\Controllers\SituationReportController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WelfareController;
 use App\Http\Controllers\WorkController;
@@ -339,4 +340,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('recruitment_reports/show', [RecruitmentReportController::class, 'show'])->name('recruitment_reports.show');
     Route::get('recruitment_reports', [RecruitmentReportController::class, 'index'])->name('recruitment_reports.index');
 
+    //SituationReport
+    Route::get('situation_reports', [SituationReportController::class, 'index'])->name('situation_reports.index');
+    Route::get('situation_reports/data', [SituationReportController::class, 'anyData'])->name('situation_reports.data');
 });

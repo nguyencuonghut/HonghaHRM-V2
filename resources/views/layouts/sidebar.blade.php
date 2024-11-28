@@ -209,6 +209,7 @@
            || Request::is('kpi_reports*')
            || Request::is('birthday_reports*')
            || Request::is('recruitment_reports*')
+           || Request::is('situation_reports*')
            ?
            'menu-open'
            :
@@ -225,6 +226,7 @@
                     || Request::is('kpi_reports*')
                     || Request::is('birthday_reports*')
                     || Request::is('recruitment_reports*')
+                    || Request::is('situation_reports*')
                     ?
                     'active'
                     :
@@ -385,6 +387,14 @@
                         <a href="{{route('birthday_reports.show')}}" class="nav-link {{ Request::is('birthday_reports*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                         <p>Sinh nhật</p>
+                      </a>
+                    </li>
+
+                    <!-- Situation -->
+                    <li class="nav-item">
+                        <a href="{{route('situation_reports.index')}}" class="nav-link {{ Request::is('situation_reports*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                        <p>Hoàn cảnh</p>
                       </a>
                     </li>
                 </ul>
