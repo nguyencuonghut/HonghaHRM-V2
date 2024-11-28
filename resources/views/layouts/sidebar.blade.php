@@ -371,47 +371,21 @@
                         </li>
                       </ul>
                     </li>
-                  </ul>
 
-                <!-- KPI -->
-                <ul class="nav nav-treeview">
-                    <li class="nav-item {{ Request::is('kpi_reports*') ? 'menu-open' : '' }}">
-                      <a href="{{route('kpi_reports.show')}}" class="nav-link {{ Request::is('kpi_reports*') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>
-                          KPI
-                          <i class="fas fa-angle-left right"></i>
-                        </p>
+                    <!-- KPI -->
+                    <li class="nav-item">
+                        <a href="{{route('kpi_reports.show')}}" class="nav-link {{ Request::is('kpi_reports*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                        <p>KPI</p>
                       </a>
-                      <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                          <a href="{{route('kpi_reports.show')}}" class="nav-link {{ Request::is('kpi_reports*') ? 'active' : '' }}">
-                            <i class="far fa-dot-circle nav-icon"></i>
-                            <p>Tất cả</p>
-                          </a>
-                        </li>
-                      </ul>
                     </li>
-                  </ul>
 
-                <!-- Birthday -->
-                <ul class="nav nav-treeview">
-                    <li class="nav-item {{ Request::is('birthday_reports*') ? 'menu-open' : '' }}">
-                    <a href="{{route('birthday_reports.show')}}" class="nav-link {{ Request::is('birthday_reports*') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>
-                        Sinh nhật
-                        <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
+                    <!-- Birthday -->
+                    <li class="nav-item">
                         <a href="{{route('birthday_reports.show')}}" class="nav-link {{ Request::is('birthday_reports*') ? 'active' : '' }}">
-                            <i class="far fa-dot-circle nav-icon"></i>
-                            <p>Tất cả</p>
-                        </a>
-                        </li>
-                    </ul>
+                            <i class="far fa-circle nav-icon"></i>
+                        <p>Sinh nhật</p>
+                      </a>
                     </li>
                 </ul>
           </li>

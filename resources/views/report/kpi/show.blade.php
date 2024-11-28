@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Báo cáo kpi' }}
+{{ 'Báo cáo hiệu suất' }}
 @endsection
 
 @extends('layouts.base')
@@ -11,12 +11,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Báo cáo kpi năm {{Carbon\Carbon::now()->year}}</h1>
+          <h1 class="m-0">Báo cáo hiệu suất năm {{Carbon\Carbon::now()->year}}</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Báo cáo kpi năm {{Carbon\Carbon::now()->year}}</li>
+            <li class="breadcrumb-item active">Báo cáo hiệu suất năm {{Carbon\Carbon::now()->year}}</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
