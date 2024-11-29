@@ -18,6 +18,7 @@ use App\Models\EmployeeSchool;
 use App\Models\Family;
 use App\Models\Insurance;
 use App\Models\InsuranceType;
+use App\Models\JoinDate;
 use App\Models\Kpi;
 use App\Models\OnType;
 use App\Models\Position;
@@ -125,7 +126,6 @@ class EmployeeController extends Controller
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
         $employee->experience = $request->experience;
-        $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
         $employee->marriage_status = $request->marriage_status;
         $employee->save();
 
@@ -160,6 +160,7 @@ class EmployeeController extends Controller
         $regimes = Regime::where('employee_id', $employee->id)->get();
         $welfares = Welfare::where('employee_id', $employee->id)->get();
         $kpis = Kpi::where('employee_id', $employee->id)->get();
+        $join_dates = JoinDate::where('employee_id', $employee->id)->get();
         $positions = Position::all();
         $contract_types = ContractType::all();
         $on_types = OnType::all();
@@ -202,6 +203,7 @@ class EmployeeController extends Controller
             'kpis' => $kpis,
             'this_year_kpi_average' => $this_year_kpi_average,
             'my_positions' => $my_positions,
+            'join_dates' => $join_dates,
         ]);
     }
 
@@ -283,7 +285,6 @@ class EmployeeController extends Controller
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
         $employee->experience = $request->experience;
-        $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
         $employee->marriage_status = $request->marriage_status;
         $employee->save();
 
@@ -480,7 +481,7 @@ class EmployeeController extends Controller
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
         $employee->experience = $request->experience;
-        $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
+        //$employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);TODO: need to remove
         $employee->marriage_status = $request->marriage_status;
         $employee->save();
 

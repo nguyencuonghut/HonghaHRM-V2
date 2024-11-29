@@ -38,7 +38,6 @@ class UpdateEmployeeRequest extends FormRequest
             'commune_id' => 'required',
             'addmore.*.school_id' => 'required',
             'experience' => 'required',
-            'join_date' => 'required',
             'marriage_status' => 'required',
         ];
     }
@@ -61,7 +60,6 @@ class UpdateEmployeeRequest extends FormRequest
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
-            'join_date.required' => 'Bạn phải nhập ngày vào.',
             'marriage_status.required' => 'Bạn phải nhập tình trạng hôn nhân.',
         ];
     }

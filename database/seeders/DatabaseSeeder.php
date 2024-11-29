@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             DepartmentManagersTableSeeder::class,
             DivisionManagersTableSeeder::class,
             DepartmentVicesTableSeeder::class,
+            JoinDatesTableSeeder::class,
         ]);
     }
 }

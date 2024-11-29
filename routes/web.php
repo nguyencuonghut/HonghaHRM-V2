@@ -31,6 +31,7 @@ use App\Http\Controllers\FirstInterviewResultController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InitialInterviewController;
 use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\JoinDateController;
 use App\Http\Controllers\KidPolicyReportController;
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\KpiReportController;
@@ -296,6 +297,10 @@ Route::group(['middleware'=>'auth:web'], function() {
     //DepartmentVice
     Route::get('department_vices/data', [DepartmentViceController::class, 'anyData'])->name('department_vices.data');
     Route::resource('department_vices', DepartmentViceController::class);
+
+    //JoinDate
+    Route::get('join_dates/data', [JoinDateController::class, 'anyData'])->name('join_dates.data');
+    Route::resource('join_dates', JoinDateController::class, ['names' => 'join_dates']);
 
     //WorkRotationReport
     Route::get('work_rotation_reports/data', [WorkRotationReportController::class, 'anyData'])->name('work_rotation_reports.data');

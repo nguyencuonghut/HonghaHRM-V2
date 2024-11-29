@@ -141,13 +141,6 @@
         <hr>
 
         <div class="row invoice-info">
-            <div class="col-sm-4 invoice-col">
-                <address>
-                    <strong>Ngày vào</strong><br>
-                    {{date('d/m/Y', strtotime($employee->join_date))}}<br>
-                </address>
-            </div>
-            <!-- /.col -->
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 <address>

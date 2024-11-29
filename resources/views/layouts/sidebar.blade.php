@@ -99,6 +99,17 @@
             </a>
           </li>
 
+          <!-- Ngày vào -->
+          <li class="nav-item">
+            <a href="{{route('join_dates.index')}}" class="nav-link {{ Request::is('join_dates*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-calendar-check"></i>
+              <p>
+                Ngày vào
+              </p>
+            </a>
+          </li>
+
+
           <!-- Salry -->
           <li class="nav-item">
             <a href="{{route('salaries.index')}}" class="nav-link {{ Request::is('salaries*') ? 'active' : '' }}">

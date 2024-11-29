@@ -35,6 +35,7 @@
                             <li class="nav-item"><a class="nav-link active" href="#tab-information" data-toggle="tab">Thông tin</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-contract" data-toggle="tab">Hợp đồng</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-work" data-toggle="tab">Công tác</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-join-date" data-toggle="tab">Ngày vào</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-salary" data-toggle="tab">Lương</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-document" data-toggle="tab">Hồ sơ</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-probation" data-toggle="tab">Thử việc</a></li>
@@ -52,6 +53,7 @@
                           @include('employee.tabs.information_tab')
                           @include('employee.tabs.contract_tab')
                           @include('employee.tabs.work_tab')
+                          @include('employee.tabs.join_date_tab')
                           @include('employee.tabs.salary_tab')
                           @include('employee.tabs.document_tab')
                           @include('employee.tabs.probation_tab')

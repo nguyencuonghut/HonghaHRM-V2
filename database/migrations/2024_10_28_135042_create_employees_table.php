@@ -30,7 +30,6 @@ return new class extends Migration
             $table->string('temporary_address')->nullable();
             $table->foreignId('temporary_commune_id')->nullable()->constrained('communes');
             $table->text('experience');
-            $table->date('join_date');
             $table->enum('marriage_status', ['Kết hôn', 'Độc thân']);
             $table->string('bhxh')->nullable();
             $table->timestamps();

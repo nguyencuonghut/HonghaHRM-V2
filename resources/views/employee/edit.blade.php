@@ -117,7 +117,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="control-group">
                                             <label class="control-label">Nơi cấp</label>
                                             <div class="controls">
@@ -125,7 +125,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Giới tính</label>
                                             <div class="controls">
@@ -137,19 +137,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="required-field">Ngày vào</label>
-                                        <div class="input-group date" id="join_date" data-target-input="nearest">
-                                            <input type="text" name="join_date" class="form-control datetimepicker-input" data-target="#join_date" @if ($employee->join_date) value="{{date('d/m/Y', strtotime($employee->join_date))}}" @endif/>
-                                            <div class="input-group-append" data-target="#join_date" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="control-group">
                                             <label class="control-label">Tình trạng hôn nhân</label>
                                             <div class="controls">
@@ -330,9 +318,6 @@
             format: 'DD/MM/YYYY'
         });
         $('#issued_date').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
-        $('#join_date').datetimepicker({
             format: 'DD/MM/YYYY'
         });
 

@@ -30,7 +30,6 @@ class Employee extends Model
         'temporary_address',
         'temporary_commune_id',
         'experience',
-        'join_date',
         'marriage_status',
         'bhxh',
     ];
