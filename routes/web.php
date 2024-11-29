@@ -20,6 +20,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\DivisionManagerController;
 use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentReportController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\FamilyController;
@@ -348,4 +349,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     //KidPolicyReport
     Route::get('kid_policy_reports', [KidPolicyReportController::class, 'index'])->name('kid_policy_reports.index');
     Route::get('kid_policy_reports/data', [KidPolicyReportController::class, 'anyData'])->name('kid_policy_reports.data');
+
+    //DocumentReport
+    Route::get('document_reports', [DocumentReportController::class, 'index'])->name('document_reports.index');
+    Route::get('document_reports/data', [DocumentReportController::class, 'anyData'])->name('document_reports.data');
 });
