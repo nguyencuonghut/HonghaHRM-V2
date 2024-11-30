@@ -43,7 +43,7 @@ class JoinDateController extends Controller
 
         $join_date = new JoinDate();
         $join_date->employee_id = $request->employee_id;
-        $join_date->start_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
+        $join_date->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
         $join_date->save();
 
         Alert::toast('Tạo mới ngày vào thành công!', 'success', 'top-right');
