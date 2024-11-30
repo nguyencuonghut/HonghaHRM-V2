@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\StoreFromCandidateRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Appendix;
 use App\Models\Candidate;
@@ -417,7 +418,7 @@ class EmployeeController extends Controller
                     ]);
     }
 
-    public function storeFromCandidate(Request $request)
+    public function storeFromCandidate(StoreFromCandidateRequest $request)
     {
         if (Auth::user()->cannot('store-from-candidate', Employee::class)) {
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
@@ -481,7 +482,6 @@ class EmployeeController extends Controller
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
         $employee->experience = $request->experience;
-        //$employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);TODO: need to remove
         $employee->marriage_status = $request->marriage_status;
         $employee->save();
 
@@ -498,6 +498,13 @@ class EmployeeController extends Controller
             }
             $employee_school->save();
         }
+
+        //Create JoinDate
+        $join_date = new JoinDate();
+        $join_date->recruitment_candidate_id = $request->recruitment_candidate_id;
+        $join_date->employee_id = $employee->id;
+        $join_date->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
+        $join_date->save();
 
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
         return redirect()->route('employees.show', $employee);
