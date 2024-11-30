@@ -84,7 +84,38 @@ class RecruitmentReportController extends Controller
                 return $offers->count();
             })
             ->editColumn('is_on_deadline', function ($data) {
-                return '-';//TODO: tính lại trong tương lai
+                //Trường hợp số lượng tuyển được không đạt số lượng yêu cầu
+                $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
+                $offers = Offer::whereIn('recruitment_candidate_id', $recruitment_candidate_ids)
+                                ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
+                                ->get();
+                if ($offers->count() < $data->quantity) {
+                    return '<span class="badge badge-danger">Quá hạn</span>';
+                } else {
+                    //Khi số lượng đủ, so sánh giữa JoinDate của từng ứng viên
+                    $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
+                    $offer_recruitment_candidate_ids = Offer::whereIn('recruitment_candidate_id', $recruitment_candidate_ids)
+                                                            ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
+                                                            ->pluck('recruitment_candidate_id')
+                                                            ->toArray();
+                    $offer_recruitment_candidate_ids = RecruitmentCandidate::whereIn('id', $offer_recruitment_candidate_ids)
+                                                                        ->pluck('id')
+                                                                        ->toArray();
+                    $join_dates = JoinDate::whereIn('recruitment_candidate_id', $offer_recruitment_candidate_ids)->get();
+                    $is_on_deadline = true;
+
+                    foreach ($join_dates as $join_date) {
+                        if (Carbon::parse($join_date->join_date)->gt(Carbon::parse($data->work_time))) {
+                            $is_on_deadline = false;
+                            break;
+                        }
+                    }
+                    if ($is_on_deadline) {
+                        return '<span class="badge badge-success">Đúng hạn</span>';
+                    } else {
+                        return '<span class="badge badge-danger">Quá hạn</span>';
+                    }
+                }
             })
             ->editColumn('employees', function ($data) {
                 $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
@@ -170,7 +201,38 @@ class RecruitmentReportController extends Controller
                 return $offers->count();
             })
             ->editColumn('is_on_deadline', function ($data) {
-                return '-';//TODO: tính lại trong tương lai
+                //Trường hợp số lượng tuyển được không đạt số lượng yêu cầu
+                $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
+                $offers = Offer::whereIn('recruitment_candidate_id', $recruitment_candidate_ids)
+                                ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
+                                ->get();
+                if ($offers->count() < $data->quantity) {
+                    return '<span class="badge badge-danger">Quá hạn</span>';
+                } else {
+                    //Khi số lượng đủ, so sánh giữa JoinDate của từng ứng viên
+                    $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
+                    $offer_recruitment_candidate_ids = Offer::whereIn('recruitment_candidate_id', $recruitment_candidate_ids)
+                                                            ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
+                                                            ->pluck('recruitment_candidate_id')
+                                                            ->toArray();
+                    $offer_recruitment_candidate_ids = RecruitmentCandidate::whereIn('id', $offer_recruitment_candidate_ids)
+                                                                        ->pluck('id')
+                                                                        ->toArray();
+                    $join_dates = JoinDate::whereIn('recruitment_candidate_id', $offer_recruitment_candidate_ids)->get();
+                    $is_on_deadline = true;
+
+                    foreach ($join_dates as $join_date) {
+                        if (Carbon::parse($join_date->join_date)->gt(Carbon::parse($data->work_time))) {
+                            $is_on_deadline = false;
+                            break;
+                        }
+                    }
+                    if ($is_on_deadline) {
+                        return '<span class="badge badge-success">Đúng hạn</span>';
+                    } else {
+                        return '<span class="badge badge-danger">Quá hạn</span>';
+                    }
+                }
             })
             ->editColumn('employees', function ($data) {
                 $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();

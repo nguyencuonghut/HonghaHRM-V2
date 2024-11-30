@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->foreignId('recruitment_candidate_id')->nullable()->constrained('recruitment_candidates')->onDelete('cascade');
-            $table->dateTime('join_date');
+            $table->date('join_date');
             $table->timestamps();
         });
     }
