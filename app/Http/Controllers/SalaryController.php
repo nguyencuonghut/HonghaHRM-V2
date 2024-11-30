@@ -173,7 +173,7 @@ class SalaryController extends Controller
             // Only fetch the Employee according to Admin's Department
             $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
             $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
-            $employee_ids = Work::whereIn('company_job_id', $position_ids)->pluck('employee_id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
             $data = Salary::whereIn('employee_id', $employee_ids)
                                                 ->where('status', 'On')
                                                 ->join('employees', 'employees.id', 'salaries.employee_id')
@@ -198,7 +198,7 @@ class SalaryController extends Controller
                         if(++$i === $length) {
                             $department_str .= $work->position->department->name;
                         } else {
-                            $department_str .= $work->company_job->department->name;
+                            $department_str .= $work->position->department->name;
                             $department_str .= ' | ';
                         }
                     }

@@ -63,7 +63,7 @@ class StoreFromCandidateRequest extends FormRequest
             'gender.required' => 'Bạn phải chọn giới tính.',
             'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
-            'company_job_id.required' => 'Bạn phải chọn vị trí.',
+            'position_id.required' => 'Bạn phải chọn vị trí.',
             'addmore.*.school_name.required' => 'Bạn phải nhập tên trường.',
             'addmore.*.degree_name.required' => 'Bạn phải nhập trình độ.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',

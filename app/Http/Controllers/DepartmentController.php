@@ -144,11 +144,11 @@ class DepartmentController extends Controller
                 $i = 0;
                 $length = count($positions);
                 $position_lists = '';
-                foreach ($positions as $company_job) {
+                foreach ($positions as $position) {
                     if(++$i === $length) {
-                        $position_lists =  $position_lists . $company_job->name;
+                        $position_lists =  $position_lists . $position->name;
                     } else {
-                        $position_lists = $position_lists . $company_job->name . ', <br>';
+                        $position_lists = $position_lists . $position->name . ', <br>';
                     }
                 }
                 return $position_lists;
