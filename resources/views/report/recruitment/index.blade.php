@@ -44,7 +44,6 @@
                     <th>Deadline</th>
                     <th>Số lượng</th>
                     <th>Kết quả</th>
-                    <th>Ngày đi làm</th>
                     <th>Đúng deadline</th>
                     <th>Nhân sự</th>
                   </tr>
@@ -79,14 +78,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
 
             },
@@ -94,28 +93,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             }
         ],
@@ -130,7 +129,6 @@
             {data: 'work_time', name: 'work_time'},
             {data: 'quantity', name: 'quantity'},
             {data: 'result', name: 'result'},
-            {data: 'join_date', name: 'join_date'},
             {data: 'is_on_deadline', name: 'is_on_deadline'},
             {data: 'employees', name: 'employees'},
        ]

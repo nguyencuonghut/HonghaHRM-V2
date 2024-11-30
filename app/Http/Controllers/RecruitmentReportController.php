@@ -9,6 +9,7 @@ use App\Models\Channel;
 use App\Models\Filter;
 use App\Models\FirstInterviewInvitation;
 use App\Models\FirstInterviewResult;
+use App\Models\JoinDate;
 use App\Models\Offer;
 use App\Models\Recruitment;
 use App\Models\RecruitmentCandidate;
@@ -82,14 +83,10 @@ class RecruitmentReportController extends Controller
                                 ->get();
                 return $offers->count();
             })
-            ->editColumn('join_date', function ($data) {
-                return '-';//TODO: tính lại trong tương lai
-            })
             ->editColumn('is_on_deadline', function ($data) {
                 return '-';//TODO: tính lại trong tương lai
             })
             ->editColumn('employees', function ($data) {
-
                 $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
                 $offer_recruitment_candidate_ids = Offer::whereIn('recruitment_candidate_id', $recruitment_candidate_ids)
                                 ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
@@ -99,17 +96,29 @@ class RecruitmentReportController extends Controller
                                                                     ->pluck('candidate_id')
                                                                     ->toArray();
                 $offer_candidates = Candidate::whereIn('id', $offer_candidate_ids)->get();
-                //return $offer_candidates;
                 $employees_str = '';
                 $i = 0;
                 $length = count($offer_candidates);
                 if ($length) {
                     foreach ($offer_candidates as $offer_candidate) {
+                        $my_recruitment_candiate = RecruitmentCandidate::where('recruitment_id', $data->id)
+                                                                        ->where('candidate_id', $offer_candidate->id)
+                                                                        ->first();
+                        $join_date = JoinDate::where('recruitment_candidate_id', $my_recruitment_candiate->id)->first();
                         if(++$i === $length) {
-                            $employees_str .= $offer_candidate->name;
+                            if ($join_date) {
+                                $employees_str .= '- ' . $offer_candidate->name . ' (' . date('d/m/Y', strtotime($join_date->join_date)) .')';
+                            } else {
+                                $employees_str .= '- '.  $offer_candidate->name;
+                            }
                         } else {
-                            $employees_str .= $offer_candidate->name;
-                            $employees_str .= ', <br>';
+                            if ($join_date) {
+                                $employees_str .= '- ' . $offer_candidate->name . ' (' . date('d/m/Y', strtotime($join_date->join_date)) .')';
+                                $employees_str .= ', <br>';
+                            } else {
+                                $employees_str .= '- '. $offer_candidate->name;
+                                $employees_str .= ', <br>';
+                            }
                         }
                     }
                 } else {
@@ -160,14 +169,10 @@ class RecruitmentReportController extends Controller
                                 ->get();
                 return $offers->count();
             })
-            ->editColumn('join_date', function ($data) {
-                return '-';//TODO: tính lại trong tương lai
-            })
             ->editColumn('is_on_deadline', function ($data) {
                 return '-';//TODO: tính lại trong tương lai
             })
             ->editColumn('employees', function ($data) {
-
                 $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
                 $offer_recruitment_candidate_ids = Offer::whereIn('recruitment_candidate_id', $recruitment_candidate_ids)
                                 ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
@@ -177,17 +182,29 @@ class RecruitmentReportController extends Controller
                                                                     ->pluck('candidate_id')
                                                                     ->toArray();
                 $offer_candidates = Candidate::whereIn('id', $offer_candidate_ids)->get();
-                //return $offer_candidates;
                 $employees_str = '';
                 $i = 0;
                 $length = count($offer_candidates);
                 if ($length) {
                     foreach ($offer_candidates as $offer_candidate) {
+                        $my_recruitment_candiate = RecruitmentCandidate::where('recruitment_id', $data->id)
+                                                                        ->where('candidate_id', $offer_candidate->id)
+                                                                        ->first();
+                        $join_date = JoinDate::where('recruitment_candidate_id', $my_recruitment_candiate->id)->first();
                         if(++$i === $length) {
-                            $employees_str .= $offer_candidate->name;
+                            if ($join_date) {
+                                $employees_str .= '- ' . $offer_candidate->name . ' (' . date('d/m/Y', strtotime($join_date->join_date)) .')';
+                            } else {
+                                $employees_str .= '- '.  $offer_candidate->name;
+                            }
                         } else {
-                            $employees_str .= $offer_candidate->name;
-                            $employees_str .= ', <br>';
+                            if ($join_date) {
+                                $employees_str .= '- ' . $offer_candidate->name . ' (' . date('d/m/Y', strtotime($join_date->join_date)) .')';
+                                $employees_str .= ', <br>';
+                            } else {
+                                $employees_str .= '- '. $offer_candidate->name;
+                                $employees_str .= ', <br>';
+                            }
                         }
                     }
                 } else {
