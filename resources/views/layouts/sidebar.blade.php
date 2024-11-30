@@ -223,6 +223,7 @@
            || Request::is('situation_reports*')
            || Request::is('kid_policy_reports*')
            || Request::is('document_reports*')
+           || Request::is('seniority_reports*')
            ?
            'menu-open'
            :
@@ -242,6 +243,7 @@
                     || Request::is('situation_reports*')
                     || Request::is('kid_policy_reports*')
                     || Request::is('document_reports*')
+                    || Request::is('seniority_reports*')
                     ?
                     'active'
                     :
@@ -335,6 +337,33 @@
                     </ul>
                   </li>
                 </ul>
+
+              <!-- Thâm niên -->
+                <ul class="nav nav-treeview">
+                    <li class="nav-item {{ Request::is('seniority_reports*') ? 'menu-open' : '' }}">
+                      <a href="{{route('seniority_reports.index')}}" class="nav-link {{ Request::is('seniority_reports*') ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Thâm niên
+                          <i class="fas fa-angle-left right"></i>
+                        </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{route('seniority_reports.index')}}" class="nav-link {{ Request::is('seniority_reports') ? 'active' : '' }}">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>Tất cả</p>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="{{route('seniority_reports.show')}}" class="nav-link {{ Request::is('seniority_reports/show') || Request::is('reward_reports/by_year') ? 'active' : '' }}">
+                            <i class="far fa-dot-circle nav-icon"></i>
+                            <p>Chi tiết</p>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
 
               <!-- Khen thưởng -->
               <ul class="nav nav-treeview">

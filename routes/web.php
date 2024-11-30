@@ -57,6 +57,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SecondInterviewDetailController;
 use App\Http\Controllers\SecondInterviewInvitationController;
 use App\Http\Controllers\SecondInterviewResultController;
+use App\Http\Controllers\SeniorityReportController;
 use App\Http\Controllers\SituationReportController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WelfareController;
@@ -358,4 +359,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     //DocumentReport
     Route::get('document_reports', [DocumentReportController::class, 'index'])->name('document_reports.index');
     Route::get('document_reports/data', [DocumentReportController::class, 'anyData'])->name('document_reports.data');
+
+    //SeniorityReport
+    Route::get('seniority_reports/show', [SeniorityReportController::class, 'show'])->name('seniority_reports.show');
+    Route::get('seniority_reports/data', [SeniorityReportController::class, 'anyData'])->name('seniority_reports.data');
+    Route::post('seniority_reports/by_year', [SeniorityReportController::class, 'byYear'])->name('seniority_reports.by_year');
+    Route::get('seniority_reports/{year}', [SeniorityReportController::class, 'byYearData'])->name('seniority_reports.byYearData');
+    Route::get('seniority_reports', [SeniorityReportController::class, 'index'])->name('seniority_reports.index');
 });
