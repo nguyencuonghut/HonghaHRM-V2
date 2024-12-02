@@ -337,9 +337,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('kpi_reports/{year}', [KpiReportController::class, 'byYearData'])->name('kpi_reports.byYearData');
 
     //BirthdayReport
-    Route::get('birthday_reports/show', [BirthdayReportController::class, 'show'])->name('birthday_reports.show');
-    Route::post('birthday_reports/by_month', [BirthdayReportController::class, 'byMonth'])->name('birthday_reports.by_month');
-    Route::get('birthday_reports/{month}', [BirthdayReportController::class, 'byMonthData'])->name('birthday_reports.byMonthData');
+    Route::get('birthday_reports', [BirthdayReportController::class, 'index'])->name('birthday_reports.index');
 
     //RecruitmentReport
     Route::get('recruitment_reports/data', [RecruitmentReportController::class, 'anyData'])->name('recruitment_reports.data');

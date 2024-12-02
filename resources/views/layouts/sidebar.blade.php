@@ -428,7 +428,7 @@
 
                     <!-- Birthday -->
                     <li class="nav-item">
-                        <a href="{{route('birthday_reports.show')}}" class="nav-link {{ Request::is('birthday_reports*') ? 'active' : '' }}">
+                        <a href="{{route('birthday_reports.index')}}" class="nav-link {{ Request::is('birthday_reports*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                         <p>Sinh nhật</p>
                       </a>
