@@ -308,7 +308,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="{{route('off_work_reports.by_range')}}" class="nav-link {{ Request::is('off_work_reports/by_range') || Request::is('off_work_reports/by_range') ? 'active' : '' }}">
+                      <a href="{{route('off_work_reports.by_range')}}" class="nav-link {{ Request::is('off_work_reports/by_range') ? 'active' : '' }}">
                         <i class="far fa-dot-circle nav-icon"></i>
                         <p>Theo khoảng</p>
                       </a>
@@ -338,6 +338,12 @@
                         <a href="{{route('recruitment_reports.show')}}" class="nav-link {{ Request::is('recruitment_reports/show') || Request::is('recruitment_reports/by_month') ? 'active' : '' }}">
                           <i class="far fa-dot-circle nav-icon"></i>
                           <p>Chi tiết</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{route('recruitment_reports.by_range')}}" class="nav-link {{ Request::is('recruitment_reports/by_range') ? 'active' : '' }}">
+                          <i class="far fa-dot-circle nav-icon"></i>
+                          <p>Theo khoảng</p>
                         </a>
                       </li>
                     </ul>

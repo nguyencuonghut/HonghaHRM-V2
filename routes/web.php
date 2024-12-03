@@ -315,9 +315,8 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('off_work_reports/by_month', [OffWorkReportController::class, 'byMonth'])->name('off_work_reports.by_month');
     Route::get('off_work_reports/{month}/{year}', [OffWorkReportController::class, 'byMonthData'])->name('off_work_reports.byMonthData');
     Route::get('off_work_reports/show', [OffWorkReportController::class, 'show'])->name('off_work_reports.show');
-    Route::get('off_work_reports', [OffWorkReportController::class, 'index'])->name('off_work_reports.index');
-
     Route::get('off_work_reports/by_range', [OffWorkReportController::class, 'byRange'])->name('off_work_reports.by_range');
+    Route::get('off_work_reports', [OffWorkReportController::class, 'index'])->name('off_work_reports.index');
 
 
     //RewardReport
@@ -347,6 +346,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('recruitment_reports/by_month', [RecruitmentReportController::class, 'byMonth'])->name('recruitment_reports.by_month');
     Route::get('recruitment_reports/{month}/{year}', [RecruitmentReportController::class, 'byMonthData'])->name('recruitment_reports.byMonthData');
     Route::get('recruitment_reports/show', [RecruitmentReportController::class, 'show'])->name('recruitment_reports.show');
+    Route::get('recruitment_reports/by_range', [RecruitmentReportController::class, 'byRange'])->name('recruitment_reports.by_range');
     Route::get('recruitment_reports', [RecruitmentReportController::class, 'index'])->name('recruitment_reports.index');
 
     //SituationReport
