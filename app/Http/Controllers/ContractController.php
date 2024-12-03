@@ -261,7 +261,7 @@ class ContractController extends Controller
         // Off the EmployeeContract
         $contract->status = 'Off';
         $contract->end_date = Carbon::createFromFormat('d/m/Y', $request->e_date);
-        if ($contract->request_terminate_date) {
+        if ($request->request_terminate_date) {
             $contract->request_terminate_date = Carbon::createFromFormat('d/m/Y', $request->request_terminate_date);
         }
         $contract->save();
