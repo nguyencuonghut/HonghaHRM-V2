@@ -123,7 +123,7 @@
                                             <div class="control-group">
                                                 <label class="required-field" class="control-label">Vị trí</label>
                                                 <div class="controls">
-                                                    <select name="position_id" id="position_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    <select name="ct_position_id" id="ct_position_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                         <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                         @foreach ($positions as $position)
                                                             <option value="{{$position->id}}">{{$position->name}} {{$position->division_id ? (' - ' . $position->division->name) : ''}} {{$position->department_id ? ( ' - ' . $position->department->name) : ''}}</option>

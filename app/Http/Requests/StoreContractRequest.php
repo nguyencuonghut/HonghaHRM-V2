@@ -24,7 +24,7 @@ class StoreContractRequest extends FormRequest
     {
         return [
             'employee_id' => 'required',
-            'position_id' => 'required',
+            'ct_position_id' => 'required',
             'contract_type_id' => 'required',
             'contract_s_date' => 'required',
         ];
@@ -34,7 +34,7 @@ class StoreContractRequest extends FormRequest
     {
         return [
             'employee_id.required' => 'Số Id nhân sự chưa có.',
-            'position_id.required' => 'Bạn cần chọn Vị trí.',
+            'ct_position_id.required' => 'Bạn cần chọn Vị trí.',
             'contract_type_id.required' => 'Bạn cần chọn loại hợp đồng.',
             'contract_s_date.required' => 'Bạn cần nhập ngày bắt đầu.',
         ];

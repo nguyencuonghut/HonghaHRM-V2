@@ -162,7 +162,7 @@ class EmployeeController extends Controller
         $welfares = Welfare::where('employee_id', $employee->id)->get();
         $kpis = Kpi::where('employee_id', $employee->id)->get();
         $join_dates = JoinDate::where('employee_id', $employee->id)->get();
-        $positions = Position::all();
+        $positions = Position::orderBy('name', 'asc')->get();
         $contract_types = ContractType::all();
         $on_types = OnType::all();
         $doc_types = DocType::all();

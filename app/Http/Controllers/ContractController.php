@@ -50,7 +50,7 @@ class ContractController extends Controller
         // Create new Contract
         $contract = new Contract();
         $contract->employee_id = $request->employee_id;
-        $contract->position_id = $request->position_id;
+        $contract->position_id = $request->ct_position_id;
         $contract->contract_type_id = $request->contract_type_id;
         $contract->start_date = Carbon::createFromFormat('d/m/Y', $request->contract_s_date);
         if ($request->contract_e_date) {
@@ -108,7 +108,7 @@ class ContractController extends Controller
             return redirect()->route('contracts.index');
         }
 
-        $positions = Position::all();
+        $positions = Position::orderBy('name', 'asc')->get();
         $contract_types = ContractType::all();
         return view('contract.edit', [
             'contract' => $contract,
