@@ -44,7 +44,8 @@ class RecruitmentController extends Controller
         }
         //Fetch Position by User's department
         if ('Admin' == Auth::user()->role->name
-        || 'Ban lãnh đạo' == Auth::user()->role->name) {
+        || 'Ban lãnh đạo' == Auth::user()->role->name
+        || 'Nhân sự' == Auth::user()->role->name) {
             // Fetch all Position
             $positions = Position::orderBy('name', 'asc')->get();
         } else {
