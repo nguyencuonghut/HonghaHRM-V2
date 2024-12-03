@@ -94,6 +94,15 @@ class RecruitmentController extends Controller
         } else {
             $recruitment->status = 'Mở';
         }
+
+        // Trường hợp người tạo là Nahan sự, cập nhật luôn trạng thái yêu cầu
+        if ('Nhân sự' == Auth::user()->role->name) {
+            $recruitment->reviewer_id      = Auth::user()->id;
+            $recruitment->reviewer_result  = 'Đồng ý';
+            $recruitment->reviewed_time  = Carbon::now();
+            $recruitment->status = 'Đã kiểm tra';
+        }
+
         $recruitment->save();
 
         //Send notification to reviewer
@@ -175,6 +184,15 @@ class RecruitmentController extends Controller
         } else {
             $recruitment->status = 'Mở';
         }
+
+        // Trường hợp người tạo là Nahan sự, cập nhật luôn trạng thái yêu cầu
+        if ('Nhân sự' == Auth::user()->role->name) {
+            $recruitment->reviewer_id      = Auth::user()->id;
+            $recruitment->reviewer_result  = 'Đồng ý';
+            $recruitment->reviewed_time  = Carbon::now();
+            $recruitment->status = 'Đã kiểm tra';
+        }
+
         $recruitment->save();
 
         //Send notification to reviewer
