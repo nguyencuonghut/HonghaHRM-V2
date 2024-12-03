@@ -90,7 +90,12 @@ class RecruitmentReportController extends Controller
                                 ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
                                 ->get();
                 if ($offers->count() < $data->quantity) {
-                    return '<span class="badge badge-danger">Quá hạn</span>';
+                    //Thiếu số lượng, nhưng còn trong thời hạn yêu cầu
+                    if (Carbon::parse($data->work_time)->gt(Carbon::now())) {
+                        return '<span class="badge badge-success">Đúng hạn</span>';
+                    } else {
+                        return '<span class="badge badge-danger">Quá hạn</span>';
+                    }
                 } else {
                     //Khi số lượng đủ, so sánh giữa JoinDate của từng ứng viên
                     $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
@@ -207,7 +212,12 @@ class RecruitmentReportController extends Controller
                                 ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
                                 ->get();
                 if ($offers->count() < $data->quantity) {
-                    return '<span class="badge badge-danger">Quá hạn</span>';
+                    //Thiếu số lượng, nhưng còn trong thời hạn yêu cầu
+                    if (Carbon::parse($data->work_time)->gt(Carbon::now())) {
+                        return '<span class="badge badge-success">Đúng hạn</span>';
+                    } else {
+                        return '<span class="badge badge-danger">Quá hạn</span>';
+                    }
                 } else {
                     //Khi số lượng đủ, so sánh giữa JoinDate của từng ứng viên
                     $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
@@ -324,7 +334,12 @@ class RecruitmentReportController extends Controller
                                 ->whereIn('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐCTV'])
                                 ->get();
                 if ($offers->count() < $data->quantity) {
-                    return '<span class="badge badge-danger">Quá hạn</span>';
+                    //Thiếu số lượng, nhưng còn trong thời hạn yêu cầu
+                    if (Carbon::parse($data->work_time)->gt(Carbon::now())) {
+                        return '<span class="badge badge-success">Đúng hạn</span>';
+                    } else {
+                        return '<span class="badge badge-danger">Quá hạn</span>';
+                    }
                 } else {
                     //Khi số lượng đủ, so sánh giữa JoinDate của từng ứng viên
                     $recruitment_candidate_ids = RecruitmentCandidate::where('recruitment_id', $data->id)->pluck('id')->toArray();
