@@ -46,7 +46,7 @@ class WorkController extends Controller
         // Create new Work
         $work = new Work();
         $work->employee_id = $request->employee_id;
-        $work->position_id = $request->position_id;
+        $work->position_id = $request->wt_position_id;
         $work->on_type_id = $request->on_type_id;
         $work->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
         $work->contract_code = $request->contract_code;
@@ -83,7 +83,7 @@ class WorkController extends Controller
             return redirect()->back();
         }
 
-        $positions = Position::all();
+        $positions = Position::orderBy('name', 'asc')->get();
         $on_types = OnType::all();
         return view('work.edit', [
             'work' => $work,

@@ -25,7 +25,7 @@ class StoreWorkRequest extends FormRequest
         return [
             'contract_code' => 'required',
             'employee_id' => 'required',
-            'position_id' => 'required',
+            'wt_position_id' => 'required',
             'on_type_id' => 'required',
             's_date' => 'required',
         ];
@@ -36,7 +36,7 @@ class StoreWorkRequest extends FormRequest
         return [
             'contract_code.required' => 'Bạn phải nhập số hợp đồng.',
             'employee_id.required' => 'Số Id nhân sự chưa có.',
-            'position_id.required' => 'Bạn cần chọn Vị trí.',
+            'wt_position_id.required' => 'Bạn cần chọn Vị trí.',
             'on_type_id.required' => 'Bạn cần chọn Phân loại tạo.',
             's_date.required' => 'Bạn cần nhập ngày bắt đầu.',
         ];
