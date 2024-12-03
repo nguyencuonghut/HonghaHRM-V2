@@ -317,6 +317,9 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('off_work_reports/show', [OffWorkReportController::class, 'show'])->name('off_work_reports.show');
     Route::get('off_work_reports', [OffWorkReportController::class, 'index'])->name('off_work_reports.index');
 
+    Route::get('off_work_reports/by_range', [OffWorkReportController::class, 'byRange'])->name('off_work_reports.by_range');
+
+
     //RewardReport
     Route::get('reward_reports/show', [RewardReportController::class, 'show'])->name('reward_reports.show');
     Route::get('reward_reports/data', [RewardReportController::class, 'anyData'])->name('reward_reports.data');

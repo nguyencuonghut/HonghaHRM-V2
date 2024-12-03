@@ -1,6 +1,10 @@
 @section('title')
-{{ 'Báo cáo sinh nhật' }}
+{{ 'Báo cáo nghỉ việc theo khoảng thời gian' }}
 @endsection
+
+@push('styles')
+  <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
+@endpush
 
 @extends('layouts.base')
 @section('content')
@@ -11,12 +15,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Báo cáo sinh nhật tháng {{Carbon\Carbon::now()->month}}</h1>
+          <h1 class="m-0">Báo cáo nghỉ việc theo khoảng thời gian</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Báo cáo sinh nhật tháng {{Carbon\Carbon::now()->month}}</li>
+            <li class="breadcrumb-item"><a href="{{ route('off_work_reports.index') }}">Tất cả</a></li>
+            <li class="breadcrumb-item active">Khoảng thời gian</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -28,31 +32,15 @@
   <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <form class="form-horizontal" method="post" action="{{route('birthday_reports.by_month')}}" name="filter_by_month" id="filter_by_month" novalidate="novalidate">
-                    {{ csrf_field() }}
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="control-group">
-                                <label class="control-label">Chọn tháng</label>
-                                <div class="input-group date" id="month" data-target-input="nearest">
-                                    <input type="text" id="month" name="month" class="form-control datetimepicker-input" value="{{Carbon\Carbon::now()->month}}" data-target="#month"/>
-                                    <div class="input-group-append" data-target="#month" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="control-group">
-                                <label class="control-label"></label>
-                                <div class="controls mt-2">
-                                    <input type="submit" value="Tìm" class="btn btn-success">
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                      </span>
                     </div>
-                </form>
+                    <input type="text" class="form-control float-right daterange" id="daterange"  name="daterange">
+                </div>
             </div>
         </div>
       <!-- Small boxes (Stat box) -->
@@ -68,10 +56,12 @@
                     <th>Mã NV</th>
                     <th>Tên</th>
                     <th>Chức danh</th>
+                    <th>Bộ phận</th>
                     <th>Phòng/ban</th>
-                    <th>Giới tính</th>
-                    <th>Ngày sinh</th>
-                    <th>Ngày ký HĐ chính thức</th>
+                    <th>Ngày thử việc</th>
+                    <th>Ngày chính thức</th>
+                    <th>Ngày nghỉ việc</th>
+                    <th>Lý do nghỉ</th>
                   </tr>
                   </thead>
                 </table>
@@ -88,6 +78,10 @@
 @endsection
 
 @push('scripts')
+<!-- date-range-picker -->
+<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+
+
 <style type="text/css">
     .dataTables_wrapper .dt-buttons {
     margin-bottom: -3em
@@ -97,29 +91,32 @@
 
 <script>
     $(function () {
-      //Date picker
-      $('#month').datetimepicker({
-          format: 'MM',
-          minViewMode: 'months',
-          viewMode: 'months',
-          pickTime: false
+      var start_date = moment().subtract(1, 'M');
+      var end_date = moment();
+
+      $('.daterange').daterangepicker({
+        locale: {
+            format: 'DD/MM/YYYY'
+        },
+        startDate : start_date,
+        endDate : end_date
       });
 
-      $("#reports-table").DataTable({
+      var table = $("#reports-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         buttons: [
             {
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
 
             },
@@ -127,44 +124,58 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             }
         ],
         dom: 'Blfrtip',
-        ajax: ' {!! route('birthday_reports.byMonthData', ['month' => $month]) !!}',
+        processing : true,
+        serverSide : true,
+        ajax: {
+            url: "{{ route('off_work_reports.by_range') }}",
+            data : function(d){
+                d.from_date = $('.daterange').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                d.to_date = $('.daterange').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            }
+        },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'employee_code', name: 'employee_code'},
             {data: 'employee_name', name: 'employee_name'},
             {data: 'position', name: 'position'},
+            {data: 'division', name: 'division'},
             {data: 'department', name: 'department'},
-            {data: 'gender', name: 'gender'},
-            {data: 'date_of_birth', name: 'date_of_birth'},
-            {data: 'formal_contract_start_date', name: 'formal_contract_start_date'},
+            {data: 'probation_contract_date', name: 'probation_contract_date'},
+            {data: 'formal_contract_date', name: 'formal_contract_date'},
+            {data: 'end_date', name: 'end_date'},
+            {data: 'off_reason', name: 'off_reason'},
        ]
-      }).buttons().container().appendTo('#reports-table_wrapper .col-md-6:eq(0)');
+      });
+
+      $('.daterange').change(function(){
+            table.draw();
+        });
     });
   </script>
 @endpush

@@ -307,6 +307,12 @@
                         <p>Chi tiết</p>
                       </a>
                     </li>
+                    <li class="nav-item">
+                      <a href="{{route('off_work_reports.by_range')}}" class="nav-link {{ Request::is('off_work_reports/show') || Request::is('off_work_reports/by_range') ? 'active' : '' }}">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>Theo khoảng</p>
+                      </a>
+                    </li>
                   </ul>
                 </li>
               </ul>
