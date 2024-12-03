@@ -383,7 +383,7 @@ class ContractController extends Controller
 
         // Thời gian
         $w_sheet->mergeCells("E5:J5");
-        $w_sheet->setCellValue('E5', 'Hà Nam, ngày ' . date('d/m/Y', strtotime($contract->end_date)));
+        $w_sheet->setCellValue('E5', 'Hà Nam, ngày ' . date('d', strtotime($contract->end_date)) . ' tháng ' . date('m', strtotime($contract->end_date)) . ' năm ' . date('Y', strtotime($contract->end_date)));
         $w_sheet->getStyle("E5")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
 
