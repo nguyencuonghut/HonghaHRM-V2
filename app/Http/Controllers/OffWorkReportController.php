@@ -281,8 +281,12 @@ class OffWorkReportController extends Controller
                         $pre_previous_contract = Contract::where('end_date', $previous_contract->start_date)
                                                         ->where('employee_id', $formal_contract->employee_id)
                                                         ->first();
-                        if ('Hợp đồng thử việc' == $pre_previous_contract->contract_type->name) {
-                            return date('d/m/Y', strtotime($pre_previous_contract->start_date));
+                        if ($pre_previous_contract) {
+                            if ('Hợp đồng thử việc' == $pre_previous_contract->contract_type->name) {
+                                return date('d/m/Y', strtotime($pre_previous_contract->start_date));
+                            } else {
+                                return '-';
+                            }
                         } else {
                             return '-';
                         }
