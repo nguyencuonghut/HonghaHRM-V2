@@ -19,6 +19,11 @@ class DivisionManagerController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', DivisionManager::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('division_manager.index');
     }
 

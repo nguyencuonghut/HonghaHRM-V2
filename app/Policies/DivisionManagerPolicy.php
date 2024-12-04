@@ -13,7 +13,7 @@ class DivisionManagerPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
@@ -29,7 +29,7 @@ class DivisionManagerPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role->name == 'Admin' || $user->role->name == 'Trưởng đơn vị';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
@@ -37,7 +37,7 @@ class DivisionManagerPolicy
      */
     public function update(User $user, DivisionManager $divisionManager): bool
     {
-        return $user->role->name == 'Admin' || $user->role->name == 'Trưởng đơn vị';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
@@ -45,7 +45,7 @@ class DivisionManagerPolicy
      */
     public function delete(User $user, DivisionManager $divisionManager): bool
     {
-        return $user->role->name == 'Admin' || $user->role->name == 'Trưởng đơn vị';
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**
