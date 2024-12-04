@@ -21,7 +21,7 @@ class RoleController extends Controller
     {
         if (Auth::user()->cannot('viewany', Role::class)) {
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
-            return redirect()->back();
+            return redirect()->route('home');
         }
 
         return view('role.index');
