@@ -18,6 +18,11 @@ class ChannelController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', Channel::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('channel.index');
     }
 
