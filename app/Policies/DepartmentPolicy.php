@@ -21,7 +21,7 @@ class DepartmentPolicy
      */
     public function view(User $user, Department $department): bool
     {
-        //
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**

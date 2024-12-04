@@ -66,6 +66,11 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
+        if (Auth::user()->cannot('view', $department)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         $datasource = [];
         $datasource = $this->createDataSource($department);
 
