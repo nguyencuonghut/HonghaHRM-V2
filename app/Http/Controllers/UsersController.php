@@ -23,6 +23,11 @@ class UsersController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', User::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         return view('user.index');
     }
 

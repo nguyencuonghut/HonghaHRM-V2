@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
 class UserPolicy
 {
@@ -12,7 +13,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role->name == 'Admin';
     }
 
     /**

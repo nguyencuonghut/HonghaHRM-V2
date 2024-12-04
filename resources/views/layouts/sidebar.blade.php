@@ -478,16 +478,21 @@
                 </ul>
           </li>
 
+          @if ('Admin' == Auth::user()->role->name
+            || 'Nhân sự' == Auth::user()->role->name)
           <li class="nav-header">HỆ THỐNG</li>
-          <!-- Người dùng -->
-          <li class="nav-item">
-            <a href="{{route('users.index')}}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                Người dùng
-              </p>
-            </a>
-          </li>
+
+          @if ('Admin' == Auth::user()->role->name)
+            <!-- Người dùng -->
+            <li class="nav-item">
+                <a href="{{route('users.index')}}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                    Người dùng
+                </p>
+                </a>
+            </li>
+          @endif
 
           <!-- Vai trò -->
           <li class="nav-item">
@@ -648,6 +653,7 @@
               </p>
             </a>
           </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
