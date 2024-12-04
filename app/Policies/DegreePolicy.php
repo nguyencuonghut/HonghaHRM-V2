@@ -14,7 +14,7 @@ class DegreePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return 'Admin' == Auth::user()->role->name || 'Nhân sự' == Auth::user()->role->name;
     }
 
     /**
