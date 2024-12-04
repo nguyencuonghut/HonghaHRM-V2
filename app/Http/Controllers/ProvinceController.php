@@ -17,6 +17,11 @@ class ProvinceController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', Province::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('province.index');
     }
 
