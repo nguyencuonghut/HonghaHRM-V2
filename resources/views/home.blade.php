@@ -32,7 +32,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>10</h3>
+                <h3>{{$department_cnt}}</h3>
 
                 <p>Tổng số phòng/ban</p>
               </div>
@@ -47,7 +47,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>522</h3>
+                <h3>{{$employee_cnt}}</h3>
 
                 <p>Tổng số nhân sự</p>
               </div>
@@ -62,7 +62,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>4</h3>
+                <h3>{{$recruitment_cnt}}</h3>
 
                 <p>Tổng số yêu cầu tuyển dụng</p>
               </div>
@@ -77,7 +77,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>8</h3>
+                <h3>{{$probation_cnt}}</h3>
 
                 <p>Tổng số thử việc</p>
               </div>
@@ -96,7 +96,7 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>3</h3>
+                  <h3>{{$birthday_cnt}}</h3>
 
                   <p>Sinh nhật trong tháng</p>
                 </div>
@@ -111,7 +111,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>33</h3>
+                  <h3>{{$situation_cnt}}</h3>
 
                   <p>Gia đình hoàn cảnh</p>
                 </div>
@@ -126,7 +126,7 @@
               <!-- small box -->
               <div class="small-box bg-primary">
                 <div class="inner">
-                  <h3>243</h3>
+                  <h3>{{$kid_cnt}}</h3>
 
                   <p>Chế độ 1/6</p>
                 </div>
@@ -141,9 +141,9 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>135</h3>
+                  <h3>{{$seniority_cnt}}</h3>
 
-                  <p>Thâm niên > 5 năm</p>
+                  <p>Thâm niên 5 năm</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-award"></i>
