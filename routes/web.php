@@ -308,6 +308,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('work_rotation_reports/by_month', [WorkRotationReportController::class, 'byMonth'])->name('work_rotation_reports.by_month');
     Route::get('work_rotation_reports/{month}/{year}', [WorkRotationReportController::class, 'byMonthData'])->name('work_rotation_reports.byMonthData');
     Route::get('work_rotation_reports/show', [WorkRotationReportController::class, 'show'])->name('work_rotation_reports.show');
+    Route::get('work_rotation_reports/by_range', [WorkRotationReportController::class, 'byRange'])->name('work_rotation_reports.by_range');
     Route::get('work_rotation_reports', [WorkRotationReportController::class, 'index'])->name('work_rotation_reports.index');
 
     //OffWorkReport
