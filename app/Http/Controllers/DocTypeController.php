@@ -16,6 +16,11 @@ class DocTypeController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', DocType::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('doc_type.index');
     }
 
