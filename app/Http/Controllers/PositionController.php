@@ -21,6 +21,11 @@ class PositionController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', Position::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('position.index');
     }
 
