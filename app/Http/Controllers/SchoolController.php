@@ -20,6 +20,11 @@ class SchoolController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', School::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('school.index');
     }
 
