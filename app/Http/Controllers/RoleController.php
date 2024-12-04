@@ -19,6 +19,11 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewany', Role::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         return view('role.index');
     }
 
