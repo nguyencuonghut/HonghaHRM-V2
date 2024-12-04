@@ -13,7 +13,7 @@ class DivisionPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role->name == 'Admin' || $user->role->name == 'Nhân sự';
     }
 
     /**

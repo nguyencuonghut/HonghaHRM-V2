@@ -22,8 +22,13 @@ class DivisionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index()
     {
+        if (Auth::user()->cannot('viewAny', Division::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('division.index');
     }
 
