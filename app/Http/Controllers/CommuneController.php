@@ -21,6 +21,11 @@ class CommuneController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', Commune::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('commune.index');
     }
 
