@@ -19,6 +19,11 @@ class DepartmentViceController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->cannot('viewAny', DepartmentVice::class)) {
+            Alert::toast('Bạn không có quyền!', 'error', 'top-right');
+            return redirect()->route('home');
+        }
+
         return view('department_vice.index');
     }
 
