@@ -15,10 +15,7 @@ class BirthdayReportController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            //Tìm các nhân sự chưa nghỉ
-            $employee_ids = Contract::where('status', 'On')->pluck('employee_id')->toArray();
-            $data = Employee::whereIn('id', $employee_ids)
-                            ->orderBy('code', 'desc');
+            $data = Employee::orderBy('code', 'desc');
 
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -31,7 +28,7 @@ class BirthdayReportController extends Controller
                 ->editColumn('position', function ($data) {
                     $my_position_ids = Work::where('employee_id', $data->id)
                                     ->where(function ($query) {
-                                        $query->whereIn('off_type_id', [2,3,4])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm
+                                        $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
                                             ->orWhereNull('off_type_id');
                                     })
                                     ->pluck('position_id')
@@ -58,30 +55,32 @@ class BirthdayReportController extends Controller
                     return '-';
                 })
                 ->editColumn('department', function ($data) {
-                    $my_position_ids = Work::where('employee_id', $data->id)
-                                            ->where(function ($query) {
-                                                $query->whereIn('off_type_id', [2,3,4])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm
-                                                    ->orWhereNull('off_type_id');
-                                            })
-                                            ->pluck('position_id')
-                                            ->toArray();
-                    $my_positions = Position::whereIn('id', $my_position_ids)->get();
+                    $dept_arr = [];
                     $department_str = '';
-                    $i = 0;
-                    $length = count($my_positions);
-                    if ($length) {
-                        foreach ($my_positions as $my_position) {
-                            if(++$i === $length) {
-                                $department_str .= $my_position->division_id ? $my_position->division->name . ' - ' . $my_position->department->name : $my_position->department->name;
-                            } else {
-                                $department_str .= $my_position->department->name;
-                                $department_str .= ' | ';
+                    //Tìm tất cả Works
+                    $works = Work::where('employee_id', $data->id)->get();
+                    if (0 == $works->count()) {
+                        return 'Chưa có QT công tác';
+                    } else {//Đã có QT công tác
+                        $on_works = Work::where('employee_id', $data->id)
+                                        ->where('status', 'On')
+                                        ->get();
+                        if ($on_works->count()) {//Có QT công tác ở trạng thái On
+                            foreach ($on_works as $on_work) {
+                                array_push($dept_arr, $on_work->position->department->name);
                             }
+                        } else {//Còn lại là các QT công tác ở trạng thái Off
+                            $last_off_works = Work::where('employee_id', $data->id)
+                                            ->where('status', 'Off')
+                                            ->orderBy('start_date', 'desc')
+                                            ->first();
+                            array_push($dept_arr, $last_off_works->position->department->name);
                         }
-                    } else {
-                        $department_str .= '!! Chưa gán phòng/ban !!';
+                        //Xóa các department trùng nhau
+                        $dept_arr = array_unique($dept_arr);
+                        //Convert array sang string
+                        $department_str = implode(' | ', $dept_arr);
                     }
-
                     return $department_str;
                 })
                 ->editColumn('gender', function ($data) {

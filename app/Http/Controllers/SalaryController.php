@@ -189,21 +189,31 @@ class SalaryController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('department', function ($data) {
-                $works =Work::where('employee_id', $data->employee_id)->where('status', 'On')->get();
+                $dept_arr = [];
                 $department_str = '';
-                $i = 0;
-                $length = count($works);
-                if ($length) {
-                    foreach ($works as $work) {
-                        if(++$i === $length) {
-                            $department_str .= $work->position->department->name;
-                        } else {
-                            $department_str .= $work->position->department->name;
-                            $department_str .= ' | ';
+                //Tìm tất cả Works
+                $works = Work::where('employee_id', $data->employee_id)->get();
+                if (0 == $works->count()) {
+                    return 'Chưa có QT công tác';
+                } else {//Đã có QT công tác
+                    $on_works = Work::where('employee_id', $data->employee_id)
+                                    ->where('status', 'On')
+                                    ->get();
+                    if ($on_works->count()) {//Có QT công tác ở trạng thái On
+                        foreach ($on_works as $on_work) {
+                            array_push($dept_arr, $on_work->position->department->name);
                         }
+                    } else {//Còn lại là các QT công tác ở trạng thái Off
+                        $last_off_works = Work::where('employee_id', $data->employee_id)
+                                        ->where('status', 'Off')
+                                        ->orderBy('start_date', 'desc')
+                                        ->first();
+                        array_push($dept_arr, $last_off_works->position->department->name);
                     }
-                } else {
-                    $department_str .= '!! Chưa gán vị trí công việc !!';
+                    //Xóa các department trùng nhau
+                    $dept_arr = array_unique($dept_arr);
+                    //Convert array sang string
+                    $department_str = implode(' | ', $dept_arr);
                 }
                 return $department_str;
             })

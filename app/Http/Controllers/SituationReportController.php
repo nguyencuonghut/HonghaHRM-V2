@@ -26,30 +26,32 @@ class SituationReportController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('department', function ($data) {
-                $my_position_ids = Work::where('employee_id', $data->employee_id)
-                                        ->where(function ($query) {
-                                            $query->whereIn('off_type_id', [2,3,4])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm
-                                                ->orWhereNull('off_type_id');
-                                        })
-                                        ->pluck('position_id')
-                                        ->toArray();
-                $my_positions = Position::whereIn('id', $my_position_ids)->get();
+                $dept_arr = [];
                 $department_str = '';
-                $i = 0;
-                $length = count($my_positions);
-                if ($length) {
-                    foreach ($my_positions as $my_position) {
-                        if(++$i === $length) {
-                            $department_str .= $my_position->division_id ? $my_position->division->name . ' - ' . $my_position->department->name : $my_position->department->name;
-                        } else {
-                            $department_str .= $my_position->department->name;
-                            $department_str .= ' | ';
+                //Tìm tất cả Works
+                $works = Work::where('employee_id', $data->employee_id)->get();
+                if (0 == $works->count()) {
+                    return 'Chưa có QT công tác';
+                } else {//Đã có QT công tác
+                    $on_works = Work::where('employee_id', $data->employee_id)
+                                    ->where('status', 'On')
+                                    ->get();
+                    if ($on_works->count()) {//Có QT công tác ở trạng thái On
+                        foreach ($on_works as $on_work) {
+                            array_push($dept_arr, $on_work->position->department->name);
                         }
+                    } else {//Còn lại là các QT công tác ở trạng thái Off
+                        $last_off_works = Work::where('employee_id', $data->employee_id)
+                                        ->where('status', 'Off')
+                                        ->orderBy('start_date', 'desc')
+                                        ->first();
+                        array_push($dept_arr, $last_off_works->position->department->name);
                     }
-                } else {
-                    $department_str .= '!! Chưa gán phòng/ban !!';
+                    //Xóa các department trùng nhau
+                    $dept_arr = array_unique($dept_arr);
+                    //Convert array sang string
+                    $department_str = implode(' | ', $dept_arr);
                 }
-
                 return $department_str;
             })
             ->editColumn('code', function ($data) {
