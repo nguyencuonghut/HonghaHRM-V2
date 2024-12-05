@@ -57,8 +57,9 @@
                     <th>Phòng/ban</th>
                     <th>Email</th>
                     <th>Điện thoại</th>
-                    <th>Địa chỉ thường trú</th>
+                    <th>Thường trú</th>
                     <th>CCCD</th>
+                    <th>Trạng thái</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
                   </thead>
@@ -92,14 +93,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
 
             },
@@ -107,28 +108,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             }
         ],
@@ -143,6 +144,7 @@
             {data: 'phone', name: 'phone'},
             {data: 'addr', name: 'addr'},
             {data: 'cccd', name: 'cccd'},
+            {data: 'status', name: 'status'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#employees-table_wrapper .col-md-6:eq(0)');

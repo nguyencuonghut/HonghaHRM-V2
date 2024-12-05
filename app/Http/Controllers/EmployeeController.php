@@ -402,6 +402,45 @@ class EmployeeController extends Controller
             ->editColumn('cccd', function ($data) {
                 return $data->cccd;
             })
+            ->editColumn('status', function ($data) {
+                $works = Work::where('employee_id', $data->id)->get();
+                if (0 == $works->count()) {//Không tồn tại QT công tác nào
+                    return '<span class="badge badge-secondary">Không có QT công tác</span>';
+                } else {//Có QT công tác
+                    //Tìm QT công tác ở trạng thái On
+                    $on_works = Work::where('employee_id', $data->id)
+                                    ->where('status', 'On')
+                                    ->get();
+                    if ($on_works->count()) {//Đang có QT công tác
+                        return '<span class="badge badge-success">Đang làm</span>';
+                    } else { //Chỉ có QT công tác, nhưng ở trạng thái Off
+                        $last_off_work = Work::where('employee_id', $data->id)
+                                        ->where('status', 'Off')
+                                        ->orderBy('start_date' ,'desc')
+                                        ->first();
+                        switch ($last_off_work->off_type_id) {
+                            case 1://Nghỉ việc
+                                return '<span class="badge badge-danger">Nghỉ việc</span>';
+                                break;
+                            case 2://Nghỉ thai sản
+                                return '<span class="badge badge-secondary">Nghỉ thai sản</span>';
+                                break;
+                            case 3://Nghỉ không lương
+                                return '<span class="badge badge-secondary">Nghỉ không lương</span>';
+                                break;
+                            case 4://Nghỉ ốm
+                                return '<span class="badge badge-secondary">Nghỉ ốm</span>';
+                                break;
+                            case 6://Nghỉ hưu
+                                return '<span class="badge badge-warning">Nghỉ hưu</span>';
+                                break;
+                            default:
+                                return '-';
+                        }
+
+                    }
+                }
+            })
             ->addColumn('actions', function ($data) {
                 $action = '<a href="' . route("employees.edit", $data->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                            <form style="display:inline" action="'. route("employees.destroy", $data->id) . '" method="POST">
@@ -410,7 +449,7 @@ class EmployeeController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'name', 'email'])
+            ->rawColumns(['actions', 'name', 'email', 'status'])
             ->make(true);
     }
 
