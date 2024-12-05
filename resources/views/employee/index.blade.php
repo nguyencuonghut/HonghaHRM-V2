@@ -54,11 +54,11 @@
                     <th>STT</th>
                     <th>Mã</th>
                     <th>Họ tên</th>
+                    <th>Phòng/ban</th>
                     <th>Email</th>
                     <th>Điện thoại</th>
                     <th>Địa chỉ thường trú</th>
                     <th>CCCD</th>
-                    <th>Địa chỉ tạm trú</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
                   </thead>
@@ -138,11 +138,11 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
+            {data: 'department', name: 'department'},
             {data: 'email', name: 'email'},
             {data: 'phone', name: 'phone'},
             {data: 'addr', name: 'addr'},
             {data: 'cccd', name: 'cccd'},
-            {data: 'temp_addr', name: 'temp_addr'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#employees-table_wrapper .col-md-6:eq(0)');

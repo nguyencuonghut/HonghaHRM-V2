@@ -350,6 +350,35 @@ class EmployeeController extends Controller
             ->editColumn('name', function ($data) {
                 return '<a href="'.route('employees.show', $data->id).'">'.$data->name.'</a>';
             })
+            ->editColumn('department', function ($data) {
+                $dept_arr = [];
+                $department_str = '';
+                //Tìm tất cả Works
+                $works = Work::where('employee_id', $data->id)->get();
+                if (0 == $works->count()) {
+                    return 'Chưa có QT công tác';
+                } else {//Đã có QT công tác
+                    $on_works = Work::where('employee_id', $data->id)
+                                    ->where('status', 'On')
+                                    ->get();
+                    if ($on_works->count()) {//Có QT công tác ở trạng thái On
+                        foreach ($on_works as $on_work) {
+                            array_push($dept_arr, $on_work->position->department->name);
+                        }
+                    } else {//Còn lại là các QT công tác ở trạng thái Off
+                        $last_off_works = Work::where('employee_id', $data->id)
+                                        ->where('status', 'Off')
+                                        ->orderBy('start_date', 'desc')
+                                        ->first();
+                        array_push($dept_arr, $last_off_works->position->department->name);
+                    }
+                    //Xóa các department trùng nhau
+                    $dept_arr = array_unique($dept_arr);
+                    //Convert array sang string
+                    $department_str = implode(' | ', $dept_arr);
+                }
+                return $department_str;
+            })
             ->editColumn('email', function ($data) {
                 $email = '';
                 if ($data->private_email) {
@@ -372,13 +401,6 @@ class EmployeeController extends Controller
             })
             ->editColumn('cccd', function ($data) {
                 return $data->cccd;
-            })
-            ->editColumn('temp_addr', function ($data) {
-                if ($data->temporary_address) {
-                    return $data->temporary_address . ', ' .  $data->temporary_commune->name .', ' .  $data->temporary_commune->district->name .', ' . $data->temporary_commune->district->province->name;
-                } else {
-                    return '-';
-                }
             })
             ->addColumn('actions', function ($data) {
                 $action = '<a href="' . route("employees.edit", $data->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
