@@ -196,6 +196,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('offers', OfferController::class, ['names' => 'offers']);
 
     //Employees
+    Route::get('employees/export', [EmployeeController::class, 'export'])->name('employees.export');
     Route::get('employees/data', [EmployeeController::class, 'anyData'])->name('employees.data');
     Route::get('employees/create_from_candidate/{recruitment_candidate_id}', [EmployeeController::class, 'createFromCandidate'])->name('employees.create_from_candidate');
     Route::post('employees/store_from_candidate', [EmployeeController::class, 'storeFromCandidate'])->name('employees.store_from_candidate');
