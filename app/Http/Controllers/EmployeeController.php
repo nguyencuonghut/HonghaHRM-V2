@@ -988,6 +988,7 @@ class EmployeeController extends Controller
                                     ->where(function ($query) use ($search){
                                         $query->where('name', 'like', '%'.$search.'%')
                                             ->orWhere('code', 'like', '%'.$search.'%')
+                                            ->orWhere('phone', 'like', '%'.$search.'%')
                                             ->orWhere('company_email', 'like', '%'.$search.'%');
                                     })
                                     ->paginate(9);
@@ -997,6 +998,7 @@ class EmployeeController extends Controller
                                     ->where(function ($query) use ($search){
                                         $query->where('name', 'like', '%'.$search.'%')
                                             ->orWhere('code', 'like', '%'.$search.'%')
+                                            ->orWhere('phone', 'like', '%'.$search.'%')
                                             ->orWhere('company_email', 'like', '%'.$search.'%');
                                     })
                                     ->paginate(9);
