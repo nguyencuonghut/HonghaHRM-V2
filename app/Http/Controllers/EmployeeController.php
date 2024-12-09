@@ -976,11 +976,8 @@ class EmployeeController extends Controller
                                     ->orderBy('code', 'desc')
                                     ->where(function ($query) use ($search){
                                         $query->where('name', 'like', '%'.$search.'%')
-                                            ->orWhere('email', 'like', '%'.$search.'%')
-                                            ->orWhereHas('departments' ,function($q) use ($search) {
-                                                $q->where('name', 'like', '%'.$search.'%')
-                                                    ->orWhere('code', 'like', '%'.$search.'%');
-                                            });
+                                            ->orWhere('code', 'like', '%'.$search.'%')
+                                            ->orWhere('company_email', 'like', '%'.$search.'%');
                                     })
                                     ->paginate(9);
             } else {
@@ -988,12 +985,26 @@ class EmployeeController extends Controller
                                     ->orderBy('code', 'asc')
                                     ->where(function ($query) use ($search){
                                         $query->where('name', 'like', '%'.$search.'%')
+                                            ->orWhere('code', 'like', '%'.$search.'%')
                                             ->orWhere('company_email', 'like', '%'.$search.'%');
                                     })
                                     ->paginate(9);
             }
         } else {
-            $employees = Employee::with(['commune'])->orderBy('code', 'asc')->paginate(9);
+            if ('Trưởng đơn vị' == Auth::user()->role->name) {
+                //Only fetch the Employee according to User's Department
+                $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+                $positions_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+                $employee_ids = Work::whereIn('position_id', $positions_ids)->pluck('employee_id')->toArray();
+                $employees = Employee::with(['commune'])
+                                    ->whereIn('id', $employee_ids)
+                                    ->orderBy('code', 'desc')
+                                    ->paginate(9);
+            } else {
+                $employees = Employee::with(['commune'])
+                                    ->orderBy('code', 'asc')
+                                    ->paginate(9);
+            }
         }
 
         return view('employee.gallery', ['employees' => $employees]);
