@@ -153,6 +153,17 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
+        //Trưởng đơn vị: Chỉ được xem những Employee thuộc phòng/ban của mình
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $manager_position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $works = Work::where('employee_id', $employee->id)
+                        ->whereIn('position_id', $manager_position_ids);
+            if (0 == $works->count()) {
+                Alert::toast('Bạn không có quyền xem nhân sự này!', 'error', 'top-right');
+                return redirect()->route('employees.index');
+            }
+        }
         $contracts = Contract::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $appendixes = Appendix::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $works = Work::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
