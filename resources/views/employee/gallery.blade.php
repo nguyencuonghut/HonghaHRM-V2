@@ -30,23 +30,27 @@
     <div class="card card-solid">
         <!-- /.card-header -->
         <div class="card-body">
-            @can('create', App\Models\Employee::class)
-            <a href="{{ route('employees.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
-            @endcan
-            <div class="btn-group float-right">
-                <a href="{{route('employees.index')}}" class="btn btn-primary {{Route::is('employees.index') ? 'active' : ''}}">
-                    <i class="fas fa-bars"></i>
-                </a>
-                <a href="{{route('employees.gallery')}}" class="btn btn-secondary {{Route::is('employees.gallery') ? 'active' : ''}}">
-                    <i class="fas fa-th"></i>
-                </a>
-                <a href="{{route('employees.export')}}" class="btn btn-success {{Route::is('employees.export') ? 'active' : ''}}">
-                    <i class="fas fa-download"></i>
-                </a>
+            <div class="row">
+                <div class="col-md-12">
+                    @can('create', App\Models\Employee::class)
+                    <a href="{{ route('employees.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                    @endcan
+                    <div class="btn-group float-right">
+                        <a href="{{route('employees.index')}}" class="btn btn-primary {{Route::is('employees.index') ? 'active' : ''}}">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                        <a href="{{route('employees.gallery')}}" class="btn btn-secondary {{Route::is('employees.gallery') ? 'active' : ''}}">
+                            <i class="fas fa-th"></i>
+                        </a>
+                        <a href="{{route('employees.export')}}" class="btn btn-success {{Route::is('employees.export') ? 'active' : ''}}">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                    @cannot('create', App\Models\Employee::class)
+                    <div class="row"></div>
+                    @endcannot
+                </div>
             </div>
-            @cannot('create', App\Models\Employee::class)
-            <div class="row mt-4"></div>
-            @endcannot
 
             <div class="row">
                 &nbsp;
