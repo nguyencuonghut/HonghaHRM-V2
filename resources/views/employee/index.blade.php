@@ -49,7 +49,7 @@
                     </a>
                 </div>
                 @cannot('create', App\Models\Employee::class)
-                <div class="row mt-1"></div>
+                <div class="row mt-4"></div>
                 @endcannot
                 <table id="employees-table" class="table table-bordered table-striped">
                   <thead>

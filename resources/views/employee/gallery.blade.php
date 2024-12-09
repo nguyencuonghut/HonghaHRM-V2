@@ -34,7 +34,6 @@
             <a href="{{ route('employees.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
             @endcan
             <div class="btn-group float-right">
-                &nbsp;
                 <a href="{{route('employees.index')}}" class="btn btn-primary {{Route::is('employees.index') ? 'active' : ''}}">
                     <i class="fas fa-bars"></i>
                 </a>
@@ -45,6 +44,9 @@
                     <i class="fas fa-download"></i>
                 </a>
             </div>
+            @cannot('create', App\Models\Employee::class)
+            <div class="row mt-4"></div>
+            @endcannot
 
             <div class="row">
                 &nbsp;
