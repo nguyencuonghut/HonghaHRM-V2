@@ -914,7 +914,7 @@ class EmployeeController extends Controller
         $works = Work::where('employee_id', $value->id)->get();
         $status_str = '';
         if (0 == $works->count()) {//Không tồn tại QT công tác nào
-            $status_str = '<span class="badge badge-secondary">Không có QT công tác</span>';
+            $status_str = 'Không có QT công tác';
         } else {//Có QT công tác
             //Tìm QT công tác ở trạng thái On
             $on_works = Work::where('employee_id', $value->id)
@@ -960,5 +960,42 @@ class EmployeeController extends Controller
 
         Alert::toast('Tải file thành công!!', 'success', 'top-right');
         return response()->download($file_name)->deleteFileAfterSend(true);
+    }
+
+    public function gallery(Request $request)
+    {
+        $search =  $request->input('search');
+        if ($search != ""){
+            if ('Trưởng đơn vị' == Auth::user()->role->name) {
+                //Only fetch the Employee according to User's Department
+                $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+                $positions_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+                $employee_ids = Work::whereIn('position_id', $positions_ids)->pluck('employee_id')->toArray();
+                $employees = Employee::with(['commune'])
+                                    ->whereIn('id', $employee_ids)
+                                    ->orderBy('code', 'desc')
+                                    ->where(function ($query) use ($search){
+                                        $query->where('name', 'like', '%'.$search.'%')
+                                            ->orWhere('email', 'like', '%'.$search.'%')
+                                            ->orWhereHas('departments' ,function($q) use ($search) {
+                                                $q->where('name', 'like', '%'.$search.'%')
+                                                    ->orWhere('code', 'like', '%'.$search.'%');
+                                            });
+                                    })
+                                    ->paginate(9);
+            } else {
+                $employees = Employee::with(['commune'])
+                                    ->orderBy('code', 'asc')
+                                    ->where(function ($query) use ($search){
+                                        $query->where('name', 'like', '%'.$search.'%')
+                                            ->orWhere('company_email', 'like', '%'.$search.'%');
+                                    })
+                                    ->paginate(9);
+            }
+        } else {
+            $employees = Employee::with(['commune'])->orderBy('code', 'asc')->paginate(9);
+        }
+
+        return view('employee.gallery', ['employees' => $employees]);
     }
 }

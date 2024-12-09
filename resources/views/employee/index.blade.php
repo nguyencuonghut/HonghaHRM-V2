@@ -38,11 +38,11 @@
                 @endcan
                 <div class="btn-group float-right">
                     &nbsp;
-                    <a href="#" class="btn btn-secondary {{Route::is('employees.gallery') ? 'active' : ''}}">
-                        <i class="fas fa-th"></i>
-                    </a>
                     <a href="{{route('employees.index')}}" class="btn btn-primary {{Route::is('employees.index') ? 'active' : ''}}">
                         <i class="fas fa-bars"></i>
+                    </a>
+                    <a href="{{ route('employees.gallery') }}" class="btn btn-secondary {{Route::is('employees.gallery') ? 'active' : ''}}">
+                        <i class="fas fa-th"></i>
                     </a>
                     <a href="{{route('employees.export')}}" class="btn btn-success {{Route::is('employees.export') ? 'active' : ''}}">
                         <i class="fas fa-download"></i>
