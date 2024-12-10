@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWelfareRequest;
 use App\Http\Requests\UpdateWelfareRequest;
+use App\Models\Position;
+use App\Models\UserDepartment;
 use App\Models\Welfare;
 use App\Models\WelfareType;
 use App\Models\Work;
@@ -123,10 +125,22 @@ class WelfareController extends Controller
 
     public function anyData()
     {
-        $data = Welfare::join('employees', 'employees.id', 'welfares.employee_id')
+        //Display Welfare based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
+            $data = Welfare::whereIn('employee_id', $employee_ids)
+                            ->join('employees', 'employees.id', 'welfares.employee_id')
                             ->select('welfares.*', 'employees.code as employees_code')
                             ->orderBy('employees_code', 'desc')
                             ->get();
+        } else {
+            $data = Welfare::join('employees', 'employees.id', 'welfares.employee_id')
+                            ->select('welfares.*', 'employees.code as employees_code')
+                            ->orderBy('employees_code', 'desc')
+                            ->get();
+        }
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('employee_code', function ($data) {
