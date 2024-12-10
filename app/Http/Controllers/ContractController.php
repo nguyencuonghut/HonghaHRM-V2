@@ -10,6 +10,7 @@ use App\Models\ContractType;
 use App\Models\Employee;
 use App\Models\Position;
 use App\Models\Salary;
+use App\Models\UserDepartment;
 use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -185,10 +186,21 @@ class ContractController extends Controller
 
     public function anyData()
     {
-        $data = Contract::join('employees', 'employees.id', 'contracts.employee_id')
-                            ->select('contracts.*', 'employees.code as employees_code')
-                            ->orderBy('employees_code', 'desc')
-                            ->get();
+        //List all Contracts based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $data = Contract::whereIn('position_id', $position_ids)
+                                ->join('employees', 'employees.id', 'contracts.employee_id')
+                                ->select('contracts.*', 'employees.code as employees_code')
+                                ->orderBy('employees_code', 'desc')
+                                ->get();
+        } else {
+            $data = Contract::join('employees', 'employees.id', 'contracts.employee_id')
+                                ->select('contracts.*', 'employees.code as employees_code')
+                                ->orderBy('employees_code', 'desc')
+                                ->get();
+        }
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('code', function ($data) {
