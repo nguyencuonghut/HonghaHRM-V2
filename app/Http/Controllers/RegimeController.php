@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRegimeRequest;
 use App\Http\Requests\UpdateRegimeRequest;
+use App\Models\Position;
 use App\Models\Regime;
 use App\Models\RegimeType;
+use App\Models\UserDepartment;
 use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -138,10 +140,23 @@ class RegimeController extends Controller
 
     public function anyData()
     {
-        $data = Regime::join('employees', 'employees.id', 'regimes.employee_id')
+        //Display Regime based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
+            $data = Regime::whereIn('employee_id', $employee_ids)
+                            ->join('employees', 'employees.id', 'regimes.employee_id')
                             ->select('regimes.*', 'employees.code as employees_code')
                             ->orderBy('employees_code', 'desc')
                             ->get();
+        } else {
+            $data = Regime::join('employees', 'employees.id', 'regimes.employee_id')
+                        ->select('regimes.*', 'employees.code as employees_code')
+                        ->orderBy('employees_code', 'desc')
+                        ->get();
+        }
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('employee_code', function ($data) {
