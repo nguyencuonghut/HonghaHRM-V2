@@ -6,6 +6,8 @@ use App\Http\Requests\StoreInsuranceRequest;
 use App\Http\Requests\UpdateInsuranceRequest;
 use App\Models\Insurance;
 use App\Models\InsuranceType;
+use App\Models\Position;
+use App\Models\UserDepartment;
 use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -116,10 +118,22 @@ class InsuranceController extends Controller
 
     public function anyData()
     {
-        $data = Insurance::join('employees', 'employees.id', 'insurances.employee_id')
+        //Display Insurance based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
+            $data = Insurance::whereIn('employee_id', $employee_ids)
+                            ->join('employees', 'employees.id', 'insurances.employee_id')
                             ->select('insurances.*', 'employees.code as employees_code')
                             ->orderBy('employees_code', 'desc')
                             ->get();
+        } else {
+            $data = Insurance::join('employees', 'employees.id', 'insurances.employee_id')
+                            ->select('insurances.*', 'employees.code as employees_code')
+                            ->orderBy('employees_code', 'desc')
+                            ->get();
+        }
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('insurance_type', function ($data) {
