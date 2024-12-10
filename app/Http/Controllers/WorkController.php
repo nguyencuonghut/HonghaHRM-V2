@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateWorkRequest;
 use App\Models\OffType;
 use App\Models\OnType;
 use App\Models\Position;
+use App\Models\UserDepartment;
 use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -171,9 +172,20 @@ class WorkController extends Controller
 
     public function anyData()
     {
-        $data = Work::join('employees', 'employees.id', 'works.employee_id')
-                                        ->orderBy('employees.code', 'desc')
-                                        ->get();
+        //Display Work based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $data = Work::whereIn('position_id', $position_ids)
+                        ->join('employees', 'employees.id', 'works.employee_id')
+                        ->orderBy('employees.code', 'desc')
+                        ->get();
+        } else {
+            $data = Work::join('employees', 'employees.id', 'works.employee_id')
+                        ->orderBy('employees.code', 'desc')
+                        ->get();
+        }
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('employee_name', function ($data) {
