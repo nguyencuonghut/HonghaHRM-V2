@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateKpiRequest;
 use App\Models\Kpi;
 use App\Models\KpiReport;
 use App\Models\Position;
+use App\Models\UserDepartment;
 use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -155,10 +156,22 @@ class KpiController extends Controller
 
     public function anyData()
     {
-        $data = Kpi::join('employees', 'employees.id', 'kpis.employee_id')
-                    ->select('kpis.*', 'employees.code as employees_code')
-                    ->orderBy('employees_code', 'desc')
-                    ->get();
+        //Display KPI based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
+            $data = Kpi::whereIn('employee_id', $employee_ids)
+                        ->join('employees', 'employees.id', 'kpis.employee_id')
+                        ->select('kpis.*', 'employees.code as employees_code')
+                        ->orderBy('employees_code', 'desc')
+                        ->get();
+        } else {
+            $data = Kpi::join('employees', 'employees.id', 'kpis.employee_id')
+                        ->select('kpis.*', 'employees.code as employees_code')
+                        ->orderBy('employees_code', 'desc')
+                        ->get();
+        }
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('employee_code', function ($data) {
