@@ -7,6 +7,9 @@ use App\Http\Requests\UpdateAppendixRequest;
 use App\Models\Appendix;
 use App\Models\Contract;
 use App\Models\Employee;
+use App\Models\Position;
+use App\Models\UserDepartment;
+use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -153,10 +156,23 @@ class AppendixController extends Controller
 
     public function anyData()
     {
-        $data = Appendix::join('employees', 'employees.id', 'appendixes.employee_id')
-                            ->select('appendixes.*', 'employees.code as employees_code')
-                            ->orderBy('employees_code', 'desc')
-                            ->get();
+        //List all Appendixes based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
+            $data = Appendix::whereIn('employee_id', $employee_ids)
+                                ->join('employees', 'employees.id', 'appendixes.employee_id')
+                                ->select('appendixes.*', 'employees.code as employees_code')
+                                ->orderBy('employees_code', 'desc')
+                                ->get();
+        } else {
+            $data = Appendix::join('employees', 'employees.id', 'appendixes.employee_id')
+                                ->select('appendixes.*', 'employees.code as employees_code')
+                                ->orderBy('employees_code', 'desc')
+                                ->get();
+        }
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('employee_name', function ($data) {
