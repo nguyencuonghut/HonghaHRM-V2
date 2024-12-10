@@ -78,11 +78,6 @@
                     <div class="card bg-light d-flex flex-fill">
                     @php
                     $works = App\Models\Work::where('employee_id', $employee->id)
-                                            ->where('status', 'On')
-                                            ->where(function ($query) {
-                                                $query->whereIn('off_type_id', [2,3,4,5])//2: Nghỉ thai sản, 3: Nghỉ không lương, 4: Nghỉ ốm, 5: Thay đổi chức danh
-                                                    ->orWhereNull('off_type_id');
-                                            })
                                             ->get();
                         $i = 0;
                         $positions_list = '';
@@ -142,7 +137,7 @@
                     <div class="card-body pt-0">
                         <div class="row">
                             <div class="ribbon-wrapper ribbon-lg">
-                                <div class="ribbon @if('Đang làm' == $status_str) bg-success @elseif('Nghỉ việc' == $status_str) bg-danger @else bg-secondary @endif">
+                                <div class="ribbon @if('Đang làm' == $status_str) bg-success @elseif('Nghỉ việc' == $status_str) bg-danger @else bg-warning @endif">
                                   {{$status_str}}
                                 </div>
                               </div>
