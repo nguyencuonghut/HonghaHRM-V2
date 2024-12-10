@@ -6,6 +6,7 @@ use App\Http\Requests\StoreJoinDateRequest;
 use App\Http\Requests\UpdateJoinDateRequest;
 use App\Models\JoinDate;
 use App\Models\Position;
+use App\Models\UserDepartment;
 use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -102,10 +103,22 @@ class JoinDateController extends Controller
 
     public function anyData()
     {
-        $data = JoinDate::join('employees', 'employees.id', 'join_dates.employee_id')
-                    ->select('join_dates.*', 'employees.code as employees_code')
-                    ->orderBy('employees_code', 'desc')
-                    ->get();
+        //Display JoinDate based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
+            $data = JoinDate::whereIn('employee_id', $employee_ids)
+                            ->join('employees', 'employees.id', 'join_dates.employee_id')
+                            ->select('join_dates.*', 'employees.code as employees_code')
+                            ->orderBy('employees_code', 'desc')
+                            ->get();
+        } else {
+            $data = JoinDate::join('employees', 'employees.id', 'join_dates.employee_id')
+            ->select('join_dates.*', 'employees.code as employees_code')
+            ->orderBy('employees_code', 'desc')
+            ->get();
+        }
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('department', function ($data) {
