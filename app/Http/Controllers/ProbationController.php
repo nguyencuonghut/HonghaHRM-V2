@@ -9,8 +9,11 @@ use App\Http\Requests\StoreProbationRequest;
 use App\Http\Requests\UpdateProbationRequest;
 use App\Models\Candidate;
 use App\Models\Employee;
+use App\Models\Position;
 use App\Models\Probation;
 use App\Models\RecruitmentCandidate;
+use App\Models\UserDepartment;
+use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -183,10 +186,22 @@ class ProbationController extends Controller
 
     public function anyData()
     {
-        $data = Probation::select('probations.*')
-                                ->join('employees', 'employees.id', 'probations.employee_id')
-                                ->orderBy('employees.code', 'desc')
-                                ->get();
+        //Display Probation based on User's role
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
+            $data = Probation::whereIn('employee_id', $employee_ids)
+                            ->select('probations.*')
+                            ->join('employees', 'employees.id', 'probations.employee_id')
+                            ->orderBy('employees.code', 'desc')
+                            ->get();
+        } else {
+            $data = Probation::select('probations.*')
+                            ->join('employees', 'employees.id', 'probations.employee_id')
+                            ->orderBy('employees.code', 'desc')
+                            ->get();
+        }
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('employee_name', function ($data) {
