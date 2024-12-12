@@ -9,6 +9,7 @@ use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ContractTypeController;
+use App\Http\Controllers\DecreaseInsuranceController;
 use App\Http\Controllers\DegreeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentManagerController;
@@ -29,6 +30,8 @@ use App\Http\Controllers\FirstInterviewDetailController;
 use App\Http\Controllers\FirstInterviewInvitationController;
 use App\Http\Controllers\FirstInterviewResultController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IncreaseDecreaseInsuranceReportController;
+use App\Http\Controllers\IncreaseInsuranceController;
 use App\Http\Controllers\InitialInterviewController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\JoinDateController;
@@ -258,6 +261,18 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('insurances/data', [InsuranceController::class, 'anyData'])->name('insurances.data');
     Route::resource('insurances', InsuranceController::class, ['names' => 'insurances']);
 
+    //IncreaseInsurance
+    Route::get('increase_insurances/data', [IncreaseInsuranceController::class, 'anyData'])->name('increase_insurances.data');
+    Route::get('increase_insurances/getConfirm/{id}', [IncreaseInsuranceController::class, 'getConfirm'])->name('increase_insurances.getConfirm');
+    Route::post('increase_insurances/confirm/{id}', [IncreaseInsuranceController::class, 'confirm'])->name('increase_insurances.confirm');
+    Route::resource('increase_insurances', IncreaseInsuranceController::class, ['names' => 'increase_insurances']);
+
+    //DecreaseInsurance
+    Route::get('decrease_insurances/data', [DecreaseInsuranceController::class, 'anyData'])->name('decrease_insurances.data');
+    Route::get('decrease_insurances/getConfirm/{id}', [DecreaseInsuranceController::class, 'getConfirm'])->name('decrease_insurances.getConfirm');
+    Route::post('decrease_insurances/confirm/{id}', [DecreaseInsuranceController::class, 'confirm'])->name('decrease_insurances.confirm');
+    Route::resource('decrease_insurances', DecreaseInsuranceController::class, ['names' => 'decrease_insurances']);
+
     //Regimes
     Route::get('regimes/data', [RegimeController::class, 'anyData'])->name('regimes.data');
     Route::resource('regimes', RegimeController::class, ['names' => 'regimes']);
@@ -370,4 +385,10 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::post('seniority_reports/by_year', [SeniorityReportController::class, 'byYear'])->name('seniority_reports.by_year');
     Route::get('seniority_reports/{year}', [SeniorityReportController::class, 'byYearData'])->name('seniority_reports.byYearData');
     Route::get('seniority_reports', [SeniorityReportController::class, 'index'])->name('seniority_reports.index');
+
+    //IncreaseDecreaseInsuranceReport
+    Route::post('increase_decrease_insurance_reports/by_month', [IncreaseDecreaseInsuranceReportController::class, 'byMonth'])->name('increase_decrease_insurance_reports.by_month');
+    Route::get('increase_decrease_insurance_reports/decrease/{month}/{year}', [IncreaseDecreaseInsuranceReportController::class, 'decreaseByMonthData'])->name('increase_decrease_insurance_reports.decreaseByMonthData');
+    Route::get('increase_decrease_insurance_reports/increase/{month}/{year}', [IncreaseDecreaseInsuranceReportController::class, 'increaseByMonthData'])->name('increase_decrease_insurance_reports.increaseByMonthData');
+    Route::get('increase_decrease_insurance_reports/show', [IncreaseDecreaseInsuranceReportController::class, 'show'])->name('increase_decrease_insurance_reports.show');
 });

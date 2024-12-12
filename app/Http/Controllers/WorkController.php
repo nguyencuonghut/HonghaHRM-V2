@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OffWorkRequest;
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
+use App\Models\DecreaseInsurance;
+use App\Models\IncreaseInsurance;
 use App\Models\OffType;
 use App\Models\OnType;
 use App\Models\Position;
@@ -54,13 +56,12 @@ class WorkController extends Controller
         $work->status = 'On';
         $work->save();
 
-        // TODO: Tạo bảng theo dõi tăng BHXH với HĐ ký mới là HĐLĐ
-        // if (2 == $request->on_type_id) {
-        //     $increase_decrease_insurance = new IncreaseDecreaseInsurance();
-        //     $increase_decrease_insurance->employee_work_id = $employee_work->id;
-        //     $increase_decrease_insurance->is_increase = true;
-        //     $increase_decrease_insurance->save();
-        // }
+        //Tạo bảng theo dõi tăng BHXH với HĐ ký mới là HĐLĐ
+        if (2 == $request->on_type_id) {//2: Ký HĐLĐ
+            $increase_insurance = new IncreaseInsurance();
+            $increase_insurance->work_id = $work->id;
+            $increase_insurance->save();
+        }
 
         Alert::toast('Thêm quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->back();
@@ -105,13 +106,13 @@ class WorkController extends Controller
         $work->contract_code = $request->contract_code;
         $work->save();
 
-        //TODO: Xóa bảng theo dõi tăng BHXH với HĐ ký mới khác HĐLĐ
-        // if (2 != $request->on_type_id) {
-        //     $increase_decrease_insurance = IncreaseDecreaseInsurance::where('employee_work_id', $employee_work->id)->first();
-        //     if ($increase_decrease_insurance) {
-        //         $increase_decrease_insurance->destroy($increase_decrease_insurance->id);
-        //     }
-        // }
+        //Xóa bảng theo dõi tăng BHXH với HĐ ký mới khác HĐLĐ
+        if (2 != $request->on_type_id) {//2: Ký HĐLĐ
+            $increase_insurance = IncreaseInsurance::where('work_id', $work->id)->first();
+            if ($increase_insurance) {
+                $increase_insurance->delete();
+            }
+        }
 
         Alert::toast('Sửa quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->route('employees.show', $work->employee_id);
@@ -126,6 +127,28 @@ class WorkController extends Controller
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
             return redirect()->back();
         }
+        if ('On' == $work->status) {
+            // Xóa bảng theo dõi tăng BHXH với HĐ ký mới là HĐLĐ
+            if ('Ký HĐLĐ' == $work->on_type->name) {
+                $increase_insurance = IncreaseInsurance::where('work_id', $work->id)->first();
+                if ($increase_insurance) {
+                    $increase_insurance->delete();
+                }
+            }
+        } else {
+            // Xóa bảng theo dõi giảm BHXH với HĐ ký mới là HĐLĐ
+            if ('Ký HĐLĐ' == $work->on_type->name ||
+                'Tái ký HĐLĐ' == $work->on_type->name ||
+                'Thay đổi chức danh, lương' == $work->on_type->name ||
+                'Đi làm lại' == $work->on_type->name) {
+
+                $decrease_insurance = DecreaseInsurance::where('work_id', $work->id)->first();
+                if ($decrease_insurance) {
+                    $decrease_insurance->delete();
+                }
+            }
+        }
+
         $work->delete();
 
         Alert::toast('Xóa quá trình công tác thành công!', 'success', 'top-rigth');
@@ -156,15 +179,23 @@ class WorkController extends Controller
         }
         $work->save();
 
-        //TODO: Tạo bảng theo dõi giảm BHXH
-        // if (2 == $work->on_type_id
-        //     || 3 == $work->on_type_id
-        //     || 4 == $work->on_type_id) {
-        //     $increase_decrease_insurance = new IncreaseDecreaseInsurance();
-        //     $increase_decrease_insurance->employee_work_id = $employee_work->id;
-        //     $increase_decrease_insurance->is_decrease = true;
-        //     $increase_decrease_insurance->save();
-        // }
+        //Tạo bảng theo dõi giảm BHXH
+        if ('Ký HĐLĐ' == $work->on_type->name
+            || 'Tái ký HĐLĐ' == $work->on_type->name
+            || 'Thay đổi chức danh, lương' == $work->on_type->name
+            || 'Đi làm lại' == $work->on_type->name) {
+            //Kiểm tra đã có record nào tương ứng với work_id hay chưa
+            $decrease_insurances = DecreaseInsurance::where('work_id', $work->id)->get();
+            if (0 == $decrease_insurances->count()) {
+                $decrease_insurance = new DecreaseInsurance();
+                $decrease_insurance->work_id = $work->id;
+                $decrease_insurance->save();
+            } else {
+                $decrease_insurance = $decrease_insurances->first();
+                $decrease_insurance->confirmed_month = null;
+                $decrease_insurance->save();
+            }
+        }
 
         Alert::toast('Cập nhật thành công!', 'success', 'top-right');
         return redirect()->route('employees.show', $work->employee_id);

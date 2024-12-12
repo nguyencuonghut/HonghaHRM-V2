@@ -140,6 +140,26 @@
             </a>
           </li>
 
+          <!-- Increase Insurance -->
+          <li class="nav-item">
+            <a href="{{route('increase_insurances.index')}}" class="nav-link {{ Request::is('increase_insurances*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-hand-holding-medical"></i>
+              <p>
+                Tăng BHXH
+              </p>
+            </a>
+          </li>
+
+          <!-- Decrease Insurance -->
+          <li class="nav-item">
+            <a href="{{route('decrease_insurances.index')}}" class="nav-link {{ Request::is('decrease_insurances*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-hand-holding-medical"></i>
+              <p>
+                Giảm BHXH
+              </p>
+            </a>
+          </li>
+
           <!-- Regime -->
           <li class="nav-item">
             <a href="{{route('regimes.index')}}" class="nav-link {{ Request::is('regimes*') ? 'active' : '' }}">
@@ -441,6 +461,14 @@
                         <a href="{{route('kpi_reports.show')}}" class="nav-link {{ Request::is('kpi_reports*') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                         <p>KPI</p>
+                      </a>
+                    </li>
+
+                    <!-- KPI -->
+                    <li class="nav-item">
+                        <a href="{{route('increase_decrease_insurance_reports.show')}}" class="nav-link {{ Request::is('increase_decrease_insurance_reports*') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                        <p>Tăng giảm BHXH</p>
                       </a>
                     </li>
 
