@@ -98,6 +98,8 @@
                     Phát sinh giảm
                 </div>
               <div class="card-body">
+                <a href="{{route('increase_decrease_insurance_reports.exportDecBhxh', ['month' => $month, 'year' => $year])}}" class="btn btn-sm btn-primary"><i class="fas fa-cloud-download-alt"></i></a>
+
                 <table id="decrease-insurance-reports-table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
