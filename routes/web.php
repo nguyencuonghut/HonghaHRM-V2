@@ -387,6 +387,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::get('seniority_reports', [SeniorityReportController::class, 'index'])->name('seniority_reports.index');
 
     //IncreaseDecreaseInsuranceReport
+    Route::get('increase_decrease_insurance_reports/export_inc_bhxh/{month}/{year}', [IncreaseDecreaseInsuranceReportController::class, 'exportIncBhxh'])->name('increase_decrease_insurance_reports.exportIncBhxh');
     Route::post('increase_decrease_insurance_reports/by_month', [IncreaseDecreaseInsuranceReportController::class, 'byMonth'])->name('increase_decrease_insurance_reports.by_month');
     Route::get('increase_decrease_insurance_reports/decrease/{month}/{year}', [IncreaseDecreaseInsuranceReportController::class, 'decreaseByMonthData'])->name('increase_decrease_insurance_reports.decreaseByMonthData');
     Route::get('increase_decrease_insurance_reports/increase/{month}/{year}', [IncreaseDecreaseInsuranceReportController::class, 'increaseByMonthData'])->name('increase_decrease_insurance_reports.increaseByMonthData');
