@@ -152,11 +152,10 @@ class InsuranceController extends Controller
                 $length = $works->count();
                 if ($length) {
                     $on_works = Work::where('employee_id', $data->employee_id)->where('status', 'On')->get();
-                    $j = 0;
                     $on_length = $on_works->count();
                     if ($on_length) {
                         foreach ($on_works as $work) {
-                            if(++$j === $on_length) {
+                            if(++$i === $on_length) {
                                 $department_str .= $work->position->department->name;
                             } else {
                                 $department_str .= $work->position->department->name;
