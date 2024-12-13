@@ -150,23 +150,31 @@ class WelfareController extends Controller
                 return '<a href=' . route("employees.show", $data->employee_id) . '>' . $data->employee->name . '</a>' ;
             })
             ->editColumn('employee_department', function ($data) {
-                $employee_works = Work::where('employee_id', $data->employee_id)->where('status', 'On')->get();
-                $employee_department_str = '';
+                $works = Work::where('employee_id', $data->employee_id)->orderBy('start_date', 'desc')->get();
+                $department_str = '';
                 $i = 0;
-                $length = count($employee_works);
+                $length = $works->count();
                 if ($length) {
-                    foreach ($employee_works as $employee_work) {
-                        if(++$i === $length) {
-                            $employee_department_str .= $employee_work->position->department->name;
-                        } else {
-                            $employee_department_str .= $employee_work->position->department->name;
-                            $employee_department_str .= ' | ';
+                    $on_works = Work::where('employee_id', $data->employee_id)->where('status', 'On')->get();
+                    $on_length = $on_works->count();
+                    if ($on_length) {
+                        foreach ($on_works as $work) {
+                            if(++$i === $on_length) {
+                                $department_str .= $work->position->department->name;
+                            } else {
+                                $department_str .= $work->position->department->name;
+                                $department_str .= ' | ';
+                            }
                         }
+                    } else {
+                        //Get the last Work that has Status is Off
+                        $last_work = $works->first();
+                        $department_str .= $last_work->position->department->name;
                     }
                 } else {
-                    $employee_department_str .= '!! Chưa gán vị trí công việc !!';
+                    $department_str .= '!! Chưa gán vị trí công việc !!';
                 }
-                return $employee_department_str;
+                return $department_str;
             })
             ->editColumn('welfare_type', function ($data) {
                 return $data->welfare_type->name;
