@@ -39,7 +39,7 @@
               <div class="icon">
                 <i class="fas fa-sitemap"></i>
               </div>
-              <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+              <a @if('Trưởng đơn vị' != Auth::user()->role->name) href="{{route('departments.index')}}" @endif class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -54,7 +54,7 @@
               <div class="icon">
                 <i class="fas fa-users"></i>
               </div>
-              <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('employees.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -69,7 +69,7 @@
               <div class="icon">
                 <i class="fas fa-search-location"></i>
               </div>
-              <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('recruitments.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -84,7 +84,7 @@
               <div class="icon">
                 <i class="fas fa-user-check"></i>
               </div>
-              <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('probations.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -103,7 +103,7 @@
                 <div class="icon">
                   <i class="fas fa-birthday-cake"></i>
                 </div>
-                <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('birthday_reports.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -118,7 +118,7 @@
                 <div class="icon">
                   <i class="fas fa-hand-holding-heart"></i>
                 </div>
-                <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('situation_reports.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -133,7 +133,7 @@
                 <div class="icon">
                   <i class="fas fa-baby"></i>
                 </div>
-                <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('kid_policy_reports.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -148,7 +148,7 @@
                 <div class="icon">
                   <i class="fas fa-award"></i>
                 </div>
-                <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('seniority_reports.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
