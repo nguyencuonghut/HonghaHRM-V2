@@ -98,7 +98,7 @@
                 <div class="inner">
                   <h3>{{$birthday_cnt}}</h3>
 
-                  <p>Sinh nhật trong tháng</p>
+                  <p>Sinh nhật tháng {{Carbon\Carbon::now()->month}}</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-birthday-cake"></i>
