@@ -244,6 +244,7 @@
            || Request::is('kid_policy_reports*')
            || Request::is('document_reports*')
            || Request::is('seniority_reports*')
+           || Request::is('increase_decrease_insurance_reports*')
            ?
            'menu-open'
            :
@@ -264,6 +265,7 @@
                     || Request::is('kid_policy_reports*')
                     || Request::is('document_reports*')
                     || Request::is('seniority_reports*')
+                    || Request::is('increase_decrease_insurance_reports*')
                     ?
                     'active'
                     :
