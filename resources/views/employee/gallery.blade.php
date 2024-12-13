@@ -77,22 +77,31 @@
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                     <div class="card bg-light d-flex flex-fill">
                     @php
-                    $works = App\Models\Work::where('employee_id', $employee->id)
-                                            ->get();
-                        $i = 0;
-                        $positions_list = '';
+                        $works = App\Models\Work::where('employee_id', $employee->id)->orderBy('start_date', 'desc')->get();
                         $departments_list = '';
-                        foreach ($works as $work) {
-                            if(++$i === $works->count()) {
-                                $positions_list =  $positions_list . $work->position->name;
-                                $departments_list =  $departments_list . $work->position->department->name;
+                        $positions_list = '';
+                        $i = 0;
+                        $length = $works->count();
+                        if ($length) {
+                            $on_works = App\Models\Work::where('employee_id', $employee->id)->where('status', 'On')->get();
+                            $on_length = $on_works->count();
+                            if ($on_length) {
+                                foreach ($on_works as $work) {
+                                    if(++$i === $on_length) {
+                                        $departments_list .= $work->position->department->name;
+                                        $positions_list .=  $work->position->name;
+                                    } else {
+                                        $departments_list .= $work->position->department->name . ' | ';
+                                        $positions_list .= $work->position->name . ' | ';
+                                    }
+                                }
                             } else {
-                                $positions_list = $positions_list . $work->position->name . ' | ';
-                                $departments_list = $departments_list . $work->position->department->name . ' | ';
+                                //Get the last Work that has Status is Off
+                                $last_work = $works->first();
+                                $departments_list .= $last_work->position->department->name;
+                                $positions_list .= $last_work->position->name;
                             }
                         }
-
-                        $works = App\Models\Work::where('employee_id', $employee->id)->get();
                         $status_str = '';
                         if (0 == $works->count()) {//Không tồn tại QT công tác nào
                             $status_str = 'Không có QT công tác';
