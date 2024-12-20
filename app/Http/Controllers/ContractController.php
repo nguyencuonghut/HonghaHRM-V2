@@ -306,7 +306,7 @@ class ContractController extends Controller
                     Alert::toast('Tải file thành công!!', 'success', 'top-right');
                     return response()->download($file_name)->deleteFileAfterSend(true);
                 } else {
-                    Alert::toast('Có lỗi khi tạo file!!', 'error', 'top-right');
+                    Alert::toast('Không tìm thấy lương khớp với ngày hợp đồng!', 'error', 'top-right');
                     return redirect()->back();
                 }
 
@@ -317,7 +317,7 @@ class ContractController extends Controller
                     Alert::toast('Tải file thành công!!', 'success', 'top-right');
                     return response()->download($file_name)->deleteFileAfterSend(true);
                 } else {
-                    Alert::toast('Có lỗi khi tạo file!!', 'error', 'top-right');
+                    Alert::toast('Không tìm thấy lương khớp với ngày hợp đồng!', 'error', 'top-right');
                     return redirect()->back();
                 }
 
