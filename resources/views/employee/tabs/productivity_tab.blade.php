@@ -54,18 +54,18 @@
                                               <div class="controls">
                                                   <select name="month" id="month" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                       <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                      <option value="Tháng 1" @if(1 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 1</option>
-                                                      <option value="Tháng 2" @if(2 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 2</option>
-                                                      <option value="Tháng 3" @if(3 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 3</option>
-                                                      <option value="Tháng 4" @if(4 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 4</option>
-                                                      <option value="Tháng 5" @if(5 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 5</option>
-                                                      <option value="Tháng 6" @if(6 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 6</option>
-                                                      <option value="Tháng 7" @if(7 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 7</option>
-                                                      <option value="Tháng 8" @if(8 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 8</option>
-                                                      <option value="Tháng 9" @if(9 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 9</option>
-                                                      <option value="Tháng 10" @if(10 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 10</option>
-                                                      <option value="Tháng 11" @if(11 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 11</option>
-                                                      <option value="Tháng 12" @if(12 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 12</option>
+                                                      <option value="1" @if(1 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 1</option>
+                                                      <option value="2" @if(2 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 2</option>
+                                                      <option value="3" @if(3 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 3</option>
+                                                      <option value="4" @if(4 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 4</option>
+                                                      <option value="5" @if(5 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 5</option>
+                                                      <option value="6" @if(6 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 6</option>
+                                                      <option value="7" @if(7 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 7</option>
+                                                      <option value="8" @if(8 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 8</option>
+                                                      <option value="9" @if(9 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 9</option>
+                                                      <option value="10" @if(10 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 10</option>
+                                                      <option value="11" @if(11 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 11</option>
+                                                      <option value="12" @if(12 == Carbon\Carbon::now()->month - 1) selected="selected" @endif>Tháng 12</option>
                                                   </select>
                                               </div>
                                         </div>

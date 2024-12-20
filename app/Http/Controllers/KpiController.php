@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportKpiRequest;
 use App\Http\Requests\StoreKpiRequest;
 use App\Http\Requests\UpdateKpiRequest;
+use App\Imports\KpiImport;
 use App\Models\Kpi;
 use App\Models\KpiReport;
 use App\Models\Position;
@@ -11,6 +13,7 @@ use App\Models\UserDepartment;
 use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -243,40 +246,40 @@ class KpiController extends Controller
         $kpi_report->position_id = $position_id;
         $kpi_report->year = $year;
         switch ($month) {
-            case 'Tháng 1':
+            case '1':
                 $kpi_report->jan = $score;
                 break;
-            case 'Tháng 2':
+            case '2':
                 $kpi_report->feb = $score;
                 break;
-            case 'Tháng 3':
+            case '3':
                 $kpi_report->mar = $score;
                 break;
-            case 'Tháng 4':
+            case '4':
                 $kpi_report->apr = $score;
                 break;
-            case 'Tháng 5':
+            case '5':
                 $kpi_report->may = $score;
                 break;
-            case 'Tháng 6':
+            case '6':
                 $kpi_report->jun = $score;
                 break;
-            case 'Tháng 7':
+            case '7':
                 $kpi_report->jul = $score;
                 break;
-            case 'Tháng 8':
+            case '8':
                 $kpi_report->aug = $score;
                 break;
-            case 'Tháng 9':
+            case '9':
                 $kpi_report->sep = $score;
                 break;
-            case 'Tháng 10':
+            case '10':
                 $kpi_report->oct = $score;
                 break;
-            case 'Tháng 11':
+            case '11':
                 $kpi_report->nov = $score;
                 break;
-            case 'Tháng 12':
+            case '12':
                 $kpi_report->dec = $score;
                 break;
         }
@@ -297,7 +300,7 @@ class KpiController extends Controller
                         + $kpi_report->jul + $kpi_report->aug + $kpi_report->sep + $kpi_report->oct + $kpi_report->nov + $kpi_report->dec;
 
         switch ($kpi->month) {
-            case 'Tháng 1':
+            case '1':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->jan = null;
@@ -306,7 +309,7 @@ class KpiController extends Controller
                     $kpi_report->jan = $kpi->score;
                 }
                 break;
-            case 'Tháng 2':
+            case '2':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->feb = null;
@@ -315,7 +318,7 @@ class KpiController extends Controller
                     $kpi_report->feb = $kpi->score;
                 }
                 break;
-            case 'Tháng 3':
+            case '3':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->mar = null;
@@ -324,7 +327,7 @@ class KpiController extends Controller
                     $kpi_report->mar = $kpi->score;
                 }
                 break;
-            case 'Tháng 4':
+            case '4':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->apr = null;
@@ -333,7 +336,7 @@ class KpiController extends Controller
                     $kpi_report->apr = $kpi->score;
                 }
                 break;
-            case 'Tháng 5':
+            case '5':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->may = null;
@@ -342,7 +345,7 @@ class KpiController extends Controller
                     $kpi_report->may = $kpi->score;
                 }
                 break;
-            case 'Tháng 6':
+            case '6':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->jun = null;
@@ -351,7 +354,7 @@ class KpiController extends Controller
                     $kpi_report->jun = $kpi->score;
                 }
                 break;
-            case 'Tháng 7':
+            case '7':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->jul = null;
@@ -360,7 +363,7 @@ class KpiController extends Controller
                     $kpi_report->jul = $kpi->score;
                 }
                 break;
-            case 'Tháng 8':
+            case '8':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->aug = null;
@@ -369,7 +372,7 @@ class KpiController extends Controller
                     $kpi_report->aug = $kpi->score;
                 }
                 break;
-            case 'Tháng 9':
+            case '9':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->sep = null;
@@ -378,7 +381,7 @@ class KpiController extends Controller
                     $kpi_report->sep = $kpi->score;
                 }
                 break;
-            case 'Tháng 10':
+            case '10':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->oct = null;
@@ -387,7 +390,7 @@ class KpiController extends Controller
                     $kpi_report->oct = $kpi->score;
                 }
                 break;
-            case 'Tháng 11':
+            case '11':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->nov = null;
@@ -396,7 +399,7 @@ class KpiController extends Controller
                     $kpi_report->nov = $kpi->score;
                 }
                 break;
-            case 'Tháng 12':
+            case '12':
                 if ($is_destroy) {
                     $total_score = $total_score - $kpi->score;
                     $kpi_report->dec = null;
@@ -421,5 +424,41 @@ class KpiController extends Controller
             $kpi_report->year_avarage = 0;
         }
         $kpi_report->save();
+    }
+
+    public function import(ImportKpiRequest $request)
+    {
+        try {
+            $import = new KpiImport;
+            Excel::import($import, $request->file('file')->store('files'));
+            $rows = $import->getRowCount();
+            $invalid_employee_name_row = $import->getInvalidEmployeeNameRow();
+            $invalid_position_name_row = $import->getInvalidPositionNameRow();
+            $duplicates = $import->getDuplicateCount();
+            $duplicate_rows = $import->getDuplicateRows();
+
+            if ($duplicates) {
+                $duplicate_rows_list = implode(', ', $duplicate_rows);
+                Alert::toast('Các dòng bị trùng lặp là '. $duplicate_rows_list);
+                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công! Có ' . $duplicates . ' dòng bị trùng lặp! Lặp tại dòng số: ' . $duplicate_rows_list, 'success', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_employee_name_row) {
+                Alert::toast('Không tìm thấy tên nhân viên tại dòng thứ ' . $invalid_employee_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_position_name_row) {
+                Alert::toast('Không tìm thấy vị trí tại dòng thứ ' . $invalid_position_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            Alert::toast('Có lỗi xảy ra trong quá trình import dữ liệu. Vui lòng kiểm tra lại file!', 'error', 'top-right');
+            return redirect()->back();
+        }
     }
 }

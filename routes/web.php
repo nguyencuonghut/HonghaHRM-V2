@@ -282,6 +282,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('welfares', WelfareController::class, ['names' => 'welfares']);
 
     //Kpi
+    Route::post('kpis/import', [KpiController::class, 'import'])->name('kpis.import');
     Route::get('kpis/employeeData/{employee_id}', [KpiController::class, 'employeeData'])->name('kpis.employeeData');
     Route::get('kpis/data', [KpiController::class, 'anyData'])->name('kpis.data');
     Route::resource('kpis', KpiController::class, ['names' => 'kpis']);
