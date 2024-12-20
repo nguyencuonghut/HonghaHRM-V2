@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportYearReviewRequest;
 use App\Http\Requests\StoreYearReviewRequest;
 use App\Http\Requests\UpdateYearReviewRequest;
+use App\Imports\YearReviewImport;
 use App\Models\Position;
 use App\Models\UserDepartment;
 use App\Models\Work;
 use App\Models\YearReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -226,5 +229,41 @@ class YearReviewController extends Controller
             })
             ->rawColumns(['department', 'employee', 'result', 'actions'])
             ->make(true);
+    }
+
+    public function import(ImportYearReviewRequest $request)
+    {
+        try {
+            $import = new YearReviewImport;
+            Excel::import($import, $request->file('file')->store('files'));
+            $rows = $import->getRowCount();
+            $invalid_employee_name_row = $import->getInvalidEmployeeNameRow();
+            $invalid_position_name_row = $import->getInvalidPositionNameRow();
+            $duplicates = $import->getDuplicateCount();
+            $duplicate_rows = $import->getDuplicateRows();
+
+            if ($duplicates) {
+                $duplicate_rows_list = implode(', ', $duplicate_rows);
+                Alert::toast('Các dòng bị trùng lặp là '. $duplicate_rows_list);
+                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công! Có ' . $duplicates . ' dòng bị trùng lặp! Lặp tại dòng số: ' . $duplicate_rows_list, 'success', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_employee_name_row) {
+                Alert::toast('Không tìm thấy tên nhân viên tại dòng thứ ' . $invalid_employee_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_position_name_row) {
+                Alert::toast('Không tìm thấy vị trí tại dòng thứ ' . $invalid_position_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            Alert::toast('Có lỗi xảy ra trong quá trình import dữ liệu. Vui lòng kiểm tra lại file!', 'error', 'top-right');
+            return redirect()->back();
+        }
     }
 }

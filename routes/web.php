@@ -288,6 +288,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('kpis', KpiController::class, ['names' => 'kpis']);
 
     //YearReview
+    Route::post('year_reviews/import', [YearReviewController::class, 'import'])->name('year_reviews.import');
     Route::get('year_reviews/data', [YearReviewController::class, 'anyData'])->name('year_reviews.data');
     Route::get('year_reviews/employeeData/{employee_id}', [YearReviewController::class, 'employeeData'])->name('year_reviews.employeeData');
     Route::resource('year_reviews', YearReviewController::class, ['names' => 'year_reviews']);
