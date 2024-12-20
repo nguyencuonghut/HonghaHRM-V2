@@ -86,10 +86,10 @@
                 <address>
                     <strong>Địa chỉ</strong><br>
                     @if ($employee->temporary_address)
-                    - Thường trú: {{$employee->address}}, {{$employee->commune->name}}, {{$employee->commune->district->name}}, {{$employee->commune->district->province->name}} <br>
+                    - Thường trú: @if($employee->address) {{$employee->address}}, @endif {{$employee->commune->name}}, {{$employee->commune->district->name}}, {{$employee->commune->district->province->name}} <br>
                     - Tạm trú: {{$employee->temporary_address}}, {{$employee->temporary_commune->name}}, {{$employee->temporary_commune->district->name}}, {{$employee->temporary_commune->district->province->name}} <br>
                     @else
-                    {{$employee->address}}, {{$employee->commune->name}}, {{$employee->commune->district->name}}, {{$employee->commune->district->province->name}} <br>
+                        @if($employee->address) {{$employee->address}}, @endif {{$employee->commune->name}}, {{$employee->commune->district->name}}, {{$employee->commune->district->province->name}} <br>
                     @endif
                 </address>
             </div>

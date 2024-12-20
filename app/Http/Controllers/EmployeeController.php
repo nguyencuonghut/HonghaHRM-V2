@@ -120,7 +120,9 @@ class EmployeeController extends Controller
             $employee->bhxh = $request->bhxh;
         }
         $employee->gender = $request->gender;
-        $employee->address = $request->address;
+        if ($request->address) {
+            $employee->address = $request->address;
+        }
         $employee->commune_id = $request->commune_id;
         if ($request->temp_address) {
             $employee->temporary_address = $request->temp_address;
@@ -290,7 +292,9 @@ class EmployeeController extends Controller
             $employee->bhxh = $request->bhxh;
         }
         $employee->gender = $request->gender;
-        $employee->address = $request->address;
+        if ($request->address) {
+            $employee->address = $request->address;
+        }
         $employee->commune_id = $request->commune_id;
         if ($request->temp_address) {
             $employee->temporary_address = $request->temp_address;
@@ -547,7 +551,9 @@ class EmployeeController extends Controller
             $employee->bhxh = $request->bhxh;
         }
         $employee->gender = $request->gender;
-        $employee->address = $request->address;
+        if ($request->address) {
+            $employee->address = $request->address;
+        }
         $employee->commune_id = $request->commune_id;
         if ($request->temp_address) {
             $employee->temporary_address = $request->temp_address;

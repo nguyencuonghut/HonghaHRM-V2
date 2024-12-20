@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('issued_date')->nullable();
             $table->string('issued_by')->nullable();
             $table->enum('gender', ['Nam', 'Nữ']);
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->foreignId('commune_id')->constrained('communes');
             $table->string('temporary_address')->nullable();
             $table->foreignId('temporary_commune_id')->nullable()->constrained('communes');

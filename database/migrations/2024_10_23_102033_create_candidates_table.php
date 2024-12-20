@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('issued_date')->nullable();
             $table->string('issued_by')->nullable();
             $table->enum('gender', ['Nam', 'Nữ']);
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->foreignId('commune_id')->constrained('communes')->onDelete('cascade');
             $table->foreignId('creator_id')->constrained('users')->onDelete('cascade');
             $table->text('experience')->nullable();

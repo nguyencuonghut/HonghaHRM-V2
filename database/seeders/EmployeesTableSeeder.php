@@ -857,7 +857,7 @@ class EmployeesTableSeeder extends Seeder
                     'issued_date' => '2024-08-05',
                     'issued_by' => 'công an tỉnh Hà Nam',
                     'gender' => 'Nữ',
-                    'address' => 'số 1',
+                    'address' => null,
                     'commune_id' => 5,
                     'temporary_address' => null,
                     'temporary_commune_id' => null,

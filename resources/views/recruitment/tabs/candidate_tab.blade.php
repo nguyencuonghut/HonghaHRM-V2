@@ -40,7 +40,7 @@
                       <td>{{$candidate->phone}}</td>
                       <td>{{ date('d/m/Y', strtotime($candidate->date_of_birth)) }}</td>
                       <td>{{$candidate->cccd}}</td>
-                      <td> {{$candidate->address}}, {{$candidate->commune->name}}, {{$candidate->commune->district->name}}, {{$candidate->commune->district->province->name}}</td>
+                      <td> @if($candidate->address) {{$candidate->address}}, @endif {{$candidate->commune->name}}, {{$candidate->commune->district->name}}, {{$candidate->commune->district->province->name}}</td>
                       @php
                           $recruitment_candidate = App\Models\RecruitmentCandidate::where('recruitment_id', $recruitment->id)->where('candidate_id', $candidate->id)->first();
                           $url = '<a target="_blank" href="../../../' . $recruitment_candidate->cv_file . '"><i class="far fa-file-pdf"></i></a>';
