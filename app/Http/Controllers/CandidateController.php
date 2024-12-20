@@ -151,9 +151,7 @@ class CandidateController extends Controller
             $candidate->issued_by = $request->issued_by;
         }
         $candidate->gender = $request->gender;
-        if ($request->address) {
-            $candidate->address = $request->address;
-        }
+        $candidate->address = $request->address;
         $candidate->commune_id = $request->commune_id;
         $candidate->experience = $request->experience;
         if ($request->note) {
