@@ -74,13 +74,13 @@ class ContractController extends Controller
         $employee = Employee::findOrFail($request->employee_id);
         switch ($request->contract_type_id) {
             case 1: //HĐ thử việc
-                $code = $res = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐTV';
+                $code = $res = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐTV';
                 break;
             case 2: //HĐ lao động
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐLĐ';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐLĐ';
                 break;
             case 3: //HĐ cộng tác viên
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐCTV';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐCTV';
                 break;
         }
         $contract->code = $code;
@@ -152,13 +152,13 @@ class ContractController extends Controller
         $employee = Employee::findOrFail($contract->employee_id);
         switch ($request->contract_type_id) {
             case 1: //HĐ thử việc
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐTV';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐTV';
                 break;
             case 2: //HĐ lao động
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐLĐ';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐLĐ';
                 break;
             case 3: //HĐ cộng tác viên
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐCTV';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐCTV';
                 break;
         }
         $contract->code = $code;
