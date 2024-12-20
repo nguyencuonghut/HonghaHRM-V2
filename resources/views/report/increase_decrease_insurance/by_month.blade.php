@@ -90,6 +90,41 @@
         </div>
       </div>
       <!-- /.row (main row) -->
+
+      <!-- /.row (main row) -->
+      <div class="row mt-4">
+        <div class="col-12">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    Phát sinh giảm
+                </div>
+              <div class="card-body">
+                <a href="{{route('increase_decrease_insurance_reports.exportDecBhxh', ['month' => $month, 'year' => $year])}}" class="btn btn-sm btn-primary"><i class="fas fa-cloud-download-alt"></i></a>
+
+                <table id="decrease-insurance-reports-table" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Mã</th>
+                      <th>Họ tên</th>
+                      <th>Vị trí</th>
+                      <th>Ngày phát sinh giảm</th>
+                      <th>Tháng báo giảm</th>
+                      <th>Lương BHXH</th>
+                      <th>Tiền giảm BHXH</th>
+                    </tr>
+                    </thead><tfoot>
+                      <tr>
+                          <th colspan="7">Tổng giảm</th>
+                          <th id="total_dec_bhxh"></th>
+                      </tr>
+                    </tfoot>
+                  </table>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
@@ -206,6 +241,92 @@
                     return intVal(a) + intVal(b);
                 }, 0);
             $('#total_inc_bhtn').html(total_inc_bhtn.toLocaleString(
+                undefined, // leave undefined to use the visitor's browser
+                            // locale or a string like 'en-US' to override it.
+                { minimumFractionDigits: 0 }
+            ));
+        }
+        });
+
+
+      // Datatables
+      $('#decrease-insurance-reports-table').DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        processing: true,
+        serverSide: true,
+        // buttons: [
+        //     {
+        //         extend: 'copy',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     },
+        //     {
+        //         extend: 'csv',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+
+        //     },
+        //     {
+        //         extend: 'excel',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     },
+        //     {
+        //         extend: 'pdf',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     },
+        //     {
+        //         extend: 'print',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     },
+        //     {
+        //         extend: 'colvis',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     }
+        // ],
+        //dom: 'Blfrtip',
+        ajax: ' {!! route('increase_decrease_insurance_reports.decreaseByMonthData', ['month' => $month, 'year' => $year]) !!}',
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'code', name: 'code'},
+            {data: 'name', name: 'name'},
+            {data: 'position', name: 'position'},
+            {data: 'start_date', name: 'start_date'},
+            {data: 'confirmed_month', name: 'confirmed_month'},
+            {data: 'insurance_salary', name: 'insurance_salary'},
+            {data: 'bhxh_decrease', name: 'bhxh_decrease'},
+        ],
+        drawCallback:function(settings) {
+            var api = this.api();
+            var intVal = function(i) {
+                return typeof i === 'string' ?
+                i.replace(/[\,]/g, '') * 1:
+                typeof i === 'number' ?
+                i : 0;
+            };
+
+            var total_dec_bhxh = api
+                .column(7)
+                .data()
+                .reduce(function(a,b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+            $('#total_dec_bhxh').html(total_dec_bhxh.toLocaleString(
                 undefined, // leave undefined to use the visitor's browser
                             // locale or a string like 'en-US' to override it.
                 { minimumFractionDigits: 0 }
