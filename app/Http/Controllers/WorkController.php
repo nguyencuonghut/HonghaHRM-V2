@@ -139,7 +139,7 @@ class WorkController extends Controller
             // Xóa bảng theo dõi giảm BHXH với HĐ ký mới là HĐLĐ
             if ('Ký HĐLĐ' == $work->on_type->name ||
                 'Tái ký HĐLĐ' == $work->on_type->name ||
-                'Thay đổi chức danh, lương' == $work->on_type->name ||
+                'Thay đổi chức danh, lương, phòng ban' == $work->on_type->name ||
                 'Đi làm lại' == $work->on_type->name) {
 
                 $decrease_insurance = DecreaseInsurance::where('work_id', $work->id)->first();
@@ -182,7 +182,7 @@ class WorkController extends Controller
         //Tạo bảng theo dõi giảm BHXH
         if ('Ký HĐLĐ' == $work->on_type->name
             || 'Tái ký HĐLĐ' == $work->on_type->name
-            || 'Thay đổi chức danh, lương' == $work->on_type->name
+            || 'Thay đổi chức danh, lương, phòng ban' == $work->on_type->name
             || 'Đi làm lại' == $work->on_type->name) {
             //Kiểm tra đã có record nào tương ứng với work_id hay chưa
             $decrease_insurances = DecreaseInsurance::where('work_id', $work->id)->get();

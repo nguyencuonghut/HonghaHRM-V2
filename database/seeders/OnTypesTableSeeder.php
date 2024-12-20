@@ -41,7 +41,7 @@ class OnTypesTableSeeder extends Seeder
             3 =>
                 array (
                     'id' => 4,
-                    'name' => 'Thay đổi chức danh, lương',
+                    'name' => 'Thay đổi chức danh, lương, phòng ban',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
