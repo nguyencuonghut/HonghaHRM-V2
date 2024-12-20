@@ -69,7 +69,7 @@ class RewardReportController extends Controller
                 return $data->content;
             })
             ->editColumn('money', function ($data) {
-                return number_format($data->money, 0, '.', ',') . '<sup>đ</sup>';
+                return number_format($data->money, 0, '.', ',');
             })
             ->editColumn('note', function ($data) {
                 return $data->note;
@@ -116,7 +116,7 @@ class RewardReportController extends Controller
                 return $data->content;
             })
             ->editColumn('money', function ($data) {
-                return number_format($data->money, 0, '.', ',') . '<sup>đ</sup>';
+                return number_format($data->money, 0, '.', ',');
             })
             ->editColumn('note', function ($data) {
                 return $data->note;

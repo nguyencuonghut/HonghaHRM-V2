@@ -43,10 +43,16 @@
                     <th>Số</th>
                     <th>Ngày</th>
                     <th>Nội dung</th>
-                    <th>Tiền phạt</th>
                     <th>Ghi chú</th>
+                    <th>Tiền phạt</th>
                   </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                        <th colspan="8">Tổng phạt</th>
+                        <th id="total_money"></th>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>
@@ -127,10 +133,31 @@
             {data: 'code', name: 'code'},
             {data: 'sign_date', name: 'sign_date'},
             {data: 'content', name: 'content'},
-            {data: 'money', name: 'money'},
             {data: 'note', name: 'note'},
-       ]
-      }).buttons().container().appendTo('#disciplines-table_wrapper .col-md-6:eq(0)');
+            {data: 'money', name: 'money'},
+       ],
+       drawCallback:function(settings) {
+            var api = this.api();
+            var intVal = function(i) {
+                return typeof i === 'string' ?
+                i.replace(/[\,]/g, '') * 1:
+                typeof i === 'number' ?
+                i : 0;
+            };
+
+            var total_money = api
+                .column( 8, {search:'applied'} )
+                .data()
+                .reduce(function(a,b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+            $('#total_money').html(total_money.toLocaleString(
+                undefined, // leave undefined to use the visitor's browser
+                            // locale or a string like 'en-US' to override it.
+                { minimumFractionDigits: 0 }
+            ));
+        }
+      });
     });
   </script>
 @endpush
