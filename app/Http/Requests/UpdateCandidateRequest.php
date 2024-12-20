@@ -27,7 +27,6 @@ class UpdateCandidateRequest extends FormRequest
             'phone' => 'required',
             'date_of_birth' => 'required',
             'gender' => 'required',
-            'address' => 'required',
             'commune_id' => 'required',
             'addmore.*.school_id' => 'required',
         ];
@@ -40,7 +39,6 @@ class UpdateCandidateRequest extends FormRequest
             'phone.required' => 'Bạn phải nhập số điện thoại.',
             'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
             'gender.required' => 'Bạn phải chọn giới tính.',
-            'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn phường xã.',
             'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
         ];

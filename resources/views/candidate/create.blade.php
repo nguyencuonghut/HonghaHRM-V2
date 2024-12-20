@@ -122,7 +122,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="control-group">
-                                    <label class="required-field" class="control-label">Số nhà, thôn, xóm</label>
+                                    <label class="control-label">Số nhà, thôn, xóm</label>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="address" id="address" required="">
                                     </div>

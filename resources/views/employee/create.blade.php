@@ -154,7 +154,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="control-group">
-                                    <label class="required-field" class="control-label">Số nhà thường trú</label>
+                                    <label class="control-label">Số nhà thường trú</label>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="address" id="address" required="">
                                     </div>
