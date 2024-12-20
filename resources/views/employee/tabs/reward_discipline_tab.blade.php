@@ -19,6 +19,7 @@
                         <th>Số</th>
                         <th>Ngày</th>
                         <th>Nội dung</th>
+                        <th>Tiền thưởng</th>
                         <th>Ghi chú</th>
                         @can('create', App\Models\Reward::class)
                         <th>Thao tác</th>
@@ -59,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <label class="required-field control-label">Vị trí</label>
                                         <div class="controls">
                                             <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
@@ -69,6 +70,12 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="control-group">
+                                          <label class="control-label">Tiền thưởng</label>
+                                          <input class="form-control" type="number" name="money" id="money">
+                                      </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -117,6 +124,7 @@
                         <th>Số</th>
                         <th>Ngày</th>
                         <th>Nội dung</th>
+                        <th>Tiền phạt</th>
                         <th>Ghi chú</th>
                         @can('create', App\Models\Discipline::class)
                         <th>Thao tác</th>
@@ -157,7 +165,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <label class="required-field control-label">Vị trí</label>
                                         <div class="controls">
                                             <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
@@ -167,6 +175,12 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="control-group">
+                                          <label class="control-label">Tiền phạt</label>
+                                          <input class="form-control" type="number" name="money" id="money">
+                                      </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -225,14 +239,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
 
             },
@@ -240,28 +254,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             }
         ],
@@ -273,6 +287,7 @@
             {data: 'code', name: 'code'},
             {data: 'sign_date', name: 'sign_date'},
             {data: 'content', name: 'content'},
+            {data: 'money', name: 'money'},
             {data: 'note', name: 'note'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
@@ -285,14 +300,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
 
             },
@@ -300,28 +315,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6]
                 }
             }
         ],
@@ -333,6 +348,7 @@
             {data: 'code', name: 'code'},
             {data: 'sign_date', name: 'sign_date'},
             {data: 'content', name: 'content'},
+            {data: 'money', name: 'money'},
             {data: 'note', name: 'note'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]

@@ -48,6 +48,9 @@ class DisciplineController extends Controller
         $discipline->code = $request->code;
         $discipline->sign_date = Carbon::createFromFormat('d/m/Y', $request->dis_sign_date);
         $discipline->content = $request->dis_content;
+        if ($request->money) {
+            $discipline->money = $request->money;
+        }
         if ($request->dis_note) {
             $discipline->note = $request->dis_note;
         }
@@ -75,7 +78,13 @@ class DisciplineController extends Controller
             return redirect()->back();
         }
 
-        return view('discipline.edit', ['discipline' => $discipline]);
+        $my_position_ids = Work::where('employee_id', $discipline->employee_id)->where('status', 'On')->pluck('position_id')->toArray();
+        $my_positions = Position::whereIn('id', $my_position_ids)->get();
+
+        return view('discipline.edit', [
+            'discipline' => $discipline,
+            'my_positions' => $my_positions,
+        ]);
     }
 
     /**
@@ -87,6 +96,7 @@ class DisciplineController extends Controller
         $discipline->code = $request->code;
         $discipline->sign_date = Carbon::createFromFormat('d/m/Y', $request->sign_date);
         $discipline->content = $request->content;
+        $discipline->money = $request->money;
         if ($request->note) {
             $discipline->note = $request->note;
         }
@@ -129,6 +139,9 @@ class DisciplineController extends Controller
             ->editColumn('content', function ($data) {
                 return $data->content;
             })
+            ->editColumn('money', function ($data) {
+                return number_format($data->money, 0, '.', ',') . '<sup>đ</sup>';
+            })
             ->editColumn('note', function ($data) {
                 return $data->note;
             })
@@ -140,7 +153,7 @@ class DisciplineController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'content', 'note'])
+            ->rawColumns(['actions', 'content', 'note', 'money'])
             ->make(true);
     }
 
@@ -173,6 +186,9 @@ class DisciplineController extends Controller
             ->editColumn('position', function ($data) {
                 return $data->position->name;
             })
+            ->editColumn('position', function ($data) {
+                return $data->position->name;
+            })
             ->editColumn('code', function ($data) {
                 return $data->code;
             })
@@ -181,6 +197,9 @@ class DisciplineController extends Controller
             })
             ->editColumn('content', function ($data) {
                 return $data->content;
+            })
+            ->editColumn('money', function ($data) {
+                return number_format($data->money, 0, '.', ',') . '<sup>đ</sup>';
             })
             ->editColumn('note', function ($data) {
                 return $data->note;
@@ -193,7 +212,7 @@ class DisciplineController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['department', 'employee', 'actions', 'content', 'note'])
+            ->rawColumns(['department', 'employee', 'actions', 'content', 'note', 'money'])
             ->make(true);
     }
 }

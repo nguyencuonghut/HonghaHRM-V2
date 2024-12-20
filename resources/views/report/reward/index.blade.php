@@ -45,6 +45,7 @@
                     <th>Số</th>
                     <th>Ngày</th>
                     <th>Nội dung</th>
+                    <th>Tiền thưởng</th>
                     <th>Ghi chú</th>
                   </tr>
                   </thead>
@@ -78,14 +79,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
                 }
 
             },
@@ -93,28 +94,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
                 }
             }
         ],
@@ -130,6 +131,7 @@
             {data: 'code', name: 'code'},
             {data: 'sign_date', name: 'sign_date'},
             {data: 'content', name: 'content'},
+            {data: 'money', name: 'money'},
             {data: 'note', name: 'note'},
        ]
       }).buttons().container().appendTo('#reports-table_wrapper .col-md-6:eq(0)');

@@ -39,9 +39,11 @@
                     <th>STT</th>
                     <th>Phòng/ban</th>
                     <th>Nhân viên</th>
+                    <th>Vị trí</th>
                     <th>Số</th>
                     <th>Ngày</th>
                     <th>Nội dung</th>
+                    <th>Tiền phạt</th>
                     <th>Ghi chú</th>
                   </tr>
                   </thead>
@@ -75,14 +77,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
 
             },
@@ -90,28 +92,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             }
         ],
@@ -121,9 +123,11 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'department', name: 'department'},
             {data: 'employee', name: 'employee'},
+            {data: 'position', name: 'position'},
             {data: 'code', name: 'code'},
             {data: 'sign_date', name: 'sign_date'},
             {data: 'content', name: 'content'},
+            {data: 'money', name: 'money'},
             {data: 'note', name: 'note'},
        ]
       }).buttons().container().appendTo('#disciplines-table_wrapper .col-md-6:eq(0)');

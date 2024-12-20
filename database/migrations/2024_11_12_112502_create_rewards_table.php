@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->date('sign_date');
             $table->text('content');
+            $table->bigInteger('money')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
         });

@@ -10,7 +10,7 @@ class Reward extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'position', 'code', 'sign_date', 'content', 'note'];
+    protected $fillable = ['employee_id', 'position', 'code', 'sign_date', 'content', 'money', 'note'];
 
     public function employee(): BelongsTo
     {

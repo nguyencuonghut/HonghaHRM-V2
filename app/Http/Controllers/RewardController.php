@@ -48,6 +48,9 @@ class RewardController extends Controller
         $reward->code = $request->code;
         $reward->sign_date = Carbon::createFromFormat('d/m/Y', $request->sign_date);
         $reward->content = $request->content;
+        if ($request->money) {
+            $reward->money = $request->money;
+        }
         if ($request->note) {
             $reward->note = $request->note;
         }
@@ -94,6 +97,7 @@ class RewardController extends Controller
         $reward->position_id = $request->position_id;
         $reward->sign_date = Carbon::createFromFormat('d/m/Y', $request->sign_date);
         $reward->content = $request->content;
+        $reward->money = $request->money;
         if ($request->note) {
             $reward->note = $request->note;
         }
@@ -135,6 +139,9 @@ class RewardController extends Controller
             ->editColumn('content', function ($data) {
                 return $data->content;
             })
+            ->editColumn('money', function ($data) {
+                return number_format($data->money, 0, '.', ',') . '<sup>đ</sup>';
+            })
             ->editColumn('note', function ($data) {
                 return $data->note;
             })
@@ -146,7 +153,7 @@ class RewardController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'content', 'note'])
+            ->rawColumns(['actions', 'content', 'note', 'money'])
             ->make(true);
     }
 
@@ -189,6 +196,9 @@ class RewardController extends Controller
             ->editColumn('content', function ($data) {
                 return $data->content;
             })
+            ->editColumn('money', function ($data) {
+                return number_format($data->money, 0, '.', ',') . '<sup>đ</sup>';
+            })
             ->editColumn('note', function ($data) {
                 return $data->note;
             })
@@ -200,7 +210,7 @@ class RewardController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['department', 'employee', 'actions', 'content', 'note'])
+            ->rawColumns(['department', 'employee', 'actions', 'content', 'note', 'money'])
             ->make(true);
     }
 }

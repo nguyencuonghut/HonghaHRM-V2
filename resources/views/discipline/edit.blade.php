@@ -51,16 +51,22 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label class="required-field control-label">Vị trí</label>
                                     <div class="controls">
                                         <select name="position_id" id="position_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
                                             <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                             @foreach($my_positions as $position)
-                                                <option value="{{$position->id}}" @if($position->id == $reward->position_id) ? selected="selected" @endif>{{$position->name}}</option>
+                                                <option value="{{$position->id}}" @if($position->id == $discipline->position_id) ? selected="selected" @endif>{{$position->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
+                                </div>
+                                <div class="col-6">
+                                  <div class="control-group">
+                                      <label class="required-field" class="control-label">Tiền phạt</label>
+                                      <input class="form-control" type="number" name="money" id="money" value="{{$discipline->money}}">
+                                  </div>
                                 </div>
                             </div>
                             <div class="row">

@@ -68,10 +68,13 @@ class RewardReportController extends Controller
             ->editColumn('content', function ($data) {
                 return $data->content;
             })
+            ->editColumn('money', function ($data) {
+                return number_format($data->money, 0, '.', ',') . '<sup>đ</sup>';
+            })
             ->editColumn('note', function ($data) {
                 return $data->note;
             })
-            ->rawColumns(['employee_name'])
+            ->rawColumns(['employee_name', 'money'])
             ->make(true);
     }
 
@@ -112,10 +115,13 @@ class RewardReportController extends Controller
             ->editColumn('content', function ($data) {
                 return $data->content;
             })
+            ->editColumn('money', function ($data) {
+                return number_format($data->money, 0, '.', ',') . '<sup>đ</sup>';
+            })
             ->editColumn('note', function ($data) {
                 return $data->note;
             })
-            ->rawColumns(['employee_name'])
+            ->rawColumns(['employee_name', 'money'])
             ->make(true);
     }
 }

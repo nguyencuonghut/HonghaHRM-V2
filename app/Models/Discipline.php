@@ -10,7 +10,7 @@ class Discipline extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'position_id', 'code', 'sign_date', 'content', 'note'];
+    protected $fillable = ['employee_id', 'position_id', 'code', 'sign_date', 'content', 'money', 'note'];
 
     public function employee(): BelongsTo
     {
