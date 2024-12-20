@@ -66,6 +66,6 @@ class FilterPolicy
 
     public function approve(User $user, Filter $filter): bool
     {
-        return 'Admin' == $user->role->name || 'Trưởng đơn vị' == $user->role->name;
+        return 'Admin' == $user->role->name || 'Trưởng đơn vị' == $user->role->name || 'Ban lãnh đạo' == $user->role->name;
     }
 }
