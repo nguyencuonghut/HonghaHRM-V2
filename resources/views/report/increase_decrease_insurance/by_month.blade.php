@@ -223,7 +223,7 @@
             };
 
             var total_inc_bhxh = api
-                .column(7)
+                .column(7, {search:'applied'} )
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);
@@ -321,7 +321,7 @@
             };
 
             var total_dec_bhxh = api
-                .column(7)
+                .column(7, {search:'applied'} )
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);
