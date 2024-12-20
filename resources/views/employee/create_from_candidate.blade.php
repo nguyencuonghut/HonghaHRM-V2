@@ -214,7 +214,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="control-group">
-                                            <label class="control-label">Ảnh</label>
+                                            <label class="required-field" class="control-label">Ảnh</label>
                                             <div class="custom-file text-left">
                                                 <input type="file" name="img_path" accept="image/*" class="custom-file-input" id="img_path">
                                                 <label class="custom-file-label" for="img_path">Chọn file</label>
