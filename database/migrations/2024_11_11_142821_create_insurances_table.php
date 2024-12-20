@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('insurance_type_id')->constrained('insurance_types')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->float('pay_rate');
+            $table->float('pay_rate')->nullable();
             $table->timestamps();
         });
     }

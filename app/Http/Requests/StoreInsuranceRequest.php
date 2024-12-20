@@ -26,7 +26,6 @@ class StoreInsuranceRequest extends FormRequest
             'employee_id' => 'required',
             'insurance_type_id' => 'required',
             'insurance_s_date' => 'required',
-            'pay_rate' => 'required',
         ];
     }
 
@@ -36,7 +35,6 @@ class StoreInsuranceRequest extends FormRequest
             'employee_id.required' => 'Số id nhân sự không hợp lệ.',
             'insurance_type_id.required' => 'Bạn phải chọn loại bảo hiểm.',
             'insurance_s_date.required' => 'Bạn phải nhập ngày bắt đầu.',
-            'pay_rate.required' => 'Bạn phải nhập tỷ lệ đóng.',
         ];
     }
 }

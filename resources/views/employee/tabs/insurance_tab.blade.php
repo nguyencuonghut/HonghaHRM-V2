@@ -89,7 +89,7 @@
 
                                     <div class="col-6">
                                         <div class="control-group">
-                                            <label class="required-field" class="control-label">Tỷ lệ đóng (%)</label>
+                                            <label class="control-label">Tỷ lệ đóng (%)</label>
                                             <input class="form-control" type="number" name="pay_rate" id="pay_rate" step="any">
                                         </div>
                                     </div>

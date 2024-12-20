@@ -91,23 +91,6 @@ class IncreaseDecreaseInsuranceReportController extends Controller
                     return 'Chưa khai báo BHXH';
                 }
             })
-            ->editColumn('bhtn_increase', function ($data) use ($month, $year){
-                // Tính toán số tiền tăng cho 2- bhtn
-                $insurance = Insurance::where('employee_id', $data->work->employee_id)
-                                                        ->where('insurance_type_id', 2)
-                                                        ->first();
-                if ($insurance) {
-                    $salary = $this->getEmployeeSalaryByMonthYear($data->work->employee_id, $month, $year);
-                    if ($salary) {
-                        $bhxh_increase = $salary->insurance_salary * $insurance->pay_rate / 100;
-                        return number_format($bhxh_increase, 0, '.', ',');
-                    } else {
-                        return '';
-                    }
-                    } else {
-                    return 'Chưa khai báo BHTN';
-                }
-            })
             ->rawColumns(['name'])
             ->make(true);
     }
@@ -159,23 +142,6 @@ class IncreaseDecreaseInsuranceReportController extends Controller
                     }
                 } else {
                     return 'Chưa khai báo BHXH';
-                }
-            })
-            ->editColumn('bhtn_decrease', function ($data) use ($month, $year){
-                // Tính toán số tiền giảm cho 2- bhtn
-                $insurance = Insurance::where('employee_id', $data->work->employee_id)
-                                                        ->where('insurance_type_id', 2)
-                                                        ->first();
-                if ($insurance) {
-                    $salary = $this->getEmployeeSalaryByMonthYear($data->work->employee_id, $month, $year);
-                    if ($salary) {
-                        $bhxh_increase = $salary->insurance_salary * $insurance->pay_rate / 100;
-                        return number_format($bhxh_increase, 0, '.', ',');
-                    } else {
-                        return '';
-                    }
-                    } else {
-                    return 'Chưa khai báo BHTN';
                 }
             })
             ->rawColumns(['name'])

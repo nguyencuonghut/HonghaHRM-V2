@@ -50,7 +50,9 @@ class InsuranceController extends Controller
         if ($request->insurance_e_date) {
             $insurance->end_date = Carbon::createFromFormat('d/m/Y', $request->insurance_e_date);
         }
-        $insurance->pay_rate = $request->pay_rate;
+        if ($request->pay_rate) {
+            $insurance->pay_rate = $request->pay_rate;
+        }
         $insurance->save();
 
         Alert::toast('Tạo mới bảo hiểm thành công!', 'success', 'top-right');
