@@ -213,6 +213,7 @@
                       <th>Mô tả</th>
                       <th>Lý do</th>
                       <th>File</th>
+                      <th>Form PL</th>
                       @can('create', App\Models\Appendix::class)
                       <th>Thao tác</th>
                       @endcan
@@ -242,8 +243,11 @@
                               if ($appendix->file_path) {
                                   $url .= '<a target="_blank" href="../../../' . $appendix->file_path . '"><i class="far fa-file-pdf"></i></a>';
                               }
+                              $appendix_form_url = '<a href="'.route("appendixes.export", $appendix->id) . '"><i class="fas fa-file-excel"></i></a>';
+
                         @endphp
                         <td>{!! $url !!}</td>
+                        <td>{!! $appendix_form_url !!}</td>
                         @can('create', App\Models\Appendix::class)
                         <td>{!! $action !!}</td>
                         @endcan

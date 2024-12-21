@@ -219,9 +219,10 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('contracts', ContractController::class, ['names' => 'contracts']);
 
     //Appendixes
+    Route::get('appendixes/export/{appendix}', [AppendixController::class, 'export'])->name('appendixes.export');
     Route::get('appendixes/data', [AppendixController::class, 'anyData'])->name('appendixes.data');
-    Route::post('appendixes/add/{contract_id}', [AppendixController::class, 'add'])->name('appendixes.add');
-    Route::get('appendixes/add/{contract_id}', [AppendixController::class, 'getAdd'])->name('appendixes.getAdd');
+    Route::post('appendixes/add/{appendix_id}', [AppendixController::class, 'add'])->name('appendixes.add');
+    Route::get('appendixes/add/{appendix_id}', [AppendixController::class, 'getAdd'])->name('appendixes.getAdd');
     Route::resource('appendixes', AppendixController::class, ['names' => 'appendixes']);
 
     //Works
