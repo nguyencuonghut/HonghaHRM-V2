@@ -63,4 +63,9 @@ class CandidatePolicy
     {
         //
     }
+
+    public function export(User $user): bool
+    {
+        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+    }
 }

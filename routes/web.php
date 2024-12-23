@@ -155,6 +155,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('/degrees', DegreeController::class);
 
     //Candidates
+    Route::get('candidates/export', [CandidateController::class, 'export'])->name('candidates.export');
     Route::get('/candidates/data', [CandidateController::class, 'anyData'])->name('candidates.data');
     Route::resource('/candidates', CandidateController::class);
 

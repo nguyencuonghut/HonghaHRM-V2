@@ -36,6 +36,15 @@
                 @can('create', App\Models\Candidate::class)
                     <a href="{{ route('candidates.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
+
+                @can('export', App\Models\Candidate::class)
+                    <div class="btn-group float-right">
+                        &nbsp;
+                        <a href="{{route('candidates.export')}}" class="btn btn-primary {{Route::is('candidates.export') ? 'active' : ''}}">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                @endcan
                 <table id="candidates-table" class="table table-bordered table-striped mt-4">
                   <thead>
                   <tr>

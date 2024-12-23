@@ -28,4 +28,9 @@ class RecruitmentCandidate extends Model
     {
         return $this->belongsTo(Recruitment::class);
     }
+
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(Channel::class);
+    }
 }
