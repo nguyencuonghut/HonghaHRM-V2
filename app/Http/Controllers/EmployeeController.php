@@ -166,9 +166,9 @@ class EmployeeController extends Controller
                 return redirect()->route('employees.index');
             }
         }
-        $contracts = Contract::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+        $contracts = Contract::where('employee_id', $employee->id)->orderBy('start_date', 'desc')->get();
         $appendixes = Appendix::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
-        $works = Work::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+        $works = Work::where('employee_id', $employee->id)->orderBy('start_date', 'desc')->get();
         $documents = Document::where('employee_id', $employee->id)->get();
         $probations = Probation::where('employee_id', $employee->id)->get();
         $families = Family::where('employee_id', $employee->id)->get();

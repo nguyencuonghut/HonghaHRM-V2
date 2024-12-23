@@ -85,6 +85,7 @@ class ContractController extends Controller
         }
         $contract->code = $code;
         $contract->status = 'On';
+        $contract->created_type = $request->created_type;
         $contract->save();
 
         Alert::toast('Thêm hợp đồng mới thành công. Bạn cần tạo QT công tác!', 'success', 'top-right');
@@ -163,6 +164,7 @@ class ContractController extends Controller
         }
         $contract->code = $code;
         $contract->status = 'On';
+        $contract->created_type = $request->created_type;
         $contract->save();
 
         Alert::toast('Sửa hợp đồng mới thành công. Bạn cần sửa quá trình công tác!', 'success', 'top-right');

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->date('request_terminate_date')->nullable();
+            $table->enum('created_type', ['Ký mới', 'Tái ký']);
             $table->timestamps();
         });
     }

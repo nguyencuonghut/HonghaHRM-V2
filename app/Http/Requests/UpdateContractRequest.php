@@ -26,6 +26,7 @@ class UpdateContractRequest extends FormRequest
             'position_id' => 'required',
             'contract_type_id' => 'required',
             's_date' => 'required',
+            'created_type' => 'required',
         ];
     }
 
@@ -35,6 +36,7 @@ class UpdateContractRequest extends FormRequest
             'position_id.required' => 'Bạn cần chọn Vị trí.',
             'contract_type_id.required' => 'Bạn cần chọn loại hợp đồng.',
             's_date.required' => 'Bạn cần nhập ngày bắt đầu.',
+            'created_type.required' => 'Bạn cần nhập loại tạo.',
         ];
     }
 }

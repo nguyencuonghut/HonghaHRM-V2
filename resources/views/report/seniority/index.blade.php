@@ -40,7 +40,7 @@
                     <th>Mã</th>
                     <th>Nhân viên</th>
                     <th>Phòng/ban</th>
-                    <th>Ngày vào</th>
+                    <th>Ngày hđ lao động</th>
                     <th>Thâm niên (năm)</th>
                   </tr>
                   </thead>
@@ -124,7 +124,7 @@
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'department', name: 'department', orderable: false, searchable: false},
-            {data: 'join_date', name: 'join_date'},
+            {data: 'formal_contract_date', name: 'formal_contract_date'},
             {data: 'seniority', name: 'seniority', orderable: false, searchable: false},
         ]
         });

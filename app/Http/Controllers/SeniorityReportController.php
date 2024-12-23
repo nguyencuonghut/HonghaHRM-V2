@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
 use App\Models\Employee;
 use App\Models\JoinDate;
 use App\Models\Position;
@@ -32,7 +33,13 @@ class SeniorityReportController extends Controller
 
     public function anyData()
     {
-        $data = Employee::orderBy('code', 'desc')->get();
+        //Chỉ lấy các nhân sự có hợp đồng chính thức và chưa nghỉ việc (HĐ chính thức chưa kết thúc)
+        $employee_ids = Contract::where('contract_type_id', 2) //2: HĐ lao động
+                                ->where('status', 'On')
+                                ->pluck('employee_id')
+                                ->toArray();
+
+        $data = Employee::whereIn('id', $employee_ids)->orderBy('code', 'desc')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('code', function ($data) {
@@ -71,31 +78,28 @@ class SeniorityReportController extends Controller
                 }
                 return $department_str;
             })
-            ->editColumn('join_date', function ($data) {
-                $join_dates = JoinDate::where('employee_id', $data->id)->orderBy('join_date', 'desc')->get();
-                $join_date_str = '';
-                $i = 0;
-                $length = count($join_dates);
-                if ($length) {
-                    foreach ($join_dates as $join_date) {
-                        if(++$i === $length) {
-                            $join_date_str .= date('d/m/Y', strtotime($join_date->join_date));
-                        } else {
-                            $join_date_str .= date('d/m/Y', strtotime($join_date->join_date));
-                            $join_date_str .= ', <br>';
-                        }
-                    }
+            ->editColumn('formal_contract_date', function ($data) {
+                $formal_contract = Contract::where('employee_id', $data->id)
+                                            ->where('contract_type_id', 2)//2: HĐ lao động
+                                            ->where('created_type', 'Ký mới')
+                                            ->orderBy('start_date', 'desc')
+                                            ->first();
+                if ($formal_contract) {
+                    return date('d/m/Y', strtotime($formal_contract->start_date));
                 } else {
-                    $join_date_str .= 'Chưa nhập Ngày Vào';
+                    return 'Không có ngày HĐ chính thức';
                 }
-                return $join_date_str;
             })
             ->editColumn('seniority', function ($data) {
-                $last_join_date = JoinDate::where('employee_id', $data->id)->orderBy('join_date', 'desc')->first();
-                if ($last_join_date) {
-                    return round(ceil(Carbon::parse($last_join_date->join_date)->diffInYears(Carbon::now())*100)/100,2);
+                $formal_contract = Contract::where('employee_id', $data->id)
+                                            ->where('contract_type_id', 2)//2: HĐ lao động
+                                            ->where('created_type', 'Ký mới')
+                                            ->orderBy('start_date', 'desc')
+                                            ->first();
+                if ($formal_contract) {
+                    return round(ceil(Carbon::parse($formal_contract->start_date)->diffInYears(Carbon::now())*100)/100,2);
                 } else {
-                    return 'Chưa nhập Ngày Vào';
+                    return 'Không có ngày HĐ chính thức';
                 }
             })
             ->rawColumns(['name', 'department', 'join_date'])

@@ -118,7 +118,7 @@
                             <div class="modal-body">
                                 <input type="hidden" name="employee_id" id="employee_id" value="{{$employee->id}}">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="control-group">
                                             <div class="control-group">
                                                 <label class="required-field" class="control-label">Vị trí</label>
@@ -128,6 +128,20 @@
                                                         @foreach ($positions as $position)
                                                             <option value="{{$position->id}}">{{$position->name}} {{$position->division_id ? (' - ' . $position->division->name) : ''}} {{$position->department_id ? ( ' - ' . $position->department->name) : ''}}</option>
                                                         @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <div class="control-group">
+                                                <label class="required-field" class="control-label">Loại tạo</label>
+                                                <div class="controls">
+                                                    <select name="created_type" id="created_type" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                        <option value="Ký mới">Ký mới</option>
+                                                        <option value="Tái ký">Tái ký</option>
                                                     </select>
                                                 </div>
                                             </div>

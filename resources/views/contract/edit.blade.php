@@ -36,7 +36,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="control-group">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Vị trí</label>
@@ -46,6 +46,19 @@
                                                     @foreach ($positions as $position)
                                                         <option value="{{$position->id}}" @if ($contract && $position->id == $contract->position_id) selected="selected" @endif>{{$position->name}} {{$position->division_id ? (' - ' . $position->division->name) : ''}} {{$position->department_id ? ( ' - ' . $position->department->name) : ''}}</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="control-group">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Loại tạo</label>
+                                            <div class="controls">
+                                                <select name="created_type" id="created_type" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    <option value="Ký mới" @if('Ký mới' == $contract->created_type) selected="selected" @endif>Ký mới</option>
+                                                    <option value="Tái ký" @if('Tái ký' == $contract->created_type) selected="selected" @endif>Tái ký</option>
                                                 </select>
                                             </div>
                                         </div>

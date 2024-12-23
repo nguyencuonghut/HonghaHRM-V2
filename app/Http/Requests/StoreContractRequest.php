@@ -27,6 +27,7 @@ class StoreContractRequest extends FormRequest
             'ct_position_id' => 'required',
             'contract_type_id' => 'required',
             'contract_s_date' => 'required',
+            'created_type' => 'required',
         ];
     }
 
@@ -37,6 +38,7 @@ class StoreContractRequest extends FormRequest
             'ct_position_id.required' => 'Bạn cần chọn Vị trí.',
             'contract_type_id.required' => 'Bạn cần chọn loại hợp đồng.',
             'contract_s_date.required' => 'Bạn cần nhập ngày bắt đầu.',
+            'created_type.required' => 'Bạn cần nhập loại tạo.',
         ];
     }
 }
