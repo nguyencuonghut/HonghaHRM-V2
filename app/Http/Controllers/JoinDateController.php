@@ -42,6 +42,14 @@ class JoinDateController extends Controller
             return redirect()->back();
         }
 
+        //Each Employee has only 1 JoinDate
+        $old_join_dates = JoinDate::where('employee_id', $request->employee_id)->get();
+        if ($old_join_dates->count()) {
+            Alert::toast('Ngày vào đã tồn tại!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
+        //Create new JoinDate
         $join_date = new JoinDate();
         $join_date->employee_id = $request->employee_id;
         $join_date->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
