@@ -15,14 +15,14 @@ class Salary extends Model
         'capacity_salary',
         'position_allowance',
         'insurance_salary',
-        'employee_id',
+        'contract_id',
         'status',
         'start_date',
         'end_date',
     ];
 
-    public function employee(): BelongsTo
+    public function contract(): BelongsTo
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Contract::class);
     }
 }

@@ -23,7 +23,7 @@ class StoreSalaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employee_id' => 'required',
+            'contract_id' => 'required',
             'insurance_salary' => 'required',
             'salary_start_date' => 'required',
         ];
@@ -32,7 +32,7 @@ class StoreSalaryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'employee_id.required' => 'Số id nhân viên không hợp lệ.',
+            'contract_id.required' => 'Bạn phải chọn hợp đồng.',
             'insurance_salary.required' => 'Bạn phải nhập lương bảo hiểm.',
             'salary_start_date.required' => 'Bạn phải nhập thời gian bắt đầu.',
         ];

@@ -340,8 +340,9 @@ class ContractController extends Controller
     public function export(Contract $contract)
     {
         // Check if Salary is existed
-        $salary = Salary::where('employee_id', $contract->employee_id)
-                        ->where('status', 'On')->first();
+        $salary = Salary::where('contract_id', $contract->id)
+                        ->orderBy('start_date', 'desc')
+                        ->first();
         if (!$salary) {
             Alert::toast('Nhân sự chưa có thông tin lương!', 'error', 'top-right');
             return redirect()->back();
@@ -876,7 +877,7 @@ class ContractController extends Controller
         $w_sheet->setCellValue('A34', '- Phương tiện đi lại làm việc: tự túc.');
         $w_sheet->setCellValue('A35', '- Mức lương:');
 
-        $employee_salary = Salary::where('employee_id', $employee->id)->whereDate('start_date', $contract->start_date)->orderBy('id', 'desc')->first();
+        $employee_salary = Salary::where('contract_id', $contract->id)->orderBy('start_date', 'desc')->first();
         if (!$employee_salary) {
             return null;
         }
@@ -1451,7 +1452,7 @@ class ContractController extends Controller
         $objRichText = new RichText();
         $objRichText->createText('- Mức lương: ');
 
-        $employee_salary = Salary::where('employee_id', $employee->id)->whereDate('start_date', $contract->start_date)->orderBy('id', 'desc')->first();
+        $employee_salary = Salary::where('contract_id', $contract->id)->orderBy('start_date', 'desc')->first();
         if (!$employee_salary) {
             return null;
         }

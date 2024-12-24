@@ -22,7 +22,7 @@ class WorksTableSeeder extends Seeder
             0 =>
                 array (
                     'id' => 1,
-                    'contract_code' => '312/2014/HH-HĐLĐ',
+                    'contract_code' => '312/01/2014/HH-HĐLĐ',
                     'employee_id' => 1,
                     'position_id' => 69,
                     'status' => 'On',
@@ -35,7 +35,7 @@ class WorksTableSeeder extends Seeder
             1 =>
                 array (
                     'id' => 2,
-                    'contract_code' => '312/2019/HH-HĐLĐ',
+                    'contract_code' => '312/08/2019/HH-HĐLĐ',
                     'employee_id' => 1,
                     'position_id' => 19,
                     'status' => 'On',
@@ -48,7 +48,7 @@ class WorksTableSeeder extends Seeder
             2 =>
                 array (
                     'id' => 3,
-                    'contract_code' => '912/2016/HH-HĐLĐ',
+                    'contract_code' => '912/09/2016/HH-HĐLĐ',
                     'employee_id' => 2,
                     'position_id' => 40,
                     'status' => 'On',
@@ -61,7 +61,7 @@ class WorksTableSeeder extends Seeder
             3 =>
                 array (
                     'id' => 4,
-                    'contract_code' => '1992/2020/HH-HĐLĐ',
+                    'contract_code' => '1992/06/2020/HH-HĐLĐ',
                     'employee_id' => 3,
                     'position_id' => 41,
                     'status' => 'Off',
@@ -74,7 +74,7 @@ class WorksTableSeeder extends Seeder
             4 =>
                 array (
                     'id' => 5,
-                    'contract_code' => '1992/2022/HH-HĐLĐ',
+                    'contract_code' => '1992/06/2022/HH-HĐLĐ',
                     'employee_id' => 3,
                     'position_id' => 39,
                     'status' => 'On',
@@ -87,7 +87,7 @@ class WorksTableSeeder extends Seeder
             5 =>
                 array (
                     'id' => 6,
-                    'contract_code' => '2142/2021/HH-HĐLĐ',
+                    'contract_code' => '2142/04/2021/HH-HĐLĐ',
                     'employee_id' => 4,
                     'position_id' => 63,
                     'status' => 'Off',
@@ -100,7 +100,7 @@ class WorksTableSeeder extends Seeder
             6 =>
                 array (
                     'id' => 7,
-                    'contract_code' => '2142/2024/HH-HĐLĐ',
+                    'contract_code' => '2142/04/2024/HH-HĐLĐ',
                     'employee_id' => 4,
                     'position_id' => 78,
                     'status' => 'On',
@@ -113,7 +113,7 @@ class WorksTableSeeder extends Seeder
             7 =>
                 array (
                     'id' => 8,
-                    'contract_code' => '2199/2022/HH-HĐLĐ',
+                    'contract_code' => '2199/05/2022/HH-HĐLĐ',
                     'employee_id' => 5,
                     'position_id' => 63,
                     'status' => 'On',
@@ -126,7 +126,7 @@ class WorksTableSeeder extends Seeder
             8 =>
                 array (
                     'id' => 9,
-                    'contract_code' => '468/2015/HH-HĐLĐ',
+                    'contract_code' => '468/06/2015/HH-HĐLĐ',
                     'employee_id' => 6,
                     'position_id' => 79,
                     'status' => 'Off',
@@ -139,7 +139,7 @@ class WorksTableSeeder extends Seeder
             9 =>
                 array (
                     'id' => 10,
-                    'contract_code' => '468/2019/HH-HĐLĐ',
+                    'contract_code' => '468/07/2019/HH-HĐLĐ',
                     'employee_id' => 6,
                     'position_id' => 20,
                     'status' => 'On',
@@ -152,7 +152,7 @@ class WorksTableSeeder extends Seeder
             10 =>
                 array (
                     'id' => 11,
-                    'contract_code' => '353/2012/HH-HĐLĐ',
+                    'contract_code' => '353/08/2012/HH-HĐLĐ',
                     'employee_id' => 7,
                     'position_id' => 66,
                     'status' => 'Off',
@@ -166,7 +166,7 @@ class WorksTableSeeder extends Seeder
                 array (
                     'id' => 12,
                     'employee_id' => 7,
-                    'contract_code' => '353/2023/HH-HĐLĐ',
+                    'contract_code' => '353/08/2023/HH-HĐLĐ',
                     'position_id' => 80,
                     'status' => 'On',
                     'on_type_id' => 4,
@@ -178,7 +178,7 @@ class WorksTableSeeder extends Seeder
             12 =>
                 array (
                     'id' => 13,
-                    'contract_code' => '2159/2023/HH-HĐLĐ',
+                    'contract_code' => '2159/09/2023/HH-HĐLĐ',
                     'employee_id' => 8,
                     'position_id' => 66,
                     'status' => 'On',
@@ -191,7 +191,7 @@ class WorksTableSeeder extends Seeder
             13 =>
                 array (
                     'id' => 14,
-                    'contract_code' => '226/2011/HH-HĐLĐ',
+                    'contract_code' => '226/10/2011/HH-HĐLĐ',
                     'employee_id' => 9,
                     'position_id' => 66,
                     'status' => 'On',
@@ -204,7 +204,7 @@ class WorksTableSeeder extends Seeder
             14 =>
                 array (
                     'id' => 15,
-                    'contract_code' => '240/2011/HH-HĐLĐ',
+                    'contract_code' => '240/11/2011/HH-HĐLĐ',
                     'employee_id' => 10,
                     'position_id' => 66,
                     'status' => 'Off',
@@ -217,7 +217,7 @@ class WorksTableSeeder extends Seeder
             15 =>
                 array (
                     'id' => 16,
-                    'contract_code' => '240/2020/HH-HĐLĐ',
+                    'contract_code' => '240/12/2020/HH-HĐLĐ',
                     'employee_id' => 10,
                     'position_id' => 82,
                     'status' => 'Off',
@@ -230,7 +230,7 @@ class WorksTableSeeder extends Seeder
             16 =>
                 array (
                     'id' => 17,
-                    'contract_code' => '240/2022/HH-HĐLĐ',
+                    'contract_code' => '240/12/2022/HH-HĐLĐ',
                     'employee_id' => 10,
                     'position_id' => 59,
                     'status' => 'On',
@@ -243,7 +243,7 @@ class WorksTableSeeder extends Seeder
             17 =>
                 array (
                     'id' => 18,
-                    'contract_code' => '240/2024/HH-HĐLĐ',
+                    'contract_code' => '240/03/2024/HH-HĐLĐ',
                     'employee_id' => 10,
                     'position_id' => 81,
                     'status' => 'On',
@@ -256,7 +256,7 @@ class WorksTableSeeder extends Seeder
             18 =>
                 array (
                     'id' => 19,
-                    'contract_code' => '233/2011/HH-HĐLĐ',
+                    'contract_code' => '233/04/2011/HH-HĐLĐ',
                     'employee_id' => 11,
                     'position_id' => 68,
                     'status' => 'On',
@@ -269,7 +269,7 @@ class WorksTableSeeder extends Seeder
             19 =>
                 array (
                     'id' => 20,
-                    'contract_code' => '275/2011/HH-HĐLĐ',
+                    'contract_code' => '275/05/2011/HH-HĐLĐ',
                     'employee_id' => 12,
                     'position_id' => 68,
                     'status' => 'On',
@@ -282,7 +282,7 @@ class WorksTableSeeder extends Seeder
             20 =>
                 array (
                     'id' => 21,
-                    'contract_code' => '248/2011/HH-HĐLĐ',
+                    'contract_code' => '248/06/2011/HH-HĐLĐ',
                     'employee_id' => 13,
                     'position_id' => 43,
                     'status' => 'Off',
@@ -295,7 +295,7 @@ class WorksTableSeeder extends Seeder
             21 =>
                 array (
                     'id' => 22,
-                    'contract_code' => '248/2019/HH-HĐLĐ',
+                    'contract_code' => '248/04/2019/HH-HĐLĐ',
                     'employee_id' => 13,
                     'position_id' => 84,
                     'status' => 'On',
@@ -308,7 +308,7 @@ class WorksTableSeeder extends Seeder
             22 =>
                 array (
                     'id' => 23,
-                    'contract_code' => '252/2011/HH-HĐLĐ',
+                    'contract_code' => '252/05/2011/HH-HĐLĐ',
                     'employee_id' => 14,
                     'position_id' => 43,
                     'status' => 'On',
@@ -321,7 +321,7 @@ class WorksTableSeeder extends Seeder
             23 =>
                 array (
                     'id' => 24,
-                    'contract_code' => '554/2013/HH-HĐLĐ',
+                    'contract_code' => '554/06/2013/HH-HĐLĐ',
                     'employee_id' => 15,
                     'position_id' => 68,
                     'status' => 'Off',
@@ -334,7 +334,7 @@ class WorksTableSeeder extends Seeder
             24 =>
                 array (
                     'id' => 25,
-                    'contract_code' => '554/2022/HH-HĐLĐ',
+                    'contract_code' => '554/10/2022/HH-HĐLĐ',
                     'employee_id' => 15,
                     'position_id' => 43,
                     'status' => 'On',
@@ -347,7 +347,7 @@ class WorksTableSeeder extends Seeder
             25 =>
                 array (
                     'id' => 26,
-                    'contract_code' => '868/2016/HH-HĐLĐ',
+                    'contract_code' => '868/07/2016/HH-HĐLĐ',
                     'employee_id' => 16,
                     'position_id' => 84,
                     'status' => 'Off',
@@ -360,7 +360,7 @@ class WorksTableSeeder extends Seeder
             26 =>
                 array (
                     'id' => 27,
-                    'contract_code' => '868/2023/HH-HĐLĐ',
+                    'contract_code' => '868/02/2023/HH-HĐLĐ',
                     'employee_id' => 16,
                     'position_id' => 77,
                     'status' => 'On',
@@ -373,7 +373,7 @@ class WorksTableSeeder extends Seeder
             27 =>
                 array (
                     'id' => 28,
-                    'contract_code' => '557/2015/HH-HĐLĐ',
+                    'contract_code' => '557/08/2015/HH-HĐLĐ',
                     'employee_id' => 17,
                     'position_id' => 13,
                     'status' => 'On',
@@ -386,7 +386,7 @@ class WorksTableSeeder extends Seeder
             28 =>
                 array (
                     'id' => 29,
-                    'contract_code' => '001/2003/HH-HĐLĐ',
+                    'contract_code' => '001/09/2003/HH-HĐLĐ',
                     'employee_id' => 18,
                     'position_id' => 15,
                     'status' => 'On',
@@ -399,7 +399,7 @@ class WorksTableSeeder extends Seeder
             29 =>
                 array (
                     'id' => 30,
-                    'contract_code' => '598/2015/HH-HĐLĐ',
+                    'contract_code' => '598/10/2015/HH-HĐLĐ',
                     'employee_id' => 19,
                     'position_id' => 57,
                     'status' => 'Off',
@@ -412,7 +412,7 @@ class WorksTableSeeder extends Seeder
             30 =>
                 array (
                     'id' => 31,
-                    'contract_code' => '598/2020/HH-HĐLĐ',
+                    'contract_code' => '598/04/2020/HH-HĐLĐ',
                     'employee_id' => 19,
                     'position_id' => 71,
                     'status' => 'On',
@@ -425,7 +425,7 @@ class WorksTableSeeder extends Seeder
             31 =>
                 array (
                     'id' => 32,
-                    'contract_code' => '1821/2015/HH-HĐLĐ',
+                    'contract_code' => '1821/11/2015/HH-HĐLĐ',
                     'employee_id' => 20,
                     'position_id' => 72,
                     'status' => 'On',
@@ -438,7 +438,7 @@ class WorksTableSeeder extends Seeder
             32 =>
                 array (
                     'id' => 33,
-                    'contract_code' => '1631/2018/HH-HĐLĐ',
+                    'contract_code' => '1631/12/2018/HH-HĐLĐ',
                     'employee_id' => 21,
                     'position_id' => 17,
                     'status' => 'On',
@@ -451,7 +451,7 @@ class WorksTableSeeder extends Seeder
             33 =>
                 array (
                     'id' => 34,
-                    'contract_code' => '090/2019/HH-HĐLĐ',
+                    'contract_code' => '090/02/2019/HH-HĐLĐ',
                     'employee_id' => 22,
                     'position_id' => 21,
                     'status' => 'On',
@@ -464,7 +464,7 @@ class WorksTableSeeder extends Seeder
             34 =>
                 array (
                     'id' => 35,
-                    'contract_code' => '326/2022/HH-HĐLĐ',
+                    'contract_code' => '326/03/2022/HH-HĐLĐ',
                     'employee_id' => 23,
                     'position_id' => 75,
                     'status' => 'On',
@@ -477,7 +477,7 @@ class WorksTableSeeder extends Seeder
             35 =>
                 array (
                     'id' => 36,
-                    'contract_code' => '326/2015/HH-HĐLĐ',
+                    'contract_code' => '326/04/2015/HH-HĐLĐ',
                     'employee_id' => 23,
                     'position_id' => 63,
                     'status' => 'Off',
@@ -490,7 +490,7 @@ class WorksTableSeeder extends Seeder
             36 =>
                 array (
                     'id' => 37,
-                    'contract_code' => '594/2016/HH-HĐLĐ',
+                    'contract_code' => '594/05/2016/HH-HĐLĐ',
                     'employee_id' => 24,
                     'position_id' => 44,
                     'status' => 'On',
@@ -503,7 +503,7 @@ class WorksTableSeeder extends Seeder
             37 =>
                 array (
                     'id' => 38,
-                    'contract_code' => '353/2024/HH-HĐLĐ',
+                    'contract_code' => '353/11/2024/HH-HĐLĐ',
                     'employee_id' => 7,
                     'position_id' => 85,
                     'status' => 'On',
@@ -516,7 +516,7 @@ class WorksTableSeeder extends Seeder
             38 =>
                 array (
                     'id' => 39,
-                    'contract_code' => '481/2024/HH-HĐLĐ',
+                    'contract_code' => '481/03/2024/HH-HĐLĐ',
                     'employee_id' => 25,
                     'position_id' => 86,
                     'status' => 'On',
@@ -529,7 +529,7 @@ class WorksTableSeeder extends Seeder
             39 =>
                 array (
                     'id' => 40,
-                    'contract_code' => '444/2013/HH-HĐLĐ',
+                    'contract_code' => '444/06/2013/HH-HĐLĐ',
                     'employee_id' => 26,
                     'position_id' => 46,
                     'status' => 'On',
@@ -542,7 +542,7 @@ class WorksTableSeeder extends Seeder
             40 =>
                 array (
                     'id' => 41,
-                    'contract_code' => '170/2013/HH-HĐLĐ',
+                    'contract_code' => '170/06/2013/HH-HĐLĐ',
                     'employee_id' => 27,
                     'position_id' => 83,
                     'status' => 'On',
@@ -555,7 +555,7 @@ class WorksTableSeeder extends Seeder
             41 =>
                 array (
                     'id' => 42,
-                    'contract_code' => '166/2011/HH-HĐLĐ',
+                    'contract_code' => '166/06/2011/HH-HĐLĐ',
                     'employee_id' => 28,
                     'position_id' => 27,
                     'status' => 'On',
@@ -568,7 +568,7 @@ class WorksTableSeeder extends Seeder
             42 =>
                 array (
                     'id' => 43,
-                    'contract_code' => '846/2015/HH-HĐLĐ',
+                    'contract_code' => '846/06/2015/HH-HĐLĐ',
                     'employee_id' => 29,
                     'position_id' => 26,
                     'status' => 'On',
@@ -581,7 +581,7 @@ class WorksTableSeeder extends Seeder
             43 =>
                 array (
                     'id' => 44,
-                    'contract_code' => '279/2010/HH-HĐLĐ',
+                    'contract_code' => '279/06/2010/HH-HĐLĐ',
                     'employee_id' => 30,
                     'position_id' => 34,
                     'status' => 'On',
@@ -594,7 +594,7 @@ class WorksTableSeeder extends Seeder
             44 =>
                 array (
                     'id' => 45,
-                    'contract_code' => '273/2010/HH-HĐLĐ',
+                    'contract_code' => '27306//2010/HH-HĐLĐ',
                     'employee_id' => 31,
                     'position_id' => 34,
                     'status' => 'On',
@@ -607,7 +607,7 @@ class WorksTableSeeder extends Seeder
             45 =>
                 array (
                     'id' => 46,
-                    'contract_code' => '163/2010/HH-HĐLĐ',
+                    'contract_code' => '163/06/2010/HH-HĐLĐ',
                     'employee_id' => 32,
                     'position_id' => 87,
                     'status' => 'On',
@@ -620,7 +620,7 @@ class WorksTableSeeder extends Seeder
             46 =>
                 array (
                     'id' => 47,
-                    'contract_code' => '998/2015/HH-HĐLĐ',
+                    'contract_code' => '998/06/2015/HH-HĐLĐ',
                     'employee_id' => 33,
                     'position_id' => 60,
                     'status' => 'On',
@@ -633,7 +633,7 @@ class WorksTableSeeder extends Seeder
             47 =>
                 array (
                     'id' => 48,
-                    'contract_code' => '2173/2022/HH-HĐLĐ',
+                    'contract_code' => '2173/06/2022/HH-HĐLĐ',
                     'employee_id' => 34,
                     'position_id' => 45,
                     'status' => 'On',

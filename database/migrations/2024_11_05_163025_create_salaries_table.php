@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
+            $table->foreignId('contract_id')->constrained('contracts')->onDelete('cascade');
             $table->bigInteger('insurance_salary');
             $table->bigInteger('position_salary')->nullable();
             $table->bigInteger('capacity_salary')->nullable();

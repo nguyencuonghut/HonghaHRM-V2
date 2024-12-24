@@ -36,6 +36,35 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
+                                        <label class="required-field" class="control-label">Hợp đồng</label>
+                                        @php
+                                            $contracts = App\Models\Contract::where('employee_id', $salary->contract->employee->id)
+                                                                            ->orderBy('start_date', 'desc')
+                                                                            ->get();
+                                        @endphp
+                                        <div class="controls">
+                                            <select name="contract_id" id="contract_id" data-placeholder="Chọn hợp đồng" class="form-control select2" style="width: 100%;">
+                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                @foreach ($contracts as $contract)
+                                                    <option value="{{$contract->id}}" @if($contract->code == $salary->contract->code) selected="selected" @endif>{{$contract->code}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="required-field">Thời gian bắt đầu</label>
+                                    <div class="input-group date" id="salary_start_date" data-target-input="nearest">
+                                        <input type="text" name="salary_start_date" class="form-control datetimepicker-input" value="{{date('d/m/Y', strtotime($salary->start_date))}}" data-target="#salary_start_date"/>
+                                        <div class="input-group-append" data-target="#salary_start_date" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="control-group">
                                         <label class="control-label">Lương vị trí</label>
                                         <input class="form-control" type="number" name="position_salary" id="position_salary" value="{{$salary->position_salary}}">
                                     </div>
@@ -63,18 +92,6 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-12">
-                                  <label class="required-field">Thời gian bắt đầu</label>
-                                  <div class="input-group date" id="salary_start_date" data-target-input="nearest">
-                                      <input type="text" name="salary_start_date" class="form-control datetimepicker-input" data-target="#salary_start_date" value="{{date('d/m/Y', strtotime($salary->start_date))}}"/>
-                                      <div class="input-group-append" data-target="#salary_start_date" data-toggle="datetimepicker">
-                                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                      </div>
-                                  </div>
-                                </div>
-                            </div>
-
                             <br>
                             <div class="control-group">
                                 <div class="controls">
@@ -94,6 +111,10 @@
 @push('scripts')
 <script>
     $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2({
+         theme: 'bootstrap4'
+        });
         //Date picker
         $('#salary_start_date').datetimepicker({
             format: 'DD/MM/YYYY'

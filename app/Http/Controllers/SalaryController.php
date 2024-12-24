@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OffSalaryRequest;
 use App\Http\Requests\StoreSalaryRequest;
 use App\Http\Requests\UpdateSalaryRequest;
+use App\Models\Contract;
 use App\Models\Position;
 use App\Models\Salary;
 use App\Models\UserDepartment;
@@ -44,7 +45,7 @@ class SalaryController extends Controller
         }
 
         $salary = new Salary();
-        $salary->employee_id = $request->employee_id;
+        $salary->contract_id = $request->contract_id;
         if ($request->position_salary) {
             $salary->position_salary = $request->position_salary;
         }
@@ -95,13 +96,14 @@ class SalaryController extends Controller
         if ($request->capacity_salary) {
             $salary->capacity_salary = $request->capacity_salary;
         }
+        $salary->contract_id = $request->contract_id;
         $salary->position_allowance = $request->position_allowance;
         $salary->insurance_salary = $request->insurance_salary;
         $salary->start_date = Carbon::createFromFormat('d/m/Y', $request->salary_start_date);
         $salary->save();
 
         Alert::toast('Sửa lương thành công!', 'success', 'top-right');
-        return redirect()->route('employees.show', $salary->employee_id);
+        return redirect()->route('employees.show', $salary->contract->employee_id);
     }
 
     /**
@@ -122,7 +124,8 @@ class SalaryController extends Controller
 
     public function employeeData($employee_id)
     {
-        $data = Salary::where('employee_id', $employee_id)->orderBy('id', 'desc')->get();
+        $contract_ids = Contract::where('employee_id', $employee_id)->pluck('id')->toArray();
+        $data = Salary::whereIn('contract_id', $contract_ids)->orderBy('start_date', 'desc')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('position_salary', function ($data) {
@@ -174,16 +177,15 @@ class SalaryController extends Controller
             $department_ids = UserDepartment::where('user_id', Auth::user()->id)->pluck('department_id')->toArray();
             $position_ids = Position::whereIn('department_id', $department_ids)->pluck('id')->toArray();
             $employee_ids = Work::whereIn('position_id', $position_ids)->pluck('employee_id')->toArray();
-            $data = Salary::whereIn('employee_id', $employee_ids)
-                                                ->where('status', 'On')
-                                                ->join('employees', 'employees.id', 'salaries.employee_id')
-                                                ->orderBy('employees.code', 'desc')
-                                                ->get();
+            $contract_ids = Contract::whereIn('employee_id', $employee_ids)->pluck('id')->toArray();
+            $data = Salary::whereIn('contract_id', $contract_ids)
+                        ->where('status', 'On')
+                        ->orderBy('start_date', 'desc')
+                        ->get();
         } else {
             $data = Salary::where('status', 'On')
-                                                ->join('employees', 'employees.id', 'salaries.employee_id')
-                                                ->orderBy('employees.code', 'desc')
-                                                ->get();
+                        ->orderBy('start_date', 'desc')
+                        ->get();
         }
 
         return DataTables::of($data)
@@ -192,11 +194,11 @@ class SalaryController extends Controller
                 $dept_arr = [];
                 $department_str = '';
                 //Tìm tất cả Works
-                $works = Work::where('employee_id', $data->employee_id)->get();
+                $works = Work::where('employee_id', $data->contract->employee_id)->get();
                 if (0 == $works->count()) {
                     return 'Chưa có QT công tác';
                 } else {//Đã có QT công tác
-                    $on_works = Work::where('employee_id', $data->employee_id)
+                    $on_works = Work::where('employee_id', $data->contract->employee_id)
                                     ->where('status', 'On')
                                     ->get();
                     if ($on_works->count()) {//Có QT công tác ở trạng thái On
@@ -204,7 +206,7 @@ class SalaryController extends Controller
                             array_push($dept_arr, $on_work->position->department->name);
                         }
                     } else {//Còn lại là các QT công tác ở trạng thái Off
-                        $last_off_works = Work::where('employee_id', $data->employee_id)
+                        $last_off_works = Work::where('employee_id', $data->contract->employee_id)
                                         ->where('status', 'Off')
                                         ->orderBy('start_date', 'desc')
                                         ->first();
@@ -218,10 +220,10 @@ class SalaryController extends Controller
                 return $department_str;
             })
             ->editColumn('code', function ($data) {
-                return $data->employee->code;
+                return $data->contract->employee->code;
             })
             ->editColumn('employee', function ($data) {
-                return '<a href="' . route("employees.show", $data->employee_id) . '">' . $data->employee->name . '</a>';
+                return '<a href="' . route("employees.show", $data->contract->employee_id) . '">' . $data->contract->employee->name . '</a>';
             })
             ->editColumn('position_salary', function ($data) {
                 return number_format($data->position_salary, 0, '.', ',') . '<sup>đ</sup>';
@@ -264,6 +266,6 @@ class SalaryController extends Controller
         $salary->save();
 
         Alert::toast('Off thành công!', 'success', 'top-right');
-        return redirect()->route('employees.show', $salary->employee_id);
+        return redirect()->route('employees.show', $salary->contract->employee_id);
     }
 }

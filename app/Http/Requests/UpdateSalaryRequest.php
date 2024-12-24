@@ -23,6 +23,7 @@ class UpdateSalaryRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'contract_id' => 'required',
             'insurance_salary' => 'required',
             'salary_start_date' => 'required',
         ];
@@ -31,6 +32,7 @@ class UpdateSalaryRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'contract_id.required' => 'Bạn phải chọn hợp đồng.',
             'insurance_salary.required' => 'Bạn phải nhập lương bảo hiểm.',
             'salary_start_date.required' => 'Bạn phải nhập thời gian bắt đầu.',
         ];

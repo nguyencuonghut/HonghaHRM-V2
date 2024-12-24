@@ -168,7 +168,8 @@ class IncreaseDecreaseInsuranceReportController extends Controller
     private function getEmployeeSalaryByMonthYear($employee_id, $month, $year)
     {
         // Tìm các Salary với trạng thái On
-        $on_salary = Salary::where('employee_id', $employee_id)
+        $contract_ids = Contract::where('employee_id', $employee_id)->pluck('id')->toArray();
+        $on_salary = Salary::whereIn('contract_id', $contract_ids)
                             ->where('status', 'On')
                             ->whereYear('start_date', '<=', $year)
                             ->whereMonth('start_date', '<=', $month)
@@ -177,14 +178,14 @@ class IncreaseDecreaseInsuranceReportController extends Controller
             return $on_salary;
         } else {
             // Tìm các Salary với trạng thái Off
-            $off_salaries = Salary::where('employee_id', $employee_id)
+            $off_salaries = Salary::whereIn('contract_id', $contract_ids)
                                     ->where('status', 'Off')
                                     ->whereYear('start_date', '<=', $year)
                                     ->whereYear('end_date', '>=', $year)
                                     ->get();
             if ($off_salaries->count() > 1) {
                 // Tiếp tục lọc theo tháng
-            return Salary::where('employee_id', $employee_id)
+            return Salary::whereIn('contract_id', $contract_ids)
                         ->where('status', 'Off')
                         ->whereYear('start_date', '<=', $year)
                         ->whereYear('end_date', '>=', $year)
@@ -193,7 +194,7 @@ class IncreaseDecreaseInsuranceReportController extends Controller
                         ->first();
             } else {
                 // Trả về luôn
-                return Salary::where('employee_id', $employee_id)
+                return Salary::whereIn('contract_id', $contract_ids)
                             ->where('status', 'Off')
                             ->whereYear('start_date', '<=', $year)
                             ->whereYear('end_date', '>=', $year)
