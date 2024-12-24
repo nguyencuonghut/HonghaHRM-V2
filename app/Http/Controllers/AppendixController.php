@@ -73,7 +73,8 @@ class AppendixController extends Controller
 
         // Create code
         $employee = Employee::findOrFail($request->employee_id);
-        $appendix->code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-PLHĐ';
+        $contract = Contract::findOrFail($request->contract_id);
+        $appendix->code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . date('m', strtotime($contract->start_date)) . '/' . date('Y', strtotime($contract->start_date)) . '/' . 'HH-PLHĐ';
         $appendix->save();
 
         Alert::toast('Thêm phụ lục mới thành công. Bạn cần tạo QT công tác!', 'success', 'top-right');

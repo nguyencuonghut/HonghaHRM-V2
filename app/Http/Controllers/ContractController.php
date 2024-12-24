@@ -75,13 +75,13 @@ class ContractController extends Controller
         $employee = Employee::findOrFail($request->employee_id);
         switch ($request->contract_type_id) {
             case 1: //HĐ thử việc
-                $code = $res = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐTV';
+                $code = $res = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::createFromFormat('d/m/Y', $request->contract_s_date)->format('m') . '/' . Carbon::createFromFormat('d/m/Y', $request->contract_s_date)->format('Y') . '/' . 'HH-HĐTV';
                 break;
             case 2: //HĐ lao động
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐLĐ';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::createFromFormat('d/m/Y', $request->contract_s_date)->format('m') . '/' . Carbon::createFromFormat('d/m/Y', $request->contract_s_date)->format('Y') . '/' . 'HH-HĐLĐ';
                 break;
             case 3: //HĐ cộng tác viên
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐCTV';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::createFromFormat('d/m/Y', $request->contract_s_date)->format('m') . '/' . Carbon::createFromFormat('d/m/Y', $request->contract_s_date)->format('Y') . '/' . 'HH-HĐCTV';
                 break;
         }
         $contract->code = $code;
@@ -168,17 +168,16 @@ class ContractController extends Controller
         $employee = Employee::findOrFail($contract->employee_id);
         switch ($request->contract_type_id) {
             case 1: //HĐ thử việc
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐTV';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::createFromFormat('d/m/Y', $request->s_date)->format('m') . '/' . Carbon::createFromFormat('d/m/Y', $request->s_date)->format('Y') . '/' . 'HH-HĐTV';
                 break;
             case 2: //HĐ lao động
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐLĐ';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::createFromFormat('d/m/Y', $request->s_date)->format('m') . '/' . Carbon::createFromFormat('d/m/Y', $request->s_date)->format('Y') . '/' . 'HH-HĐLĐ';
                 break;
             case 3: //HĐ cộng tác viên
-                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::now()->format('m') . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐCTV';
+                $code = preg_replace("/[^0-9]/", "", $employee->code) . '/' . Carbon::createFromFormat('d/m/Y', $request->s_date) . '/' . Carbon::createFromFormat('d/m/Y', $request->s_date)->format('Y') . '/' . 'HH-HĐCTV';
                 break;
         }
         $contract->code = $code;
-        $contract->status = 'On';
         $contract->created_type = $request->created_type;
         $contract->save();
 
