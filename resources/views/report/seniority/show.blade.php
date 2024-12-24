@@ -146,7 +146,7 @@
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'department', name: 'department', orderable: false, searchable: false},
-            {data: 'join_date', name: 'join_date'},
+            {data: 'formal_contract_start_date', name: 'formal_contract_start_date'},
             {data: 'seniority', name: 'seniority', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#reports-table_wrapper .col-md-6:eq(0)');

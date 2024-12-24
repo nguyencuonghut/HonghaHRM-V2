@@ -124,7 +124,7 @@
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'department', name: 'department', orderable: false, searchable: false},
-            {data: 'formal_contract_date', name: 'formal_contract_date'},
+            {data: 'formal_contract_start_date', name: 'formal_contract_start_date'},
             {data: 'seniority', name: 'seniority', orderable: false, searchable: false},
         ]
         });

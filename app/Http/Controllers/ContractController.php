@@ -10,6 +10,7 @@ use App\Models\ContractType;
 use App\Models\Employee;
 use App\Models\Position;
 use App\Models\Salary;
+use App\Models\SeniorityReport;
 use App\Models\UserDepartment;
 use App\Models\Work;
 use Carbon\Carbon;
@@ -87,6 +88,20 @@ class ContractController extends Controller
         $contract->status = 'On';
         $contract->created_type = $request->created_type;
         $contract->save();
+
+        // Create SeniorityReport
+        if ('Hợp đồng lao động' == $contract->contract_type->name
+            && 'Ký mới' == $contract->created_type) {
+            //Check if SeniorityReport is existed
+            $old_seniority_report = SeniorityReport::where('employee_id', $contract->employee_id)->first();
+            if (null == $old_seniority_report) {
+                $seniority_report = new SeniorityReport();
+                $seniority_report->employee_id = $contract->employee_id;
+                $seniority_report->contract_id = $contract->id;
+                $seniority_report->formal_contract_start_date = $contract->start_date;
+                $seniority_report->save();
+            }
+        }
 
         Alert::toast('Thêm hợp đồng mới thành công. Bạn cần tạo QT công tác!', 'success', 'top-right');
         return redirect()->route('employees.show', $contract->employee_id);
@@ -167,6 +182,18 @@ class ContractController extends Controller
         $contract->created_type = $request->created_type;
         $contract->save();
 
+        // Update SeniorityReport
+        if ('Hợp đồng lao động' == $contract->contract_type->name
+            && 'Ký mới' == $contract->created_type) {
+            $seniority_report = SeniorityReport::where('employee_id', $contract->employee_id)->first();
+            if (null != $seniority_report) {
+                $seniority_report->employee_id = $contract->employee_id;
+                $seniority_report->contract_id = $contract->id;
+                $seniority_report->formal_contract_start_date = $contract->start_date;
+                $seniority_report->save();
+            }
+        }
+
         Alert::toast('Sửa hợp đồng mới thành công. Bạn cần sửa quá trình công tác!', 'success', 'top-right');
         return redirect()->route('employees.show', $contract->employee_id);
     }
@@ -180,6 +207,16 @@ class ContractController extends Controller
             Alert::toast('Bạn không có quyền!', 'error', 'top-right');
             return redirect()->back();
         }
+        // Destroy SeniorityReport
+        if ('Hợp đồng lao động' == $contract->contract_type->name
+            && 'Ký mới' == $contract->created_type) {
+            $seniority_report = SeniorityReport::where('employee_id', $contract->employee_id)->first();
+            if (null != $seniority_report) {
+                $seniority_report->delete();
+            }
+        }
+
+        // Destroy the Contract
         $contract->delete();
 
         Alert::toast('Xóa hợp đồng thành công!', 'success', 'top-right');
@@ -279,6 +316,16 @@ class ContractController extends Controller
             $contract->request_terminate_date = Carbon::createFromFormat('d/m/Y', $request->request_terminate_date);
         }
         $contract->save();
+
+        //Destroy the SeniorityReport if Employee quit the work
+        if ('Hợp đồng lao động' == $contract->contract_type->name
+            && 'Ký mới' == $contract->created_type
+            && $contract->request_terminate_date) {
+            $seniority_report = SeniorityReport::where('employee_id', $contract->employee_id)->first();
+            if (null != $seniority_report) {
+                $seniority_report->delete();
+            }
+        }
 
         Alert::toast('Cập nhật thành công. Bạn cần cập nhật QT công tác!', 'success', 'top-right');
         return redirect()->route('employees.show', $contract->employee_id);
