@@ -438,7 +438,7 @@ class ContractController extends Controller
 
         // Số hợp đồng
         $w_sheet->mergeCells("A5:D5");
-        $w_sheet->setCellValue('A5', 'Số: ' . preg_replace("/[^0-9]/", "", $employee->code) .'/' .  date('Y', strtotime($contract->end_date)) .'/QĐ-HH');
+        $w_sheet->setCellValue('A5', 'Số: ' . preg_replace("/[^0-9]/", "", $employee->code) .'/' .  date('m', strtotime($contract->end_date)) . '/' . date('Y', strtotime($contract->end_date)) .'/QĐ-HH');
         $w_sheet->getStyle("A5")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // Thời gian
@@ -674,12 +674,12 @@ class ContractController extends Controller
 
         // Số hợp đồng
         $w_sheet->mergeCells("A5:D5");
-        $w_sheet->setCellValue('A5', 'Số: ' . $employee->code .'/' .  Carbon::now()->format('Y') .'/HH-HĐTVH');
+        $w_sheet->setCellValue('A5', 'Số: ' . $contract->code);
         $w_sheet->getStyle("A5")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // Thời gian
         $w_sheet->mergeCells("E5:J5");
-        $w_sheet->setCellValue('E5', 'Hà Nam, ngày ' . Carbon::now()->format('d') . ' tháng ' . Carbon::now()->format('m') . ' năm ' . Carbon::now()->format('Y'));
+        $w_sheet->setCellValue('E5', 'Hà Nam, ngày ' . date('d', strtotime($contract->start_date)) . ' tháng ' . date('m', strtotime($contract->start_date)) . ' năm ' . date('Y', strtotime($contract->start_date)));
         $w_sheet->getStyle("E5")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // Tên hợp đồng
@@ -706,7 +706,7 @@ class ContractController extends Controller
         // Thời gian, địa điểm
         $w_sheet->mergeCells("A11:J11");
         $w_sheet->getRowDimension('11')->setRowHeight(30);
-        $w_sheet->setCellValue('A11', 'Hôm nay, ngày ' . Carbon::now()->format('d') . ' tháng ' . Carbon::now()->format('m') . ' năm ' . Carbon::now()->format('Y') . ' tại Công ty Cổ phần Dinh Dưỡng Hồng Hà, chúng tôi gồm:');
+        $w_sheet->setCellValue('A11', 'Hôm nay, ngày ' . date('d', strtotime($contract->start_date)) . ' tháng ' . date('m', strtotime($contract->start_date)) . ' năm ' . date('Y', strtotime($contract->start_date)) . ' tại Công ty Cổ phần Dinh Dưỡng Hồng Hà, chúng tôi gồm:');
         $w_sheet->getStyle("A11")->getAlignment()->setWrapText(true);
 
         // Bên A
@@ -1101,7 +1101,7 @@ class ContractController extends Controller
 
         // Số hợp đồng
         $w_sheet->mergeCells("A4:D4");
-        $w_sheet->setCellValue('A4', 'Số: ' . $employee->code .'/' .  Carbon::now()->format('Y') .'/HH-HĐLĐ');
+        $w_sheet->setCellValue('A4', 'Số: ' . $contract->code);
         $w_sheet->getStyle("A4")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // Add a drawing to the worksheet
