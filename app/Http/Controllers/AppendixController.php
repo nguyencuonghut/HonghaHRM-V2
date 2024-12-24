@@ -318,7 +318,7 @@ class AppendixController extends Controller
         $w_sheet->setCellValue('A10', 'PHỤ LỤC HỢP ĐỒNG LAO ĐỘNG');
 
         // Ngày ký
-        $w_sheet->setCellValue('A12', 'Hôm nay ngày ' . Carbon::now()->format('d') . ' tháng ' . Carbon::now()->format('mm') . ' năm ' . Carbon::now()->format('Y') . ' tại Công ty cổ phần dinh dưỡng Hồng Hà, các bên có thông tin dưới đây gồm:');
+        $w_sheet->setCellValue('A12', 'Hôm nay ngày ' . Carbon::now()->format('d') . ' tháng ' . Carbon::now()->format('m') . ' năm ' . Carbon::now()->format('Y') . ' tại Công ty cổ phần dinh dưỡng Hồng Hà, các bên có thông tin dưới đây gồm:');
         $w_sheet->mergeCells("A12:J12");
         $w_sheet->getRowDimension('12')->setRowHeight(30);
         $w_sheet->getStyle("A12")->getAlignment()->setWrapText(true);
@@ -434,7 +434,7 @@ class AppendixController extends Controller
 
 
         // Căn cứ
-        $w_sheet->setCellValue('A36', 'Căn cứ Hợp đồng lao động số ' . $appendix->code . ' ký ngày ' . Carbon::now()->format('d/M/Y') . ' và nhu cầu lao động, sử dụng lao động, Công ty và Người lao động thỏa thuận thay đổi một số nội dung của Hợp đồng lao động mà hai bên đã ký kết như sau:');
+        $w_sheet->setCellValue('A36', 'Căn cứ Hợp đồng lao động số ' . $appendix->contract->code . ' ký ngày ' . date('d/m/Y', strtotime($appendix->contract->start_date)) . ' và nhu cầu lao động, sử dụng lao động, Công ty và Người lao động thỏa thuận thay đổi một số nội dung của Hợp đồng lao động mà hai bên đã ký kết như sau:');
         $w_sheet->mergeCells("A36:J36");
         $w_sheet->getRowDimension('36')->setRowHeight(35);
         $w_sheet->getStyle("A36")->getAlignment()->setWrapText(true);
