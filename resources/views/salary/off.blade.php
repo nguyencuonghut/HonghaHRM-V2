@@ -36,7 +36,7 @@
                                 <div class="col-12">
                                   <label class="required-field">Thời gian kết thúc</label>
                                   <div class="input-group date" id="salary_end_date" data-target-input="nearest">
-                                      <input type="text" name="salary_end_date" class="form-control datetimepicker-input" @if($salary->end_date) value="{{date('d/m/Y', strtotime($salary->end_date))}}" @endif/>
+                                      <input type="text" name="salary_end_date" class="form-control datetimepicker-input" data-target="#salary_end_date" @if($salary->end_date) value="{{date('d/m/Y', strtotime($salary->end_date))}}" @endif/>
                                       <div class="input-group-append" data-target="#salary_end_date" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
