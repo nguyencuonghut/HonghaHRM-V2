@@ -76,85 +76,113 @@
             </ul>
           </li>
 
-          <!-- Canidate -->
-          {{-- <li class="nav-item">
-            <a href="{{route('candidates.index')}}" class="nav-link {{ Request::is('candidates*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-plus"></i>
-              <p>
-                Ứng viên
-              </p>
-            </a>
-          </li> --}}
-
-          <!-- Employee -->
-          <li class="nav-item">
-            <a href="{{route('employees.index')}}" class="nav-link {{ Request::is('employees*') ? 'active' : '' }}">
+          <!-- Hồ sơ nhân sự -->
+          <li class="nav-item
+                    {{
+                        Request::is('employees*')
+                        || Request::is('join_dates*')
+                        || Request::is('probations*')
+                        || Request::is('salaries*')
+                        || Request::is('contracts*')
+                        || Request::is('appendixes*')
+                        || Request::is('works*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('employees.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('employees*')
+                            || Request::is('join_dates*')
+                            || Request::is('probations*')
+                            || Request::is('salaries*')
+                            || Request::is('contracts*')
+                            || Request::is('appendixes*')
+                            || Request::is('works*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Nhân sự
+                Hồ sơ nhân sự
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+                <!-- Employee -->
+                <li class="nav-item">
+                  <a href="{{route('employees.index')}}" class="nav-link {{ Request::is('employees*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Nhân sự
+                    </p>
+                  </a>
+                </li>
 
-          <!-- Contract -->
-          <li class="nav-item">
-            <a href="{{route('contracts.index')}}" class="nav-link {{ Request::is('contracts*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-file-signature"></i>
-              <p>
-                Hợp đồng
-              </p>
-            </a>
-          </li>
+                <!-- Ngày vào -->
+                <li class="nav-item">
+                    <a href="{{route('join_dates.index')}}" class="nav-link {{ Request::is('join_dates*') ? 'active' : '' }}">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                    <p>
+                        Ngày vào
+                    </p>
+                    </a>
+                </li>
 
-          <!-- Appendix -->
-          <li class="nav-item">
-            <a href="{{route('appendixes.index')}}" class="nav-link {{ Request::is('appendixes*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-code-branch"></i>
-              <p>
-                Phụ lục
-              </p>
-            </a>
-          </li>
+                <!-- Probation -->
+                <li class="nav-item">
+                  <a href="{{route('probations.index')}}" class="nav-link {{ Request::is('probations*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Thử việc
+                    </p>
+                  </a>
+                </li>
 
-          <!-- Work -->
-          <li class="nav-item">
-            <a href="{{route('works.index')}}" class="nav-link {{ Request::is('works*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-clock"></i>
-              <p>
-                Công tác
-              </p>
-            </a>
-          </li>
+                <!-- Salry -->
+                <li class="nav-item">
+                  <a href="{{route('salaries.index')}}" class="nav-link {{ Request::is('salaries*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Lương
+                    </p>
+                  </a>
+                </li>
 
-          <!-- Ngày vào -->
-          <li class="nav-item">
-            <a href="{{route('join_dates.index')}}" class="nav-link {{ Request::is('join_dates*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-calendar-check"></i>
-              <p>
-                Ngày vào
-              </p>
-            </a>
-          </li>
+                <!-- Contract -->
+                <li class="nav-item">
+                  <a href="{{route('contracts.index')}}" class="nav-link {{ Request::is('contracts*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Hợp đồng
+                    </p>
+                  </a>
+                </li>
 
+                <!-- Appendix -->
+                <li class="nav-item">
+                  <a href="{{route('appendixes.index')}}" class="nav-link {{ Request::is('appendixes*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Phụ lục
+                    </p>
+                  </a>
+                </li>
 
-          <!-- Salry -->
-          <li class="nav-item">
-            <a href="{{route('salaries.index')}}" class="nav-link {{ Request::is('salaries*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-hand-holding-usd"></i>
-              <p>
-                Lương
-              </p>
-            </a>
-          </li>
-
-          <!-- Probation -->
-          <li class="nav-item">
-            <a href="{{route('probations.index')}}" class="nav-link {{ Request::is('probations*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-hourglass-start"></i>
-              <p>
-                Thử việc
-              </p>
-            </a>
+                <!-- Work -->
+                <li class="nav-item">
+                  <a href="{{route('works.index')}}" class="nav-link {{ Request::is('works*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Công tác
+                    </p>
+                  </a>
+                </li>
+            </ul>
           </li>
 
           <!-- Insurance -->
