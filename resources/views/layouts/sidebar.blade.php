@@ -185,6 +185,71 @@
             </ul>
           </li>
 
+          <!-- Đánh giá nhân sự -->
+          <li class="nav-item
+                    {{
+                        Request::is('kpis*')
+                        || Request::is('year_reviews*')
+                        || Request::is('rewards*')
+                        || Request::is('disciplines*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('kpis.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('kpis*')
+                            || Request::is('year_reviews*')
+                            || Request::is('rewards*')
+                            || Request::is('disciplines*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
+                <i class="nav-icon fas fa-calendar-check"></i>
+              <p>
+                Đánh giá nhân sự
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <!-- Recruitment -->
+              <li class="nav-item">
+                <a href="{{route('kpis.index')}}" class="nav-link {{ Request::is('kpis*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>KPI</p>
+                </a>
+              </li>
+
+              <!-- Canidate -->
+              <li class="nav-item">
+                <a href="{{route('year_reviews.index')}}" class="nav-link {{ Request::is('year_reviews*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Đánh giá năm</p>
+                </a>
+              </li>
+
+              <!-- Reward -->
+              <li class="nav-item">
+                <a href="{{route('rewards.index')}}" class="nav-link {{ Request::is('rewards*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Khen thưởng</p>
+                </a>
+              </li>
+
+              <!-- Discipline -->
+              <li class="nav-item">
+                <a href="{{route('disciplines.index')}}" class="nav-link {{ Request::is('disciplines*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Kỷ luật</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <!-- Insurance -->
           <li class="nav-item">
             <a href="{{route('insurances.index')}}" class="nav-link {{ Request::is('insurances*') ? 'active' : '' }}">
@@ -231,46 +296,6 @@
                 <i class="nav-icon fas fa-hand-holding-heart"></i>
               <p>
                 Phúc lợi
-              </p>
-            </a>
-          </li>
-
-          <!-- Kpi -->
-          <li class="nav-item">
-            <a href="{{route('kpis.index')}}" class="nav-link {{ Request::is('kpis*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                KPI
-              </p>
-            </a>
-          </li>
-
-          <!-- YearReview -->
-          <li class="nav-item">
-            <a href="{{route('year_reviews.index')}}" class="nav-link {{ Request::is('year_reviews*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-calendar-check"></i>
-              <p>
-                Đánh giá năm
-              </p>
-            </a>
-          </li>
-
-          <!-- Reward -->
-          <li class="nav-item">
-            <a href="{{route('rewards.index')}}" class="nav-link {{ Request::is('rewards*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-medal"></i>
-              <p>
-                Khen thưởng
-              </p>
-            </a>
-          </li>
-
-          <!-- Discipline -->
-          <li class="nav-item">
-            <a href="{{route('disciplines.index')}}" class="nav-link {{ Request::is('disciplines*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-gavel"></i>
-              <p>
-                Kỷ luật
               </p>
             </a>
           </li>
