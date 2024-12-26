@@ -22,6 +22,17 @@
             </a>
           </li>
 
+          <!-- Calendar -->
+          <li class="nav-item">
+            <a href="{{route('calendars.index')}}" class="nav-link {{ Request::is('calendars*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Lịch
+              </p>
+            </a>
+          </li>
+
+          <!-- Logout -->
           <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link">
               <i class="nav-icon fas fa-power-off"></i>
@@ -349,16 +360,6 @@
                 </a>
               </li>
             </ul>
-          </li>
-
-          <!-- Calendar -->
-          <li class="nav-item">
-            <a href="{{route('calendars.index')}}" class="nav-link {{ Request::is('calendars*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-calendar-alt"></i>
-              <p>
-                Lịch
-              </p>
-            </a>
           </li>
 
           <!-- Reports -->
