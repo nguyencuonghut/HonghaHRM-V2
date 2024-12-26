@@ -306,24 +306,49 @@
             </ul>
           </li>
 
-          <!-- Regime -->
-          <li class="nav-item">
-            <a href="{{route('regimes.index')}}" class="nav-link {{ Request::is('regimes*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-hands"></i>
-              <p>
-                Chế độ
-              </p>
-            </a>
-          </li>
-
-          <!-- Welfare -->
-          <li class="nav-item">
-            <a href="{{route('welfares.index')}}" class="nav-link {{ Request::is('welfares*') ? 'active' : '' }}">
+          <!-- Chế độ phúc lợi -->
+          <li class="nav-item
+                    {{
+                        Request::is('regimes*')
+                        || Request::is('welfares*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('regimes.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('regimes*')
+                            || Request::is('welfares*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
                 <i class="nav-icon fas fa-hand-holding-heart"></i>
               <p>
-                Phúc lợi
+                Chế độ phúc lợi
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <!-- Regime -->
+              <li class="nav-item">
+                <a href="{{route('regimes.index')}}" class="nav-link {{ Request::is('regimes*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Chế độ</p>
+                </a>
+              </li>
+
+              <!-- Welfares -->
+              <li class="nav-item">
+                <a href="{{route('welfares.index')}}" class="nav-link {{ Request::is('welfares*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Phúc lợi</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <!-- Calendar -->
