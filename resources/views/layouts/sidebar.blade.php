@@ -31,8 +31,25 @@
             </a>
           </li>
 
-          <li class="nav-item {{ Request::is('recruitments*') ? 'menu-open' : '' }}">
-            <a href="{{route('recruitments.index')}}" class="nav-link {{ Request::is('recruitments*') ? 'active' : '' }}">
+          <li class="nav-item
+                    {{
+                        Request::is('recruitments*')
+                        || Request::is('candidates*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('recruitments.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('recruitments*')
+                            || Request::is('candidates*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
               <i class="nav-icon fas fa-search-location"></i>
               <p>
                 Tuyển dụng
@@ -40,24 +57,34 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <!-- Recruitment -->
               <li class="nav-item">
                 <a href="{{route('recruitments.index')}}" class="nav-link {{ Request::is('recruitments*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Yêu cầu</p>
                 </a>
               </li>
+
+              <!-- Canidate -->
+              <li class="nav-item">
+                <a href="{{route('candidates.index')}}"
+                    class="nav-link {{ Request::is('candidates*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Ứng viên</p>
+                </a>
+              </li>
             </ul>
           </li>
 
           <!-- Canidate -->
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="{{route('candidates.index')}}" class="nav-link {{ Request::is('candidates*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-plus"></i>
               <p>
                 Ứng viên
               </p>
             </a>
-          </li>
+          </li> --}}
 
           <!-- Employee -->
           <li class="nav-item">
