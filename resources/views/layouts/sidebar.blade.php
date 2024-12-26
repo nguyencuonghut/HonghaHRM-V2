@@ -771,34 +771,61 @@
             </a>
           </li>
 
-          <!-- Province -->
-          <li class="nav-item">
-            <a href="{{route('provinces.index')}}" class="nav-link {{ Request::is('provinces*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-map-marked-alt"></i>
-              <p>
-                Tỉnh
-              </p>
-            </a>
-          </li>
-
-          <!-- District -->
-          <li class="nav-item">
-            <a href="{{route('districts.index')}}" class="nav-link {{ Request::is('districts*') ? 'active' : '' }}">
+          <!-- Hành chính -->
+          <li class="nav-item
+                    {{
+                        Request::is('provinces*')
+                        || Request::is('districts*')
+                        || Request::is('communes*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('provinces.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('provinces*')
+                            || Request::is('districts*')
+                            || Request::is('communes*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
               <i class="nav-icon fas fa-map-marker-alt"></i>
               <p>
-                Quận Huyện
+                Hành chính
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              <!-- Province -->
+              <li class="nav-item">
+                <a href="{{route('provinces.index')}}" class="nav-link {{ Request::is('provinces*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Thành phố/Tỉnh</p>
+                </a>
+              </li>
 
-          <!-- Commune -->
-          <li class="nav-item">
-            <a href="{{route('communes.index')}}" class="nav-link {{ Request::is('communes*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-map-pin"></i>
-              <p>
-                Phường xã
-              </p>
-            </a>
+              <!-- District -->
+              <li class="nav-item">
+                <a href="{{route('districts.index')}}"
+                    class="nav-link {{ Request::is('districts*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Quận/Huyện</p>
+                </a>
+              </li>
+
+              <!-- Commune -->
+              <li class="nav-item">
+                <a href="{{route('communes.index')}}"
+                    class="nav-link {{ Request::is('communes*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Phường/Xã</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <!-- School -->
