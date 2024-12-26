@@ -751,26 +751,6 @@
             </ul>
           </li>
 
-          <!-- Cách thức -->
-          <li class="nav-item">
-            <a href="{{route('methods.index')}}" class="nav-link {{ Request::is('methods*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-list-alt"></i>
-              <p>
-                Cách thức
-              </p>
-            </a>
-          </li>
-
-          <!-- Channel -->
-          <li class="nav-item">
-            <a href="{{route('channels.index')}}" class="nav-link {{ Request::is('channels*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-bullhorn"></i>
-              <p>
-                Phương tiện
-              </p>
-            </a>
-          </li>
-
           <!-- Hành chính -->
           <li class="nav-item
                     {{
@@ -828,44 +808,114 @@
             </ul>
           </li>
 
-          <!-- School -->
-          <li class="nav-item">
-            <a href="{{route('schools.index')}}" class="nav-link {{ Request::is('schools*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-graduation-cap"></i>
-              <p>
-                Trường
-              </p>
-            </a>
-          </li>
-
-          <!-- Degree -->
-          <li class="nav-item">
-            <a href="{{route('degrees.index')}}" class="nav-link {{ Request::is('degrees*') ? 'active' : '' }}">
+          <!-- Giáo dục -->
+          <li class="nav-item
+                    {{
+                        Request::is('schools*')
+                        || Request::is('degrees*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('schools.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('schools*')
+                            || Request::is('degrees*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
-                Trình độ
+                Giáo dục
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <!-- School -->
+              <li class="nav-item">
+                <a href="{{route('schools.index')}}" class="nav-link {{ Request::is('schools*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Trường</p>
+                </a>
+              </li>
+
+              <!-- Degree -->
+              <li class="nav-item">
+                <a href="{{route('degrees.index')}}" class="nav-link {{ Request::is('degrees*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Trình độ</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
-          <!-- ContractType -->
-          <li class="nav-item">
-            <a href="{{route('contract_types.index')}}" class="nav-link {{ Request::is('contract_types*') ? 'active' : '' }}">
+          <!-- Khác -->
+          <li class="nav-item
+                    {{
+                        Request::is('methods*')
+                        || Request::is('channels*')
+                        || Request::is('contract_types*')
+                        || Request::is('doc_types*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('methods.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('methods*')
+                            || Request::is('channels*')
+                            || Request::is('contract_types*')
+                            || Request::is('doc_types*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
-                Loại HĐ
+                Khác
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              <!-- Method -->
+              <li class="nav-item">
+                <a href="{{route('methods.index')}}" class="nav-link {{ Request::is('methods*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Cách thức</p>
+                </a>
+              </li>
 
-          <!-- DocType -->
-          <li class="nav-item">
-            <a href="{{route('doc_types.index')}}" class="nav-link {{ Request::is('doc_types*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Loại giấy tờ
-              </p>
-            </a>
+              <!-- Channel -->
+              <li class="nav-item">
+                <a href="{{route('channels.index')}}" class="nav-link {{ Request::is('channels*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Phương tiện</p>
+                </a>
+              </li>
+
+              <!-- Contract Type -->
+              <li class="nav-item">
+                <a href="{{route('contract_types.index')}}" class="nav-link {{ Request::is('contract_types*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Loại hợp đồng</p>
+                </a>
+              </li>
+
+              <!-- Document Type -->
+              <li class="nav-item">
+                <a href="{{route('doc_types.index')}}" class="nav-link {{ Request::is('doc_types*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Loại giấy tờ</p>
+                </a>
+              </li>
+            </ul>
           </li>
           @endif
         </ul>
