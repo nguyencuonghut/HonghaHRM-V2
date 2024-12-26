@@ -666,64 +666,89 @@
             </a>
           </li>
 
-          <!-- Phòng/ban -->
-          <li class="nav-item">
-            <a href="{{route('departments.index')}}" class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
+          <!-- Cơ cấu tổ chức -->
+          <li class="nav-item
+                    {{
+                        Request::is('departments*')
+                        || Request::is('divisions*')
+                        || Request::is('positions*')
+                        || Request::is('department_managers*')
+                        || Request::is('department_vices*')
+                        || Request::is('division_managers*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('departments.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('departments*')
+                            || Request::is('divisions*')
+                            || Request::is('positions*')
+                            || Request::is('department_managers*')
+                            || Request::is('department_vices*')
+                            || Request::is('division_managers*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
               <i class="nav-icon fas fa-sitemap"></i>
               <p>
-                Phòng/ban
+                Cơ cấu tổ chức
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              <!-- Department -->
+              <li class="nav-item">
+                <a href="{{route('departments.index')}}" class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Phòng ban</p>
+                </a>
+              </li>
 
-          <!-- Bộ phận -->
-          <li class="nav-item">
-            <a href="{{route('divisions.index')}}" class="nav-link {{ Request::is('divisions*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-code-branch"></i>
-              <p>
-                Bộ phận
-              </p>
-            </a>
-          </li>
+              <!-- Division -->
+              <li class="nav-item">
+                <a href="{{route('divisions.index')}}" class="nav-link {{ Request::is('divisions*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Bộ phận</p>
+                </a>
+              </li>
 
-          <!-- Vị trí -->
-          <li class="nav-item">
-            <a href="{{route('positions.index')}}" class="nav-link {{ Request::is('positions*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-tie"></i>
-              <p>
-                Vị trí
-              </p>
-            </a>
-          </li>
+              <!-- Position -->
+              <li class="nav-item">
+                <a href="{{route('positions.index')}}" class="nav-link {{ Request::is('positions*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Vị trí</p>
+                </a>
+              </li>
 
-          <!-- Lãnh đạo phòng/ban -->
-          <li class="nav-item">
-            <a href="{{route('department_managers.index')}}" class="nav-link {{ Request::is('department_managers*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-bookmark"></i>
-              <p>
-                QL phòng/ban
-              </p>
-            </a>
-          </li>
+              <!-- Department Manager -->
+              <li class="nav-item">
+                <a href="{{route('department_managers.index')}}" class="nav-link {{ Request::is('department_managers*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Trưởng phòng</p>
+                </a>
+              </li>
 
-          <!-- Phó phòng -->
-          <li class="nav-item">
-            <a href="{{route('department_vices.index')}}" class="nav-link {{ Request::is('department_vices*') ? 'active' : '' }}">
-              <i class="nav-icon far fa-bookmark"></i>
-              <p>
-                Phó phòng
-              </p>
-            </a>
-          </li>
+              <!-- Department Vice -->
+              <li class="nav-item">
+                <a href="{{route('department_vices.index')}}" class="nav-link {{ Request::is('department_vices*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Phó phòng</p>
+                </a>
+              </li>
 
-          <!-- Lãnh đạo bộ phận -->
-          <li class="nav-item">
-            <a href="{{route('division_managers.index')}}" class="nav-link {{ Request::is('division_managers*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-thumbtack"></i>
-              <p>
-                QL bộ phận
-              </p>
-            </a>
+              <!-- Divisions Manager -->
+              <li class="nav-item">
+                <a href="{{route('division_managers.index')}}" class="nav-link {{ Request::is('division_managers*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>QL bộ phận</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <!-- Cách thức -->
