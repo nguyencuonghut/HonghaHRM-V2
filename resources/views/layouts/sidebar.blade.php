@@ -250,34 +250,60 @@
             </ul>
           </li>
 
-          <!-- Insurance -->
-          <li class="nav-item">
-            <a href="{{route('insurances.index')}}" class="nav-link {{ Request::is('insurances*') ? 'active' : '' }}">
+
+          <!-- Bảo hiểm -->
+          <li class="nav-item
+                    {{
+                        Request::is('insurances*')
+                        || Request::is('increase_insurances*')
+                        || Request::is('decrease_insurances*')
+                        ?
+                        'menu-open'
+                        :
+                        ''
+                    }}">
+            <a href="{{route('insurances.index')}}"
+                class="nav-link
+                        {{
+                            Request::is('insurances*')
+                            || Request::is('increase_insurances*')
+                            || Request::is('decrease_insurances*')
+                            ?
+                            'active'
+                            :
+                            ''
+                        }}">
                 <i class="nav-icon fas fa-hand-holding-medical"></i>
               <p>
                 Bảo hiểm
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              <!-- Recruitment -->
+              <li class="nav-item">
+                <a href="{{route('insurances.index')}}" class="nav-link {{ Request::is('insurances*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Bảo hiểm</p>
+                </a>
+              </li>
 
-          <!-- Increase Insurance -->
-          <li class="nav-item">
-            <a href="{{route('increase_insurances.index')}}" class="nav-link {{ Request::is('increase_insurances*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-hand-holding-medical"></i>
-              <p>
-                Tăng BHXH
-              </p>
-            </a>
-          </li>
+              <!-- Insurance -->
+              <li class="nav-item">
+                <a href="{{route('increase_insurances.index')}}" class="nav-link {{ Request::is('increase_insurances*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Tăng BHXH</p>
+                </a>
+              </li>
 
-          <!-- Decrease Insurance -->
-          <li class="nav-item">
-            <a href="{{route('decrease_insurances.index')}}" class="nav-link {{ Request::is('decrease_insurances*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-hand-holding-medical"></i>
-              <p>
-                Giảm BHXH
-              </p>
-            </a>
+              <!-- Giảm BHXH -->
+              <li class="nav-item">
+                <a href="{{route('decrease_insurances.index')}}" class="nav-link {{ Request::is('decrease_insurances*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Giảm BHXH</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <!-- Regime -->
