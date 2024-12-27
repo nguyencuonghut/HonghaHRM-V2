@@ -37,6 +37,11 @@
                     <a href="{{ route('candidates.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
 
+                @can('import', App\Models\Candidate::class)
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_candidates">
+                    <i class="fas fa-upload"></i>
+                    </button>
+                @endcan
                 @can('export', App\Models\Candidate::class)
                     <div class="btn-group float-right">
                         &nbsp;
@@ -59,6 +64,38 @@
                   </tr>
                   </thead>
                 </table>
+
+
+                <!-- modal -->
+                <form class="form-horizontal" method="post" action="{{ route('candidates.import') }}" enctype="multipart/form-data" name="import-candidates" id="import-candidates">
+                    {{ csrf_field() }}
+                    <div class="modal fade" id="import_candidates">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Import ứng viên</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group mb-4">
+                                        <div class="custom-file text-left">
+                                            <input type="file" name="file" class="custom-file-input" id="customFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                            <label class="custom-file-label" for="customFile">Chọn file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Import</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </div>
+                  </form>
+                  <!-- /.modal -->
               </div>
             </div>
         </div>
@@ -81,6 +118,12 @@
 
 <script>
     $(function () {
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
       $("#candidates-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         buttons: [

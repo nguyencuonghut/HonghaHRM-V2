@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportCandidateRequest;
 use App\Http\Requests\StoreCandidateRequest;
+use App\Imports\CandidateImport;
 use App\Models\Candidate;
 use App\Models\CandidateSchool;
 use App\Models\Commune;
@@ -16,6 +18,7 @@ use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Helper\Html;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -84,7 +87,7 @@ class CandidateController extends Controller
         $candidate->commune_id = $request->commune_id;
         $candidate->experience = $request->experience;
         if ($request->note) {
-            $candidate->issued_by = $request->note;
+            $candidate->note = $request->note;
         }
         $candidate->creator_id = Auth::user()->id;
         $candidate->save();
@@ -163,7 +166,7 @@ class CandidateController extends Controller
         $candidate->commune_id = $request->commune_id;
         $candidate->experience = $request->experience;
         if ($request->note) {
-            $candidate->issued_by = $request->note;
+            $candidate->note = $request->note;
         }
         $candidate->creator_id = Auth::user()->id;
         $candidate->save();
@@ -224,7 +227,11 @@ class CandidateController extends Controller
                 return $data->phone;
             })
             ->editColumn('addr', function ($data) {
-                return $data->address . ', ' . $data->commune->name .', ' .  $data->commune->district->name .', ' . $data->commune->district->province->name;
+                if ($data->address) {
+                    return $data->address . ', ' . $data->commune->name .', ' .  $data->commune->district->name .', ' . $data->commune->district->province->name;
+                } else {
+                    return $data->commune->name .', ' .  $data->commune->district->name .', ' . $data->commune->district->province->name;
+                }
             })
             ->editColumn('cccd', function ($data) {
                 return $data->cccd;
@@ -283,20 +290,21 @@ class CandidateController extends Controller
         $w_sheet->getColumnDimension('J')->setWidth(10);//Giới tính
         $w_sheet->getColumnDimension('K')->setWidth(25);//Tình trạng hôn nhân
         $w_sheet->getColumnDimension('L')->setWidth(50);//Trường
-        $w_sheet->getColumnDimension('M')->setWidth(50);//Ngành
-        $w_sheet->getColumnDimension('N')->setWidth(50);//Vị trí ứng tuyển
-        $w_sheet->getColumnDimension('O')->setWidth(30);//Nơi làm việc mong muốn
-        $w_sheet->getColumnDimension('P')->setWidth(50);//Kinh nghiệm
-        $w_sheet->getColumnDimension('Q')->setWidth(25);//Lương mong muốn
-        $w_sheet->getColumnDimension('R')->setWidth(25);//Số đt người thân
-        $w_sheet->getColumnDimension('S')->setWidth(25);//Nguồn tin tuyển dụng
-        $w_sheet->getColumnDimension('T')->setWidth(30);//Ghi chú
+        $w_sheet->getColumnDimension('M')->setWidth(25);//Trình độ
+        $w_sheet->getColumnDimension('N')->setWidth(50);//Ngành
+        $w_sheet->getColumnDimension('O')->setWidth(50);//Vị trí ứng tuyển
+        $w_sheet->getColumnDimension('P')->setWidth(30);//Nơi làm việc mong muốn
+        $w_sheet->getColumnDimension('Q')->setWidth(50);//Kinh nghiệm
+        $w_sheet->getColumnDimension('R')->setWidth(25);//Lương mong muốn
+        $w_sheet->getColumnDimension('S')->setWidth(25);//Số đt người thân
+        $w_sheet->getColumnDimension('T')->setWidth(25);//Nguồn tin tuyển dụng
+        $w_sheet->getColumnDimension('U')->setWidth(30);//Ghi chú
 
         $w_sheet->getStyle('B2:W2')->getFont()->setBold(true);
         $w_sheet->mergeCells("B2:I2");
 
-        $w_sheet->getStyle('B5:T5')->getFont()->setBold(true);
-        $w_sheet->getStyle('B5:T5')
+        $w_sheet->getStyle('B5:U5')->getFont()->setBold(true);
+        $w_sheet->getStyle('B5:U5')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
@@ -332,14 +340,15 @@ class CandidateController extends Controller
         $w_sheet->setCellValue('J5', 'Giới tính');
         $w_sheet->setCellValue('K5', 'Tình trạng hôn nhân');
         $w_sheet->setCellValue('L5', 'Trường');
-        $w_sheet->setCellValue('M5', 'Ngành học');
-        $w_sheet->setCellValue('N5', 'Ứng tuyển');
-        $w_sheet->setCellValue('O5', 'Nơi làm việc mong muốn');
-        $w_sheet->setCellValue('P5', 'Kinh nghiệm');
-        $w_sheet->setCellValue('Q5', 'Lương mong muốn');
-        $w_sheet->setCellValue('R5', 'Số ĐT người thân');
-        $w_sheet->setCellValue('S5', 'Nguồn tin tuyển dụng');
-        $w_sheet->setCellValue('T5', 'Ghi chú');
+        $w_sheet->setCellValue('M5', 'Trình độ');
+        $w_sheet->setCellValue('N5', 'Ngành học');
+        $w_sheet->setCellValue('O5', 'Ứng tuyển');
+        $w_sheet->setCellValue('P5', 'Nơi làm việc mong muốn');
+        $w_sheet->setCellValue('Q5', 'Kinh nghiệm');
+        $w_sheet->setCellValue('R5', 'Lương mong muốn');
+        $w_sheet->setCellValue('S5', 'Số ĐT người thân');
+        $w_sheet->setCellValue('T5', 'Nguồn tin tuyển dụng');
+        $w_sheet->setCellValue('U5', 'Ghi chú');
 
         //Fill the data
         foreach ($candidates as $key => $value) {
@@ -404,11 +413,14 @@ class CandidateController extends Controller
                 $school_str = implode(' | ', $school_arr);
             }
             $w_sheet->setCellValue($cell, $school_str);
-            //Ngành học
+            //Trình độ
             $cell = 'M' . $index;
-            $w_sheet->setCellValue($cell, $major_str . ' - ' . $degree_str);
-            //Vị trí ứng tuyển
+            $w_sheet->setCellValue($cell, $degree_str);
+            //Ngành học
             $cell = 'N' . $index;
+            $w_sheet->setCellValue($cell, $major_str);
+            //Vị trí ứng tuyển
+            $cell = 'O' . $index;
             $recruitments_str = '';
             foreach ($value->recruitments as $recruitment) {
                 $recruitments_str = $recruitments_str . ' - ' . $recruitment->position->name . '<br>';
@@ -417,7 +429,7 @@ class CandidateController extends Controller
             $recruitments_HTMLCODE = $recruitments_html->toRichTextObject($recruitments_str);
             $w_sheet->setCellValue($cell, $recruitments_HTMLCODE);
             //Nơi làm việc mong muốn
-            $cell = 'O' . $index;
+            $cell = 'P' . $index;
             $recruitment_candidate_ids = RecruitmentCandidate::where('candidate_id', $value->id)->pluck('id')->toArray();
             $filters = Filter::whereIn('recruitment_candidate_id', $recruitment_candidate_ids)->get();
             $work_location_str = '';
@@ -436,13 +448,13 @@ class CandidateController extends Controller
             $experience_html = new Html();
             $experience_HTMLCODE = $experience_html->toRichTextObject($value->experience);
 
-            $cell = 'P' . $index;
+            $cell = 'Q' . $index;
             $w_sheet->setCellValue($cell, $experience_HTMLCODE);
             //Lương mong muốn
-            $cell = 'Q' . $index;
+            $cell = 'R' . $index;
             $w_sheet->setCellValue($cell, $salary_HTMLCODE);
             //Số ĐT người thân
-            $cell = 'R' . $index;
+            $cell = 'S' . $index;
             $w_sheet->setCellValue($cell, $value->relative_phone);
             //Nguồn tin tuyển dụng
             $recruitment_candidates = RecruitmentCandidate::where('candidate_id', $value->id)->get();
@@ -453,10 +465,10 @@ class CandidateController extends Controller
             $channel_html = new Html();
             $channel_HTMLCODE = $channel_html->toRichTextObject($channel_str);
 
-            $cell = 'S' . $index;
+            $cell = 'T' . $index;
             $w_sheet->setCellValue($cell, $channel_HTMLCODE);
             //Ghi chú
-            $cell = 'T' . $index;
+            $cell = 'U' . $index;
             $w_sheet->setCellValue($cell, $value->note);
         }
 
@@ -467,5 +479,42 @@ class CandidateController extends Controller
 
         Alert::toast('Tải file thành công!!', 'success', 'top-right');
         return response()->download($file_name)->deleteFileAfterSend(true);
+    }
+
+
+    public function import(ImportCandidateRequest $request)
+    {
+        try {
+            $import = new CandidateImport;
+            Excel::import($import, $request->file('file')->store('files'));
+            $rows = $import->getRowCount();
+            $invalid_province_name_row = $import->getInvalidProvinceNameRow();
+            $invalid_school_name_row = $import->getInvalidSchoolNameRow();
+            $duplicates = $import->getDuplicateCount();
+            $duplicate_rows = $import->getDuplicateRows();
+
+            if ($duplicates) {
+                $duplicate_rows_list = implode(', ', $duplicate_rows);
+                Alert::toast('Các dòng bị trùng lặp là '. $duplicate_rows_list);
+                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công! Có ' . $duplicates . ' dòng bị trùng lặp! Lặp tại dòng số: ' . $duplicate_rows_list, 'success', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_province_name_row) {
+                Alert::toast('Không tìm địa chỉ tương ứng tại dòng thứ ' . $invalid_province_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_school_name_row) {
+                Alert::toast('Không tìm thấy tên trường, trình độ tại dòng thứ ' . $invalid_school_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            Alert::toast('Có lỗi xảy ra trong quá trình import dữ liệu. Vui lòng kiểm tra lại file!', 'error', 'top-right');
+            return redirect()->back();
+        }
     }
 }

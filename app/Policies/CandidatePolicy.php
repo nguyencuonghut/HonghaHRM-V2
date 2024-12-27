@@ -68,4 +68,9 @@ class CandidatePolicy
     {
         return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
     }
+
+    public function import(User $user): bool
+    {
+        return 'Admin' == $user->role->name || 'Nhân sự' == $user->role->name;
+    }
 }
