@@ -201,6 +201,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('offers', OfferController::class, ['names' => 'offers']);
 
     //Employees
+    Route::post('employees/import', [EmployeeController::class, 'import'])->name('employees.import');
     Route::get('employees/gallery', [EmployeeController::class, 'gallery'])->name('employees.gallery');
     Route::get('employees/export', [EmployeeController::class, 'export'])->name('employees.export');
     Route::get('employees/data', [EmployeeController::class, 'anyData'])->name('employees.data');

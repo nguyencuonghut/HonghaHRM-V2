@@ -176,7 +176,6 @@ class CandidateController extends Controller
 
         // Create CandidateSchool
         foreach ($request->addmore as $item) {
-            //dd($item['major']);
             $candidate_school = new CandidateSchool();
             $candidate_school->candidate_id = $candidate->id;
             $candidate_school->degree_id = $item['degree_id'];
