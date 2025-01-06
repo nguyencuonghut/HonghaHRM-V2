@@ -230,6 +230,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('appendixes', AppendixController::class, ['names' => 'appendixes']);
 
     //Works
+    Route::post('works/import', [WorkController::class, 'import'])->name('works.import');
     Route::get('works/data', [WorkController::class, 'anyData'])->name('works.data');
     Route::post('works/off/{work}', [WorkController::class, 'off'])->name('works.off');
     Route::get('works/off/{work}', [WorkController::class, 'getOff'])->name('works.getOff');

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportWorkRequest;
 use App\Http\Requests\OffWorkRequest;
 use App\Http\Requests\StoreWorkRequest;
 use App\Http\Requests\UpdateWorkRequest;
+use App\Imports\WorkImport;
 use App\Models\DecreaseInsurance;
 use App\Models\IncreaseInsurance;
 use App\Models\OffType;
@@ -15,6 +17,7 @@ use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -262,5 +265,50 @@ class WorkController extends Controller
             })
             ->rawColumns(['employee_name', 'status', 'off_reason'])
             ->make(true);
+    }
+
+    public function import(ImportWorkRequest $request)
+    {
+        try {
+            $import = new WorkImport;
+            Excel::import($import, $request->file('file')->store('files'));
+            $rows = $import->getRowCount();
+            $invalid_contract_code_row = $import->getInvalidContractCodeRow();
+            $invalid_employee_name_row = $import->getInvalidEmployeeNameRow();
+            $invalid_position_name_row = $import->getInvalidPositionNameRow();
+            $invalid_on_type_name_row = $import->getInvalidOnTypeNameRow();
+            $invalid_off_type_name_row = $import->getInvalidOffTypeNameRow();
+
+            if ($invalid_contract_code_row) {
+                Alert::toast('Không tìm thấy mã hợp đồng tại dòng thứ ' . $invalid_contract_code_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_employee_name_row) {
+                Alert::toast('Không tìm thấy tên nhân viên tại dòng thứ ' . $invalid_employee_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_position_name_row) {
+                Alert::toast('Không tìm thấy vị trí tại dòng thứ ' . $invalid_position_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_on_type_name_row) {
+                Alert::toast('Không tìm thấy OnType tại dòng thứ ' . $invalid_on_type_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_off_type_name_row) {
+                Alert::toast('Không tìm thấy OffType tại dòng thứ ' . $invalid_off_type_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            Alert::toast('Có lỗi xảy ra trong quá trình import dữ liệu. Vui lòng kiểm tra lại file!', 'error', 'top-right');
+            return redirect()->back();
+        }
     }
 }
