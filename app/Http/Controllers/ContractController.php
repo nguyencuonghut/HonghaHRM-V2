@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportContractRequest;
 use App\Http\Requests\OffContractRequest;
 use App\Http\Requests\StoreContractRequest;
 use App\Http\Requests\UpdateContractRequest;
+use App\Imports\ContractImport;
 use App\Models\Contract;
 use App\Models\ContractType;
 use App\Models\Employee;
@@ -16,6 +18,7 @@ use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -373,6 +376,48 @@ class ContractController extends Controller
                 break;
             case 3: //HĐ cộng tác viên
                 break;
+        }
+    }
+
+    public function import(ImportContractRequest $request)
+    {
+        try {
+            $import = new ContractImport;
+            Excel::import($import, $request->file('file')->store('files'));
+            $rows = $import->getRowCount();
+            $invalid_employee_name_row = $import->getInvalidEmployeeNameRow();
+            $invalid_position_name_row = $import->getInvalidPositionNameRow();
+            $invalid_contract_type_name_row = $import->getInvalidContractTypeNameRow();
+            $duplicates = $import->getDuplicateCount();
+            $duplicate_rows = $import->getDuplicateRows();
+
+            if ($duplicates) {
+                $duplicate_rows_list = implode(', ', $duplicate_rows);
+                Alert::toast('Các dòng bị trùng lặp là '. $duplicate_rows_list);
+                Alert::toast('Import '. $rows . ' dòng dữ liệu thành công! Có ' . $duplicates . ' dòng bị trùng lặp! Lặp tại dòng số: ' . $duplicate_rows_list, 'success', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_employee_name_row) {
+                Alert::toast('Không tìm thấy tên nhân viên tại dòng thứ ' . $invalid_employee_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_position_name_row) {
+                Alert::toast('Không tìm thấy vị trí tại dòng thứ ' . $invalid_position_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            if ($invalid_contract_type_name_row) {
+                Alert::toast('Không tìm thấy loại hợp đồng tại dòng thứ ' . $invalid_position_name_row, 'error', 'top-right');
+                return redirect()->back();
+            }
+
+            Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            Alert::toast('Có lỗi xảy ra trong quá trình import dữ liệu. Vui lòng kiểm tra lại file!', 'error', 'top-right');
+            return redirect()->back();
         }
     }
 
