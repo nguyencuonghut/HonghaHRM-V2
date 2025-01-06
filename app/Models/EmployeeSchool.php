@@ -17,6 +17,11 @@ class EmployeeSchool extends Model
         'major',
     ];
 
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
     public function degree(): BelongsTo
     {
         return $this->belongsTo(Degree::class);

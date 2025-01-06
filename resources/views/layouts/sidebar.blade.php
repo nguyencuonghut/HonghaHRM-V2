@@ -97,6 +97,7 @@
                         || Request::is('contracts*')
                         || Request::is('appendixes*')
                         || Request::is('works*')
+                        || Request::is('employee_schools*')
                         ?
                         'menu-open'
                         :
@@ -112,6 +113,7 @@
                             || Request::is('contracts*')
                             || Request::is('appendixes*')
                             || Request::is('works*')
+                            || Request::is('employee_schools*')
                             ?
                             'active'
                             :
@@ -190,6 +192,16 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                     <p>
                       Công tác
+                    </p>
+                  </a>
+                </li>
+
+                <!-- EmployeeSchool -->
+                <li class="nav-item">
+                  <a href="{{route('employee_schools.index')}}" class="nav-link {{ Request::is('employee_schools*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                    <p>
+                      Trình độ
                     </p>
                   </a>
                 </li>

@@ -23,6 +23,7 @@ use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentReportController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeSchoolController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\FilterController;
@@ -39,7 +40,6 @@ use App\Http\Controllers\KidPolicyReportController;
 use App\Http\Controllers\KpiController;
 use App\Http\Controllers\KpiReportController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MethodController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\OffWorkReportController;
@@ -327,6 +327,11 @@ Route::group(['middleware'=>'auth:web'], function() {
     //JoinDate
     Route::get('join_dates/data', [JoinDateController::class, 'anyData'])->name('join_dates.data');
     Route::resource('join_dates', JoinDateController::class, ['names' => 'join_dates']);
+
+    //EmployeeShool
+    Route::post('employee_schools/import', [EmployeeSchoolController::class, 'import'])->name('employee_schools.import');
+    Route::get('employee_schools', [EmployeeSchoolController::class, 'index'])->name('employee_schools.index');
+    Route::get('employee_schools/data', [EmployeeSchoolController::class, 'anyData'])->name('employee_schools.data');
 
     //WorkRotationReport
     Route::get('work_rotation_reports/data', [WorkRotationReportController::class, 'anyData'])->name('work_rotation_reports.data');
