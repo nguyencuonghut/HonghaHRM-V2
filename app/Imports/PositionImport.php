@@ -33,12 +33,7 @@ class PositionImport implements ToCollection
                     $this->invalid_dept_name_row = $i;
                     break;
                 }
-                //Check if division_id is valid
                 $division = Division::where('name', $row['3'])->first();
-                if (null == $division) {
-                    $this->invalid_divi_name_row = $i;
-                    break;
-                }
 
                 if ($data->count() == 0
                     && $department) {
