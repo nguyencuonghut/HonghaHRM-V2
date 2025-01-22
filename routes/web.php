@@ -137,6 +137,7 @@ Route::group(['middleware'=>'auth:web'], function() {
     Route::resource('/provinces', ProvinceController::class);
 
     //Districts
+    Route::post('/districts/import', [DistrictController::class, 'import'])->name('districts.import');
     Route::get('/districts/data', [DistrictController::class, 'anyData'])->name('districts.data');
     Route::resource('/districts', DistrictController::class);
 

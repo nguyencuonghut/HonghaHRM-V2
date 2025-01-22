@@ -36,6 +36,11 @@
                 @can('create', App\Models\District::class)
                     <a href="{{ route('districts.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
+                @can('import', App\Models\District::class)
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_districts">
+                    <i class="fas fa-file-excel"></i> Import
+                    </button>
+                @endcan
                 <table id="districts-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -46,6 +51,37 @@
                   </tr>
                   </thead>
                 </table>
+
+                <!-- modal -->
+                <form class="form-horizontal" method="post" action="{{ route('districts.import') }}" enctype="multipart/form-data" name="import-districts" id="import-districts">
+                    {{ csrf_field() }}
+                    <div class="modal fade" id="import_districts">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Import quận/huyện</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group mb-4">
+                                        <div class="custom-file text-left">
+                                            <input type="file" name="file" class="custom-file-input" id="customFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                            <label class="custom-file-label" for="customFile">Chọn file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Import</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </div>
+                  </form>
+                  <!-- /.modal -->
               </div>
             </div>
         </div>
@@ -68,6 +104,13 @@
 
 <script>
     $(function () {
+
+    // Add the following code if you want the name of the file appear on select
+      $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+      });
+
       $("#districts-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         buttons: [
