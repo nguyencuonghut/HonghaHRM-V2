@@ -156,6 +156,18 @@ class CommuneController extends Controller
             $duplicate_rows = $import->getDuplicateRows();
             $invalid_province_name_row = $import->getInvalidProvinceNameRow();
             $invalid_district_name_row = $import->getInvalidDistrictNameRow();
+
+            if ($invalid_province_name_row || $invalid_district_name_row) {
+                if ($invalid_province_name_row) {
+                    Alert::toast('Tên thành phố/tỉnh bị sai tại dòng thứ ' . $invalid_province_name_row, 'error', 'top-right');
+                    return redirect()->back();
+                }
+                if ($invalid_district_name_row) {
+                    Alert::toast('Tên quận/huyện bị sai tại dòng thứ ' . $invalid_district_name_row, 'error', 'top-right');
+                    return redirect()->back();
+                }
+            }
+
             if ($duplicates) {
                 $duplicate_rows_list = implode(', ', $duplicate_rows);
                 Alert::toast('Các dòng bị trùng lặp là '. $duplicate_rows_list);
@@ -163,14 +175,6 @@ class CommuneController extends Controller
                 return redirect()->back();
             }
 
-            if ($invalid_province_name_row) {
-                Alert::toast('Tên thành phố/tỉnh bị sai tại dòng thứ ' . $invalid_province_name_row, 'error', 'top-right');
-                return redirect()->back();
-            }
-            if ($invalid_district_name_row) {
-                Alert::toast('Tên quận/huyện bị sai tại dòng thứ ' . $invalid_district_name_row, 'error', 'top-right');
-                return redirect()->back();
-            }
             Alert::toast('Import '. $rows . ' dòng dữ liệu thành công!', 'success', 'top-right');
             return redirect()->back();
         } catch (\Exception $e) {
