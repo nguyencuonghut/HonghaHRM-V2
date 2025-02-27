@@ -10,6 +10,7 @@ use App\Models\Position;
 use App\Models\Province;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class EmployeeImport implements ToCollection
@@ -66,26 +67,28 @@ class EmployeeImport implements ToCollection
                     $employee->commune_id = $commune->id;
 
                     //Get the temporary address information
-                    $temp_address_arr = explode(', ', $row[15]);
-                    if (4 == count($temp_address_arr)) {//have full address
-                        $temp_addr = $temp_address_arr[0];
-                        $temp_commune_str = $temp_address_arr[1];
-                        $temp_district_str = $temp_address_arr[2];
-                        $temp_province_str = $temp_address_arr[3];
-                        $temp_province = Province::where('name', $temp_province_str)->first();
-                        $temp_district = District::where('name', $temp_district_str)->where('province_id', $temp_province->id)->first();
-                        $temp_commune = Commune::where('name', $temp_commune_str)->where('district_id', $temp_district->id)->first();
-                    } else {
-                        $temp_addr = null;
-                        $temp_commune_str = $temp_address_arr[0];
-                        $temp_district_str = $temp_address_arr[1];
-                        $temp_province_str = $temp_address_arr[2];
-                        $temp_province = Province::where('name', $temp_province_str)->first();
-                        $temp_district = District::where('name', $temp_district_str)->where('province_id', $temp_province->id)->first();
-                        $temp_commune = Commune::where('name', $temp_commune_str)->where('district_id', $temp_district->id)->first();
+                    $temp_addr = '';
+                    if ($row[15]) {
+                        $temp_address_arr = explode(', ', $row[15]);
+                        if (4 == count($temp_address_arr)) {//have full address
+                            $temp_addr = $temp_address_arr[0];
+                            $temp_commune_str = $temp_address_arr[1];
+                            $temp_district_str = $temp_address_arr[2];
+                            $temp_province_str = $temp_address_arr[3];
+                            $temp_province = Province::where('name', $temp_province_str)->first();
+                            $temp_district = District::where('name', $temp_district_str)->where('province_id', $temp_province->id)->first();
+                            $temp_commune = Commune::where('name', $temp_commune_str)->where('district_id', $temp_district->id)->first();
+                        } else {
+                            $temp_commune_str = $temp_address_arr[0];
+                            $temp_district_str = $temp_address_arr[1];
+                            $temp_province_str = $temp_address_arr[2];
+                            $temp_province = Province::where('name', $temp_province_str)->first();
+                            $temp_district = District::where('name', $temp_district_str)->where('province_id', $temp_province->id)->first();
+                            $temp_commune = Commune::where('name', $temp_commune_str)->where('district_id', $temp_district->id)->first();
+                        }
+                        $employee->temporary_commune_id = $temp_commune->id;
                     }
                     $employee->temporary_address = $temp_addr;
-                    $employee->temporary_commune_id = $temp_commune->id;
                     $employee->experience = $row[16];
                     $employee->marriage_status = $row[17];
                     $employee->bhxh = $row[18];
