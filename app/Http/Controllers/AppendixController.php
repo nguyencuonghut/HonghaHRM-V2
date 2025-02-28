@@ -118,7 +118,7 @@ class AppendixController extends Controller
         $appendix->reason = $request->reason;
         if ($request->hasFile('file_path')) {
             //Delete old file
-            if ($appendix->file_path) {
+            if (file_exists($appendix->file_path)) {
                 unlink(public_path($appendix->file_path));
             }
 
@@ -149,7 +149,7 @@ class AppendixController extends Controller
         }
 
         //Delete file
-        if ($appendix->file_path) {
+        if (file_exists($appendix->file_path)) {
             unlink(public_path($appendix->file_path));
         }
         $appendix->delete();

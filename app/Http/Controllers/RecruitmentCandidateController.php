@@ -99,7 +99,7 @@ class RecruitmentCandidateController extends Controller
         $recruitmentCandidate->candidate_id = $request->candidate_id;
         if ($request->hasFile('cv_file')) {
             //Delete old file
-            if ($recruitmentCandidate->cv_file) {
+            if (file_exists($recruitmentCandidate->cv_file)) {
                 unlink(public_path($recruitmentCandidate->cv_file));
             }
 
@@ -129,7 +129,9 @@ class RecruitmentCandidateController extends Controller
     public function destroy(RecruitmentCandidate $recruitmentCandidate)
     {
         //Remove uploaded file
-        unlink(public_path($recruitmentCandidate->cv_file));
+        if (file_exists($recruitmentCandidate->cv_file)) {
+            unlink(public_path($recruitmentCandidate->cv_file));
+        }
 
         //Remove record
         $recruitmentCandidate->delete();

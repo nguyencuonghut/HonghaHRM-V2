@@ -115,7 +115,7 @@ class DocumentController extends Controller
         $document->doc_type_id = $request->e_doc_type_id;
 
         if ($request->hasFile('file_path')) {
-            if ($document->file_path) {
+            if (file_exists($document->file_path)) {
                 unlink(public_path($document->file_path));
             }
 
@@ -160,7 +160,7 @@ class DocumentController extends Controller
         }
 
         //Delete old file
-        if ($document->file_path) {
+        if (file_exists($document->file_path)) {
             unlink(public_path($document->file_path));
         }
         // Destroy the record

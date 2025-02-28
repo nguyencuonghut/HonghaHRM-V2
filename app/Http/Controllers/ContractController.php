@@ -151,7 +151,7 @@ class ContractController extends Controller
 
         if ($request->hasFile('file_path')) {
             //Delete old file
-            if ($contract->file_path) {
+            if (file_exists($contract->file_path)) {
                 unlink(public_path($contract->file_path));
             }
 

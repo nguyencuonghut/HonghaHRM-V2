@@ -130,7 +130,7 @@ class PositionController extends Controller
         //Store uploaded file
         if ($request->hasFile('recruitment_standard_file')) {
             //Delete old file
-            if ($position->recruitment_standard_file) {
+            if (file_exists($position->recruitment_standard_file)) {
                 unlink(public_path($position->recruitment_standard_file));
             }
 
