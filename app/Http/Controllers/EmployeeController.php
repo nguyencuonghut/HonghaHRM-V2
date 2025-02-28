@@ -341,7 +341,7 @@ class EmployeeController extends Controller
         $employee->delete();
 
         //Remove uploaded image
-        if ($employee->img_path) {
+        if (file_exists($employee->img_path)) {
             unlink(public_path($employee->img_path));
         }
 
