@@ -218,6 +218,10 @@ class ContractController extends Controller
             }
         }
 
+        //Delete old file
+        if (file_exists($contract->file_path)) {
+            unlink(public_path($contract->file_path));
+        }
         // Destroy the Contract
         $contract->delete();
 

@@ -166,6 +166,11 @@ class PositionController extends Controller
             Alert::toast('Vị trí đang được sử dụng. Không thể xóa!', 'error', 'top-right');
             return redirect()->route('positions.index');
         }
+
+        //Delete old file
+        if (file_exists($position->recruitment_standard_file)) {
+            unlink(public_path($position->recruitment_standard_file));
+        }
         $position->delete();
 
         Alert::toast('Xóa vị trí thành công!', 'success', 'top-rigth');

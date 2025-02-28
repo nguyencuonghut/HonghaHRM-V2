@@ -261,6 +261,11 @@ class EmployeeController extends Controller
         $employee->code = $request->code;
         $employee->name = $request->name;
         if ($request->hasFile('img_path')) {
+            //Remove old image
+            if (file_exists($employee->img_path)) {
+                unlink(public_path($employee->img_path));
+            }
+
             $path = 'dist/employee_img';
 
             !file_exists($path) && mkdir($path, 0777, true);
